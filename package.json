@@ -1,0 +1,20 @@
+{
+  "name": "react-4798tj",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "jspdf": "1.4.1",
+    "react": "16.1.1",
+    "react-dom": "16.1.1",
+    "html2canvas": "1.0.0-alpha.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
+}
