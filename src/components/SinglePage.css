@@ -1,0 +1,24 @@
+.invoice-body-price-calculation > div,
+.invoice-body-price {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.invoice-body-article {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.invoice-body-article-description {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.invoice-body-article-description > div {
+  margin-right: 4px;
+}

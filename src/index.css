@@ -1,0 +1,12 @@
+@media (min-width: 1200px) {
+  .invoice-page {
+    display: flex;
+    flex-direction: row;
+    padding: 2em;
+  }
+
+  .invoice-form-wrapper {
+    width: 40%;
+    margin: 2.5%;
+  }
+}
