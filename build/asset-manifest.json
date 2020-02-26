@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.b5689870.chunk.css",
-    "main.js": "/static/js/main.f86f89f7.chunk.js",
-    "main.js.map": "/static/js/main.f86f89f7.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.55583ec5.js",
-    "runtime-main.js.map": "/static/js/runtime-main.55583ec5.js.map",
-    "static/js/2.ddd6e02c.chunk.js": "/static/js/2.ddd6e02c.chunk.js",
-    "static/js/2.ddd6e02c.chunk.js.map": "/static/js/2.ddd6e02c.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.3b8a44537bcf54ea2eed9897bc45d65f.js": "/precache-manifest.3b8a44537bcf54ea2eed9897bc45d65f.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.b5689870.chunk.css.map": "/static/css/main.b5689870.chunk.css.map",
-    "static/js/2.ddd6e02c.chunk.js.LICENSE.txt": "/static/js/2.ddd6e02c.chunk.js.LICENSE.txt"
+    "main.css": "/invoice-from-form/static/css/main.b5689870.chunk.css",
+    "main.js": "/invoice-from-form/static/js/main.f86f89f7.chunk.js",
+    "main.js.map": "/invoice-from-form/static/js/main.f86f89f7.chunk.js.map",
+    "runtime-main.js": "/invoice-from-form/static/js/runtime-main.ccf4049a.js",
+    "runtime-main.js.map": "/invoice-from-form/static/js/runtime-main.ccf4049a.js.map",
+    "static/js/2.ddd6e02c.chunk.js": "/invoice-from-form/static/js/2.ddd6e02c.chunk.js",
+    "static/js/2.ddd6e02c.chunk.js.map": "/invoice-from-form/static/js/2.ddd6e02c.chunk.js.map",
+    "index.html": "/invoice-from-form/index.html",
+    "precache-manifest.df297aa63e1a17b3ad0c69650b7e0d5a.js": "/invoice-from-form/precache-manifest.df297aa63e1a17b3ad0c69650b7e0d5a.js",
+    "service-worker.js": "/invoice-from-form/service-worker.js",
+    "static/css/main.b5689870.chunk.css.map": "/invoice-from-form/static/css/main.b5689870.chunk.css.map",
+    "static/js/2.ddd6e02c.chunk.js.LICENSE.txt": "/invoice-from-form/static/js/2.ddd6e02c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.55583ec5.js",
+    "static/js/runtime-main.ccf4049a.js",
     "static/js/2.ddd6e02c.chunk.js",
     "static/css/main.b5689870.chunk.css",
     "static/js/main.f86f89f7.chunk.js"
