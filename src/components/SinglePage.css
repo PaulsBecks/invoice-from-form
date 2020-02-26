@@ -1,8 +1,44 @@
+.invoice-body-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.invoice-body-subject-key-values {
+  display: flex;
+}
+
+.invoice-body-subject-keys {
+  margin-right: 5mm;
+}
+
+.invoice-body-subject-values p {
+  margin: 0;
+}
+
+.invoice-body-price-calculation {
+  padding-top: 3mm;
+  padding-bottom: 3mm;
+  margin-top: 3mm;
+  margin-bottom: 3mm;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.invoice-body-price-calculation p {
+  margin: 0;
+}
+
 .invoice-body-price-calculation > div,
 .invoice-body-price {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+}
+
+.invoice-body-price {
+  border-bottom: 2px solid black;
+  margin-bottom: 3mm;
 }
 
 .invoice-body-article {
