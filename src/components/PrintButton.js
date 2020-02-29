@@ -51,7 +51,7 @@ const PrintButton = ({ id, label }) => (
         });
 
         html2canvas(input).then(canvas => {
-          const imgData = canvas.toDataURL("image/png", 1.0);
+          const imgData = canvas.toDataURL("image/png", 4);
           let pdf;
           // Document of a4WidthMm wide and inputHeightMm high
           if (inputHeightMm > a4HeightMm) {

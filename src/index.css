@@ -1,3 +1,7 @@
+.invoice-app-container {
+  margin-top: 2em;
+}
+
 @media (min-width: 1200px) {
   .invoice-page {
     display: flex;

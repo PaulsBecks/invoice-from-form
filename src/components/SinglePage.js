@@ -14,7 +14,6 @@ const SinglePage = ({
   }
 }) => {
   const articles_net_price = articles
-    .filter(a => !a.empty)
     .map(({ price, amount }) => {
       const totalPrice = price * amount;
       const totalPriceWithDiscount = totalPrice - totalPrice * (discount / 100);
@@ -95,49 +94,47 @@ const SinglePage = ({
           </div>
         </div>
         <div className="invoice-body-article-wrapper">
-          {articles
-            .filter(a => !a.empty)
-            .map(({ amount, price, name, isbn }) => {
-              const multiple = parseInt(amount) > 1;
-              const totalPrice = price * amount;
-              const totalPriceWithDiscount =
-                totalPrice - totalPrice * (discount / 100);
-              const net = totalPriceWithDiscount / (1 + ust / 100);
-              return (
-                <div className="invoice-body-article">
-                  <div className="invoice-body-article-left">
-                    <div className="invoice-body-article-description">
-                      <div>
-                        <b>
-                          {amount} Exemplar
-                          {multiple && "e"}
-                        </b>
-                      </div>
-                      <div className="invoice-body-article-title">
-                        <b>„{name}“</b>
-                      </div>
-                      <div className="invoice-body-article-title">{isbn}</div>
+          {articles.map(({ amount, price, name, isbn }) => {
+            const multiple = parseInt(amount) > 1;
+            const totalPrice = price * amount;
+            const totalPriceWithDiscount =
+              totalPrice - totalPrice * (discount / 100);
+            const net = totalPriceWithDiscount / (1 + ust / 100);
+            return (
+              <div className="invoice-body-article">
+                <div className="invoice-body-article-left">
+                  <div className="invoice-body-article-description">
+                    <div>
+                      <b>
+                        {amount} Exemplar
+                        {multiple && "e"}
+                      </b>
                     </div>
-                    <div className="invoice-body-artivle-price-calc">{`Preis ${
-                      multiple ? "je" : ""
-                    } ${price} €${
-                      multiple ? ` = ${totalPrice.toFixed(2)}€` : ""
-                    }${
-                      discount > 0
-                        ? `, abzüglich ${discount} % Rabatt = ${totalPriceWithDiscount.toFixed(
-                            2
-                          )} €`
-                        : ""
-                    } (beinhaltet ${ust} % MwST = ${(
-                      totalPriceWithDiscount - net
-                    ).toFixed(2)})`}</div>
+                    <div className="invoice-body-article-title">
+                      <b>„{name}“</b>
+                    </div>
+                    <div className="invoice-body-article-title">{isbn}</div>
                   </div>
-                  <div className="invoice-body-article-price">
-                    <b>{net.toFixed(2)}€</b>
-                  </div>
+                  <div className="invoice-body-artivle-price-calc">{`Preis ${
+                    multiple ? "je" : ""
+                  } ${price} €${
+                    multiple ? ` = ${totalPrice.toFixed(2)}€` : ""
+                  }${
+                    discount > 0
+                      ? `, abzüglich ${discount} % Rabatt = ${totalPriceWithDiscount.toFixed(
+                          2
+                        )} €`
+                      : ""
+                  } (beinhaltet ${ust} % MwST = ${(
+                    totalPriceWithDiscount - net
+                  ).toFixed(2)})`}</div>
                 </div>
-              );
-            })}
+                <div className="invoice-body-article-price">
+                  <b>{net.toFixed(2)}€</b>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div className="invoice-body-price-calculation">
           <div>
