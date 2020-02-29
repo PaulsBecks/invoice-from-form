@@ -11,6 +11,7 @@ import "./index.css";
 import { Tab, Container } from "semantic-ui-react";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
+import Invoice from "./components/Invoice";
 const invoiceSceleton = {
   articles: []
 };
@@ -25,18 +26,10 @@ const App = () => {
         <Tab
           panes={[
             {
-              menuItem: "Rechnung erstellen",
+              menuItem: "Rechnungen",
               render: () => (
-                <div className="invoice-page">
-                  <div className="invoice-form-wrapper">
-                    <InvoiceForm invoice={invoice} setInvoice={setInvoice} />
-                  </div>
-                  <div className="invoice-page-wrapper">
-                    <PrintButton id={"singlePage"} label={"Rechnung Drucken"} />
-                    {invoice.customer && (
-                      <SinglePage id={"singlePage"} invoice={invoice} />
-                    )}
-                  </div>
+                <div className="">
+                  <Invoices />
                 </div>
               )
             },
@@ -53,14 +46,6 @@ const App = () => {
               render: () => (
                 <div className="">
                   <Articles />
-                </div>
-              )
-            },
-            {
-              menuItem: "Rechnungen",
-              render: () => (
-                <div className="">
-                  <Invoices />
                 </div>
               )
             }

@@ -102,6 +102,14 @@ export default ({ invoice, setInvoice }) => {
     setNewCustomer(!newCustomer);
   };
 
+  const saveInvoice = () => {
+    invoice["totalPrice"] = 10;
+    let _invoices = [...invoices];
+    _invoices[invoice.id] = invoice;
+    setInvoices(_invoices);
+    setInvoice();
+  };
+
   return (
     <div className="invoice-form">
       <Container>
@@ -126,7 +134,7 @@ export default ({ invoice, setInvoice }) => {
                 ) : (
                   <div>
                     <Input
-                      placeholder="Search..."
+                      placeholder="Suche..."
                       onChange={(e, { value }) => setCustomerSearch(value)}
                       value={customerSearch}
                     />
@@ -226,8 +234,20 @@ export default ({ invoice, setInvoice }) => {
                         </Form>
                       </Modal.Content>
                       <Modal.Actions>
-                        <Button onClick={toggleNewCustomer}>Abbrechen</Button>
-                        <Button onClick={addNewCustomer}>Anlegen</Button>
+                        <Button
+                          onClick={toggleNewCustomer}
+                          content="Abbrechen"
+                          negative
+                          icon="close"
+                          labelPosition="right"
+                        ></Button>
+                        <Button
+                          onClick={addNewCustomer}
+                          content="Anlegen"
+                          primary
+                          icon="check"
+                          labelPosition="right"
+                        ></Button>
                       </Modal.Actions>
                     </Modal>
                   </div>
@@ -264,7 +284,7 @@ export default ({ invoice, setInvoice }) => {
 
                   <Input
                     name="article"
-                    label="Suche"
+                    placeholder="Suche..."
                     value={articleSearch}
                     onChange={(e, { value }) => setArticleSearch(value)}
                   />
@@ -329,21 +349,40 @@ export default ({ invoice, setInvoice }) => {
                     </Form>
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button onClick={toggleNewArticle} negative>
-                      Abbrechen
-                    </Button>
-                    <Button onClick={addNewArticle} primary>
-                      Anlegen
-                    </Button>
+                    <Button
+                      onClick={toggleNewCustomer}
+                      content="Abbrechen"
+                      negative
+                      icon="close"
+                      labelPosition="right"
+                    ></Button>
+                    <Button
+                      onClick={addNewCustomer}
+                      content="Anlegen"
+                      primary
+                      icon="check"
+                      labelPosition="right"
+                    ></Button>
                   </Modal.Actions>
                 </Modal>
               </Accordion.Content>
             </Accordion>
           </Card.Content>
         </Card>
-        <Button onClick={() => setInvoices([...invoices, invoice])}>
-          Rechnung Speichern
-        </Button>
+        <Button
+          onClick={() => setInvoice()}
+          content="Abbrechen"
+          negative
+          icon="close"
+          labelPosition="right"
+        ></Button>
+        <Button
+          onClick={saveInvoice}
+          content="Speichern"
+          primary
+          icon="check"
+          labelPosition="right"
+        ></Button>
       </Container>
     </div>
   );
