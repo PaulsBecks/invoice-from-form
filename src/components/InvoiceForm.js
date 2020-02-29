@@ -376,13 +376,15 @@ export default ({ invoice, setInvoice }) => {
           icon="close"
           labelPosition="right"
         ></Button>
-        <Button
-          onClick={saveInvoice}
-          content="Speichern"
-          primary
-          icon="check"
-          labelPosition="right"
-        ></Button>
+        {invoice.customer && (
+          <Button
+            onClick={saveInvoice}
+            content="Speichern"
+            primary
+            icon="check"
+            labelPosition="right"
+          ></Button>
+        )}
       </Container>
     </div>
   );
