@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
+  margin-bottom: 4mm;
 }
 
 .invoice-body-subject-key-values {
@@ -48,6 +49,10 @@
   align-items: flex-end;
 }
 
+.invoice-body-article-left {
+  font-size: 8pt;
+}
+
 .invoice-body-article-description {
   display: flex;
   justify-content: left;
@@ -57,4 +62,49 @@
 
 .invoice-body-article-description > div {
   margin-right: 4px;
+}
+
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.invoice-header p {
+  margin: 0;
+}
+
+.invoice-header-company-logo {
+  align-self: end;
+  height: 4em;
+}
+
+.invoice-page-pdf {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 2em 2em 2em 6em;
+}
+
+.invoice-page-pdf p {
+  font-size: 9pt;
+}
+
+.invoice-page-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-footer {
+  padding-top: 10px;
+  border-top: 1px solid black;
+}
+
+.invoice-header-customer-company {
+  margin-bottom: 2em;
+}
+
+.invoice-header-customer-info-name {
+  margin-bottom: 0.5em !important;
 }

@@ -6,6 +6,7 @@ import "./index.css";
 import { Tab, Container } from "semantic-ui-react";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
+import Company from "./components/Company";
 const invoiceSceleton = {
   articles: []
 };
@@ -40,6 +41,14 @@ const App = () => {
               render: () => (
                 <div className="">
                   <Articles />
+                </div>
+              )
+            },
+            {
+              menuItem: "Firma",
+              render: () => (
+                <div className="">
+                  <Company />
                 </div>
               )
             }
