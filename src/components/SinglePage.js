@@ -1,13 +1,14 @@
 import React from "react";
 import Page from "./Page";
 import "./SinglePage.css";
+import { formatDate } from "../services";
 const SinglePage = ({
   id,
   invoice: {
-    order_date = "24.02.2020",
-    send_date = "24.02.2020",
-    invoice_date = "24.02.2020",
-    invoice_number = "142787164221",
+    orderDate,
+    invoiceDate,
+    shippingDate,
+    invoiceNumber,
     customer: { name, ust, discount, address, city, postCode },
     articles = [],
     send_default_price = 5.0
@@ -54,12 +55,12 @@ const SinglePage = ({
               <div className="invoice-body-subject-values">
                 <div className="invoice-body-order-date">
                   <p>
-                    <b>{order_date}</b>
+                    <b>{formatDate(orderDate)}</b>
                   </p>
                 </div>
                 <div className="invoice-body-send-date">
                   <p>
-                    <b>{send_date}</b>
+                    <b>{formatDate(shippingDate)}</b>
                   </p>
                 </div>
                 <div className="invoice-body-send-to">
@@ -80,12 +81,12 @@ const SinglePage = ({
           <div>
             <div className="invoice-body-invoice-date">
               <p>
-                Rechnungsdatum: <b>{invoice_date}</b>
+                Rechnungsdatum: <b>{formatDate(invoiceDate)}</b>
               </p>
             </div>
             <div className="invoice-body-invoice-nr">
               <p>
-                Rechnungsnummer: <b>{invoice_number}</b>
+                Rechnungsnummer: <b>{invoiceNumber}</b>
               </p>
             </div>
             <div className="invoice-body-invoice-hint">

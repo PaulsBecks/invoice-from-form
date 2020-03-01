@@ -11,12 +11,17 @@ import {
   Label,
   Button
 } from "semantic-ui-react";
+
+import DatePicker from "react-datepicker";
+
 import {
   article as articleSceleton,
   customer as customerSceleton
 } from "../sceletons";
 
+import "react-datepicker/dist/react-datepicker.css";
 import "./InvoiceForm.css";
+import { calculateTotalPrice } from "../services";
 
 export default ({ invoice, setInvoice }) => {
   const [customers, setCustomers] = useLocalStorage("customers", []);
@@ -103,11 +108,15 @@ export default ({ invoice, setInvoice }) => {
   };
 
   const saveInvoice = () => {
-    invoice["totalPrice"] = 10;
+    invoice["totalPrice"] = calculateTotalPrice(invoice);
     let _invoices = [...invoices];
     _invoices[invoice.id] = invoice;
     setInvoices(_invoices);
     setInvoice();
+  };
+
+  const updateInvoiceDate = (value, name) => {
+    setInvoice({ ...invoice, [name]: value.toString() });
   };
 
   return (
@@ -260,7 +269,6 @@ export default ({ invoice, setInvoice }) => {
               <Accordion.Content active={true}>
                 <div className="invoice-form-label-container">
                   {invoice.articles.map((a, i) => {
-                    console.log(a);
                     return (
                       <Label>
                         {a.name}
@@ -365,6 +373,47 @@ export default ({ invoice, setInvoice }) => {
                     ></Button>
                   </Modal.Actions>
                 </Modal>
+              </Accordion.Content>
+              <Accordion.Title>
+                <Icon name="dropdown" />
+                Allgemein
+              </Accordion.Title>
+              <Accordion.Content active={true}>
+                <Form>
+                  <Form.Field
+                    label="Rechnungsdatum"
+                    name="invoiceDate"
+                    selected={new Date(invoice.invoiceDate)}
+                    onChange={v => updateInvoiceDate(v, "invoiceDate")}
+                    control={DatePicker}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  <Form.Field
+                    label="Bestelldatum"
+                    name="orderDate"
+                    selected={new Date(invoice.orderDate)}
+                    onChange={v => updateInvoiceDate(v, "orderDate")}
+                    control={DatePicker}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  <Form.Field
+                    label="Versanddatum"
+                    name="shippingDate"
+                    selected={new Date(invoice.shippingDate)}
+                    onChange={v => updateInvoiceDate(v, "shippingDate")}
+                    control={DatePicker}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  <Form.Field
+                    label="Rechnungsnummer"
+                    name="invoiceNumber"
+                    value={invoice.invoiceNumber}
+                    onChange={(e, { name, value }) =>
+                      setInvoice({ ...invoice, [name]: value })
+                    }
+                    control={Input}
+                  />
+                </Form>
               </Accordion.Content>
             </Accordion>
           </Card.Content>

@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { render } from "react-dom";
-import { article as articleSceleton } from "./sceletons";
-import SinglePage from "./components/SinglePage";
-import MultiPage from "./components/MultiPage";
-import PrintButton from "./components/PrintButton";
-import InvoiceForm from "./components/InvoiceForm";
 import Customers from "./components/Customers";
 
 import "./index.css";
 import { Tab, Container } from "semantic-ui-react";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
-import Invoice from "./components/Invoice";
 const invoiceSceleton = {
   articles: []
 };

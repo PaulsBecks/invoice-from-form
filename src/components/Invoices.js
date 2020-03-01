@@ -4,6 +4,7 @@ import { useLocalStorage } from "../hooks";
 import { Button, Icon, Table } from "semantic-ui-react";
 import Invoice from "./Invoice";
 import { invoice as invoiceSceleton, invoice } from "../sceletons";
+import { formatDate } from "../services";
 
 export default () => {
   const [invoices, setInvoices] = useLocalStorage("invoices", []);
@@ -28,6 +29,8 @@ export default () => {
       <Table celled>
         <Table.Header>
           <Table.Row>
+            <Table.HeaderCell>Rechnungsnummer</Table.HeaderCell>
+            <Table.HeaderCell>Rechnungsdatum</Table.HeaderCell>
             <Table.HeaderCell>Kunde</Table.HeaderCell>
             <Table.HeaderCell>Artikel</Table.HeaderCell>
             <Table.HeaderCell>Gesamtpreis</Table.HeaderCell>
@@ -38,6 +41,8 @@ export default () => {
         <Table.Body>
           {invoices.map(i => (
             <Table.Row>
+              <Table.Cell>{i.invoiceNumber}</Table.Cell>
+              <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
               <Table.Cell>{i.customer.name}</Table.Cell>
               <Table.Cell>
                 {i.articles.map(a => (
