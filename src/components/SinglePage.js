@@ -12,9 +12,10 @@ const SinglePage = ({
     invoiceDate,
     shippingDate,
     invoiceNumber,
-    customer: { name, ust, discount, address, city, postCode },
-    articles = [],
-    send_default_price = 5.0
+    porto,
+    finalText,
+    customer: { name, ust, discount, address, city, postCode, addition },
+    articles = []
   }
 }) => {
   const [company] = useLocalStorage("company", companySceleton);
@@ -39,8 +40,11 @@ const SinglePage = ({
                 {company.firstAddress.postCode} {company.firstAddress.city}
               </div>
               <div className="invoice-header-customer-info">
-                <p className="invoice-header-customer-info-name">
+                <p>
                   <b>{name}</b>
+                </p>
+                <p className="invoice-header-customer-info-name">
+                  <b>{addition}</b>
                 </p>
                 <p>
                   <b>{address}</b>
@@ -108,7 +112,7 @@ const SinglePage = ({
                   <div className="invoice-body-send-to">
                     <p>
                       <b>
-                        {name} • {}
+                        {name} • {addition}
                       </b>
                     </p>
                     <p>
@@ -189,7 +193,7 @@ const SinglePage = ({
             <div>
               <p>Versandpauschale</p>
               <p>
-                <b>{send_default_price.toFixed(2)}€</b>
+                <b>{porto}€</b>
               </p>
             </div>
             <div>
@@ -197,7 +201,7 @@ const SinglePage = ({
               <p>
                 <b>
                   {(
-                    ((articles_net_price + send_default_price) *
+                    ((articles_net_price + parseFloat(porto)) *
                       parseFloat(ust)) /
                     100
                   ).toFixed(2)}
@@ -211,7 +215,7 @@ const SinglePage = ({
             <p>
               <b>
                 {(
-                  (articles_net_price + send_default_price) *
+                  (articles_net_price + parseFloat(porto)) *
                   (1 + parseFloat(ust) / 100)
                 ).toFixed(2)}
                 €
@@ -219,16 +223,7 @@ const SinglePage = ({
             </p>
           </div>
           <div>
-            <p>
-              Zahlen Sie bitte den Rechnungsbetrag bis zum 16. März 2020 unter
-              Angabe der Rechnungsnummer auf unten stehendes Konto. <br />
-              <br /> Die gelieferte Ware bleibt bis zur vollständigen Bezahlung
-              Eigentum des Test Verlages. <br />
-              Vielen Dank für Ihre Bestellung.
-              <br />
-              <br /> Mit herzlichen Grüßen, Test Verlag.
-              <br /> Werneuchen, den 24. Februar 2020
-            </p>
+            <p className="invoice-body-final-text">{finalText}</p>
           </div>
         </div>
         <div className="invoice-footer">

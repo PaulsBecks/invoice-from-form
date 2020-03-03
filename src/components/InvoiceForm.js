@@ -9,7 +9,8 @@ import {
   Card,
   Modal,
   Label,
-  Button
+  Button,
+  TextArea
 } from "semantic-ui-react";
 
 import DatePicker from "react-datepicker";
@@ -22,6 +23,7 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import "./InvoiceForm.css";
 import { calculateTotalPrice } from "../services";
+import Article from "./Article";
 
 export default ({ invoice, setInvoice }) => {
   const [customers, setCustomers] = useLocalStorage("customers", []);
@@ -34,6 +36,21 @@ export default ({ invoice, setInvoice }) => {
   const [articleSearch, setArticleSearch] = useState("");
   const [newArticle, setNewArticle] = useState(undefined);
   const [invoices, setInvoices] = useLocalStorage("invoices", []);
+  const [porto, setPorto] = useState(invoice.porto);
+
+  const updateInvoice = (e, { name, value }) => {
+    console.log(e, name, value);
+    if (name === "porto") {
+      value = parseFloat(value);
+      if (isNaN(value)) {
+        setPorto("");
+        return;
+      }
+      value = value.toFixed(2);
+      setPorto(value);
+    }
+    setInvoice({ ...invoice, [name]: value });
+  };
 
   const toggleNewArticle = () => setNewArticle(!newArticle);
 
@@ -71,23 +88,12 @@ export default ({ invoice, setInvoice }) => {
     setCustomer({ ...customer, [name]: value });
   };
 
-  const handleArticleChange = (e, { name, value }) => {
-    if (name === "price") {
-      value = parseFloat(value);
-      if (isNaN(value)) return;
-      value = value.toFixed(2);
-    }
-    setArticle({ ...article, [name]: value });
-  };
-
   const addArticleToInvoice = article => {
     setInvoice({
       ...invoice,
-      articles: [
-        ...invoice.articles,
-        { ...article, articleAmount: articleAmount }
-      ]
+      articles: [...invoice.articles, { ...article, amount: articleAmount }]
     });
+    setArticleAmount(1);
   };
 
   const addNewArticle = () => {
@@ -183,8 +189,11 @@ export default ({ invoice, setInvoice }) => {
                             <Form.Field
                               id="form-input-control-name"
                               control={Input}
-                              label="Geschäftsform"
-                              placeholder="Geschäftsform"
+                              label="Zusatz"
+                              placeholder="Zusatz"
+                              name="addition"
+                              onChange={handleCustomerChange}
+                              value={customer.addition}
                             />
                           </Form.Group>
                           <Form.Group>
@@ -311,61 +320,18 @@ export default ({ invoice, setInvoice }) => {
                 <Modal open={newArticle} onClose={toggleNewArticle}>
                   <Modal.Header>Neuer Artikel</Modal.Header>
                   <Modal.Content>
-                    <Form>
-                      <Form.Group width="equal">
-                        <Form.Field
-                          id="form-input-control-name"
-                          control={Input}
-                          label="Name"
-                          placeholder="Name"
-                          name="name"
-                          onChange={handleArticleChange}
-                          value={article.name}
-                        />
-                        <Form.Field
-                          id="form-input-control-name"
-                          control={Input}
-                          label="Menge"
-                          placeholder="Menge"
-                          type="number"
-                          onChange={handleArticleChange}
-                          name="amount"
-                          value={article.amount}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <Form.Field
-                          id="form-input-control-last-name"
-                          control={Input}
-                          label="ISBN"
-                          placeholder="ISBN"
-                          name="isbn"
-                          onChange={handleArticleChange}
-                          value={article.isbn}
-                        />
-                        <Form.Field
-                          id="form-input-control-last-name"
-                          control={Input}
-                          label="Preis"
-                          placeholder="Preis"
-                          name="price"
-                          icon="euro sign"
-                          onChange={handleArticleChange}
-                          value={article.price}
-                        />
-                      </Form.Group>
-                    </Form>
+                    <Article article={article} setArticle={setArticle} />
                   </Modal.Content>
                   <Modal.Actions>
                     <Button
-                      onClick={toggleNewCustomer}
+                      onClick={toggleNewArticle}
                       content="Abbrechen"
                       negative
                       icon="close"
                       labelPosition="right"
                     ></Button>
                     <Button
-                      onClick={addNewCustomer}
+                      onClick={addNewArticle}
                       content="Anlegen"
                       primary
                       icon="check"
@@ -405,13 +371,31 @@ export default ({ invoice, setInvoice }) => {
                     dateFormat="dd/MM/yyyy"
                   />
                   <Form.Field
+                    label="Porto"
+                    name="shippingDate"
+                    value={porto}
+                    name="porto"
+                    onChange={(e, { value }) => setPorto(value)}
+                    control={Input}
+                    onBlur={e =>
+                      updateInvoice(e, {
+                        name: e.target.name,
+                        value: e.target.value
+                      })
+                    }
+                    icon="euro"
+                  />
+                  <Form.Field
                     label="Rechnungsnummer"
                     name="invoiceNumber"
                     value={invoice.invoiceNumber}
-                    onChange={(e, { name, value }) =>
-                      setInvoice({ ...invoice, [name]: value })
-                    }
+                    onChange={updateInvoice}
                     control={Input}
+                  />
+                  <TextArea
+                    value={invoice.finalText}
+                    onChange={updateInvoice}
+                    name="finalText"
                   />
                 </Form>
               </Accordion.Content>

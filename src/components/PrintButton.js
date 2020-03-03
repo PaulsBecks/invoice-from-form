@@ -19,7 +19,7 @@ const range = (start, end) => {
     });
 };
 
-const PrintButton = ({ id, label }) => (
+const PrintButton = ({ id, label, fileName }) => (
   <div className="tc mb4 mt2">
     {/*
     Getting pixel height in milimeters:
@@ -63,7 +63,7 @@ const PrintButton = ({ id, label }) => (
           }
 
           pdf.addImage(imgData, "PNG", 0, 0);
-          pdf.save(`${id}.pdf`);
+          pdf.save(`${fileName}.pdf`);
         });
 
         ////////////////////////////////////////////////////////

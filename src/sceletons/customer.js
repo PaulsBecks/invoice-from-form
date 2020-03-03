@@ -1,5 +1,6 @@
 export default {
   name: "",
+  addition: "",
   address: "",
   postCode: "",
   city: "",

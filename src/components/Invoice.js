@@ -12,7 +12,11 @@ export default ({ invoice, setInvoice }) => {
       </div>
       {invoice.customer && (
         <div className="invoice-page-wrapper">
-          <PrintButton id={"singlePage"} label={"Rechnung Drucken"} />
+          <PrintButton
+            id={"singlePage"}
+            label={"Rechnung Drucken"}
+            fileName={invoice.invoiceNumber}
+          />
           <SinglePage id={"singlePage"} invoice={invoice} />
         </div>
       )}

@@ -49,7 +49,7 @@ export default () => {
                   <p>{a.name}</p>
                 ))}
               </Table.Cell>
-              <Table.Cell>{i.totalPrice}€</Table.Cell>
+              <Table.Cell>{i.totalPrice.toFixed(2)}€</Table.Cell>
               <Table.Cell>
                 <Button icon onClick={() => setInvoiceSelected(i)}>
                   <Icon name="eye"></Icon>

@@ -64,6 +64,10 @@
   margin-right: 4px;
 }
 
+.invoice-body-final-text {
+  white-space: pre;
+}
+
 .invoice-header {
   display: flex;
   justify-content: space-between;
