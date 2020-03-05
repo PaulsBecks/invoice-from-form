@@ -27,11 +27,17 @@ import Article from "./Article";
 
 export default ({ invoice, setInvoice }) => {
   const [customers, setCustomers] = useLocalStorage("customers", []);
-  const [customer, setCustomer] = useState(customerSceleton);
+  const [customer, setCustomer] = useState({
+    ...customerSceleton,
+    id: customers.length
+  });
   const [newCustomer, setNewCustomer] = useState(undefined);
   const [customerSearch, setCustomerSearch] = useState("");
   const [articles, setArticles] = useLocalStorage("articles", []);
-  const [article, setArticle] = useState(articleSceleton);
+  const [article, setArticle] = useState({
+    ...articleSceleton,
+    id: articles.length
+  });
   const [articleAmount, setArticleAmount] = useState(1);
   const [articleSearch, setArticleSearch] = useState("");
   const [newArticle, setNewArticle] = useState(undefined);
@@ -88,11 +94,22 @@ export default ({ invoice, setInvoice }) => {
     setCustomer({ ...customer, [name]: value });
   };
 
+  const updateArticleAmount = (id, amountChange) => {
+    let _articles = [...articles];
+    const article = _articles[id];
+    _articles[id] = {
+      ...article,
+      amount: parseFloat(article.amount) + amountChange
+    };
+    setArticles(_articles);
+  };
+
   const addArticleToInvoice = article => {
     setInvoice({
       ...invoice,
       articles: [...invoice.articles, { ...article, amount: articleAmount }]
     });
+    setArticle();
     setArticleAmount(1);
   };
 
@@ -114,9 +131,23 @@ export default ({ invoice, setInvoice }) => {
   };
 
   const saveInvoice = () => {
+    const updateInvoiceArticles = (invoice, mul = 1) => {
+      console.log(invoice);
+      if (invoice) {
+        for (let a in invoice.articles) {
+          console.log(invoice.articles[a]);
+          updateArticleAmount(
+            invoice.articles[a].id,
+            mul * invoice.articles[a].amount
+          );
+        }
+      }
+    };
     invoice["totalPrice"] = calculateTotalPrice(invoice);
     let _invoices = [...invoices];
+    updateInvoiceArticles(invoices[invoice.id]);
     _invoices[invoice.id] = invoice;
+    updateInvoiceArticles(_invoices[invoice.id], -1);
     setInvoices(_invoices);
     setInvoice();
   };
