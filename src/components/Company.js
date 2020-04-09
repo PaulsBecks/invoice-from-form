@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Segment, Button } from "semantic-ui-react";
+import { Form, Input, Segment, Button, TextArea } from "semantic-ui-react";
 import { useLocalStorage } from "../hooks";
 import { company as companySceleton } from "../sceletons";
 import DropZone from "./DropZone";
@@ -14,21 +14,21 @@ export default function Company() {
   const updateFirstAddress = (e, { name, value }) => {
     setCompany({
       ...company,
-      firstAddress: { ...company.firstAddress, [name]: value }
+      firstAddress: { ...company.firstAddress, [name]: value },
     });
   };
 
   const updateSecondAddress = (e, { name, value }) => {
     setCompany({
       ...company,
-      secondAddress: { ...company.secondAddress, [name]: value }
+      secondAddress: { ...company.secondAddress, [name]: value },
     });
   };
 
-  const onDropHandler = files => {
+  const onDropHandler = (files) => {
     var file = files[0];
     const reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = (event) => {
       setCompany({ ...company, logo: event.target.result });
     };
     reader.readAsDataURL(file);
@@ -44,6 +44,22 @@ export default function Company() {
           onChange={updateCompany}
           value={company.name}
         />
+        <Segment>
+          <h4>Logo</h4>
+          {company.logo != "" ? (
+            <div>
+              <img src={company.logo} />
+              <Button
+                negative
+                onClick={() => setCompany({ ...company, logo: "" })}
+              >
+                Löschen
+              </Button>
+            </div>
+          ) : (
+            <DropZone onDrop={onDropHandler} />
+          )}
+        </Segment>
         <Form.Field
           label="Firmenführung"
           control={Input}
@@ -210,23 +226,15 @@ export default function Company() {
             value={company.bic}
           />
         </Segment>
+        <Form.Field>
+          <Form.TextArea
+            label="Standard Freitext"
+            value={company.finalText}
+            onChange={updateCompany}
+            name="finalText"
+          />
+        </Form.Field>
       </Form>
-      <Segment>
-        <h4>Logo</h4>
-        {company.logo != "" ? (
-          <div>
-            <img src={company.logo} />
-            <Button
-              negative
-              onClick={() => setCompany({ ...company, logo: "" })}
-            >
-              Löschen
-            </Button>
-          </div>
-        ) : (
-          <DropZone onDrop={onDropHandler} />
-        )}
-      </Segment>
     </div>
   );
 }

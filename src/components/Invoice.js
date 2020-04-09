@@ -2,13 +2,17 @@ import React from "react";
 
 import InvoiceForm from "./InvoiceForm";
 import PrintButton from "./PrintButton";
-import SinglePage from "./SinglePage";
+import SinglePage from "./SinglePage/SinglePage";
 
-export default ({ invoice, setInvoice }) => {
+export default ({ invoice, setInvoice, setInvoices }) => {
   return (
     <div className="invoice-page">
       <div className="invoice-form-wrapper">
-        <InvoiceForm invoice={invoice} setInvoice={setInvoice} />
+        <InvoiceForm
+          invoice={invoice}
+          setInvoice={setInvoice}
+          setInvoices={setInvoices}
+        />
       </div>
       {invoice.customer && (
         <div className="invoice-page-wrapper">

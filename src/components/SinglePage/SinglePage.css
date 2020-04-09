@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.invoice-body-top-right {
+  min-width: 200px;
+}
+
 .invoice-body-subject-keys {
   margin-right: 5mm;
 }
@@ -79,10 +83,14 @@
 }
 
 .invoice-header-company-logo {
-  align-self: end;
+  align-self: flex-end;
+  right: 0;
   height: 4em;
 }
 
+.invoice-header-company-info {
+  min-width: 200px;
+}
 .invoice-page-pdf {
   display: flex;
   flex-direction: column;

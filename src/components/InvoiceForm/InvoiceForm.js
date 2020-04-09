@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useLocalStorage } from "../hooks";
+import { useLocalStorage } from "../../hooks";
 import {
   Accordion,
   Container,
@@ -10,42 +10,41 @@ import {
   Modal,
   Label,
   Button,
-  TextArea
+  Checkbox,
 } from "semantic-ui-react";
 
 import DatePicker from "react-datepicker";
 
 import {
   article as articleSceleton,
-  customer as customerSceleton
-} from "../sceletons";
+  customer as customerSceleton,
+} from "../../sceletons";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./InvoiceForm.css";
-import { calculateTotalPrice } from "../services";
-import Article from "./Article";
+import { calculateTotalPrice } from "../../services";
+import Article from "../Article";
 
-export default ({ invoice, setInvoice }) => {
+export default ({ invoice, setInvoice, setInvoices }) => {
   const [customers, setCustomers] = useLocalStorage("customers", []);
   const [customer, setCustomer] = useState({
     ...customerSceleton,
-    id: customers.length
+    id: customers.length,
   });
   const [newCustomer, setNewCustomer] = useState(undefined);
   const [customerSearch, setCustomerSearch] = useState("");
   const [articles, setArticles] = useLocalStorage("articles", []);
   const [article, setArticle] = useState({
     ...articleSceleton,
-    id: articles.length
+    id: articles.length,
   });
   const [articleAmount, setArticleAmount] = useState(1);
   const [articleSearch, setArticleSearch] = useState("");
   const [newArticle, setNewArticle] = useState(undefined);
-  const [invoices, setInvoices] = useLocalStorage("invoices", []);
+  const [invoices] = useLocalStorage("invoices", []);
   const [porto, setPorto] = useState(invoice.porto);
 
-  const updateInvoice = (e, { name, value }) => {
-    console.log(e, name, value);
+  const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
       value = parseFloat(value);
       if (isNaN(value)) {
@@ -55,6 +54,9 @@ export default ({ invoice, setInvoice }) => {
       value = value.toFixed(2);
       setPorto(value);
     }
+    if (name === "payed") {
+      value = checked;
+    }
     setInvoice({ ...invoice, [name]: value });
   };
 
@@ -62,7 +64,7 @@ export default ({ invoice, setInvoice }) => {
 
   const filteredCustomers = useMemo(
     () =>
-      customers.filter(c =>
+      customers.filter((c) =>
         c.name.toLowerCase().includes(customerSearch.toLowerCase())
       ),
     [customers, customerSearch]
@@ -70,7 +72,7 @@ export default ({ invoice, setInvoice }) => {
 
   const filteredArticles = useMemo(
     () =>
-      articles.filter(a =>
+      articles.filter((a) =>
         a.name.toLowerCase().includes(articleSearch.toLowerCase())
       ),
     [articles, articleSearch]
@@ -99,15 +101,15 @@ export default ({ invoice, setInvoice }) => {
     const article = _articles[id];
     _articles[id] = {
       ...article,
-      amount: parseFloat(article.amount) + amountChange
+      amount: parseFloat(article.amount) + amountChange,
     };
     setArticles(_articles);
   };
 
-  const addArticleToInvoice = article => {
+  const addArticleToInvoice = (article) => {
     setInvoice({
       ...invoice,
-      articles: [...invoice.articles, { ...article, amount: articleAmount }]
+      articles: [...invoice.articles, { ...article, amount: articleAmount }],
     });
     setArticle();
     setArticleAmount(1);
@@ -119,10 +121,10 @@ export default ({ invoice, setInvoice }) => {
     toggleNewArticle();
   };
 
-  const removeArticle = pos => {
+  const removeArticle = (pos) => {
     setInvoice({
       ...invoice,
-      articles: invoice.articles.filter((a, i) => i !== pos)
+      articles: invoice.articles.filter((a, i) => i !== pos),
     });
   };
 
@@ -132,10 +134,8 @@ export default ({ invoice, setInvoice }) => {
 
   const saveInvoice = () => {
     const updateInvoiceArticles = (invoice, mul = 1) => {
-      console.log(invoice);
       if (invoice) {
         for (let a in invoice.articles) {
-          console.log(invoice.articles[a]);
           updateArticleAmount(
             invoice.articles[a].id,
             mul * invoice.articles[a].amount
@@ -155,6 +155,8 @@ export default ({ invoice, setInvoice }) => {
   const updateInvoiceDate = (value, name) => {
     setInvoice({ ...invoice, [name]: value.toString() });
   };
+
+  console.log(invoice);
 
   return (
     <div className="invoice-form">
@@ -188,7 +190,7 @@ export default ({ invoice, setInvoice }) => {
                       <Button onClick={toggleNewCustomer}>Neuer Kunde</Button>
                     ) : (
                       <div className="invoice-form-label-container">
-                        {filteredCustomers.map(fc => (
+                        {filteredCustomers.map((fc) => (
                           <Label
                             onClick={() =>
                               setInvoice({ ...invoice, customer: fc })
@@ -340,7 +342,7 @@ export default ({ invoice, setInvoice }) => {
                     <Button onClick={toggleNewArticle}>Neuer Artikel</Button>
                   ) : (
                     <div className="invoice-form-label-container">
-                      {filteredArticles.map(a => (
+                      {filteredArticles.map((a) => (
                         <Label onClick={() => addArticleToInvoice(a)}>
                           {a.name}
                         </Label>
@@ -381,7 +383,7 @@ export default ({ invoice, setInvoice }) => {
                     label="Rechnungsdatum"
                     name="invoiceDate"
                     selected={new Date(invoice.invoiceDate)}
-                    onChange={v => updateInvoiceDate(v, "invoiceDate")}
+                    onChange={(v) => updateInvoiceDate(v, "invoiceDate")}
                     control={DatePicker}
                     dateFormat="dd/MM/yyyy"
                   />
@@ -389,7 +391,7 @@ export default ({ invoice, setInvoice }) => {
                     label="Bestelldatum"
                     name="orderDate"
                     selected={new Date(invoice.orderDate)}
-                    onChange={v => updateInvoiceDate(v, "orderDate")}
+                    onChange={(v) => updateInvoiceDate(v, "orderDate")}
                     control={DatePicker}
                     dateFormat="dd/MM/yyyy"
                   />
@@ -397,7 +399,7 @@ export default ({ invoice, setInvoice }) => {
                     label="Versanddatum"
                     name="shippingDate"
                     selected={new Date(invoice.shippingDate)}
-                    onChange={v => updateInvoiceDate(v, "shippingDate")}
+                    onChange={(v) => updateInvoiceDate(v, "shippingDate")}
                     control={DatePicker}
                     dateFormat="dd/MM/yyyy"
                   />
@@ -408,10 +410,10 @@ export default ({ invoice, setInvoice }) => {
                     name="porto"
                     onChange={(e, { value }) => setPorto(value)}
                     control={Input}
-                    onBlur={e =>
+                    onBlur={(e) =>
                       updateInvoice(e, {
                         name: e.target.name,
-                        value: e.target.value
+                        value: e.target.value,
                       })
                     }
                     icon="euro"
@@ -423,11 +425,45 @@ export default ({ invoice, setInvoice }) => {
                     onChange={updateInvoice}
                     control={Input}
                   />
-                  <TextArea
+                  <Form.TextArea
+                    label="Freitext"
                     value={invoice.finalText}
                     onChange={updateInvoice}
                     name="finalText"
                   />
+                  <Form.Field>
+                    <label>Bezahlt</label>
+                    <Checkbox
+                      onChange={(e, { name, checked }) => {
+                        if (checked) {
+                          setInvoice({
+                            ...invoice,
+                            [name]: checked,
+                            paymentDate: new Date(),
+                          });
+                        } else {
+                          setInvoice({
+                            ...invoice,
+                            [name]: checked,
+                            paymentDate: undefined,
+                          });
+                        }
+                      }}
+                      name="payed"
+                      checked={invoice.payed}
+                      toggle
+                    />
+                  </Form.Field>
+                  {invoice.payed && (
+                    <Form.Field
+                      label="Zahlungseingangsdatum"
+                      name="paymentDate"
+                      selected={new Date(invoice.paymentDate)}
+                      onChange={(v) => updateInvoiceDate(v, "paymentDate")}
+                      control={DatePicker}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                  )}
                 </Form>
               </Accordion.Content>
             </Accordion>

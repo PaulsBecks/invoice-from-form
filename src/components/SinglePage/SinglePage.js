@@ -1,9 +1,8 @@
 import React from "react";
-import Page from "./Page";
+import Page from "../Page";
 import "./SinglePage.css";
-import { formatDate } from "../services";
-import { useLocalStorage } from "../hooks";
-import { company as companySceleton, invoice } from "../sceletons";
+import { formatDate } from "../../services";
+import { useCompany } from "../../hooks";
 
 const SinglePage = ({
   id,
@@ -15,10 +14,10 @@ const SinglePage = ({
     porto,
     finalText,
     customer: { name, ust, discount, address, city, postCode, addition },
-    articles = []
-  }
+    articles = [],
+  },
 }) => {
-  const [company] = useLocalStorage("company", companySceleton);
+  const [company] = useCompany();
   const articles_net_price = articles
     .map(({ price, amount }) => {
       const totalPrice = price * amount;
@@ -124,7 +123,7 @@ const SinglePage = ({
                 </div>
               </div>
             </div>
-            <div>
+            <div className="invoice-body-top-right">
               <div className="invoice-body-invoice-date">
                 <p>
                   Rechnungsdatum: <b>{formatDate(invoiceDate)}</b>
@@ -177,7 +176,7 @@ const SinglePage = ({
                     ).toFixed(2)})`}</div>
                   </div>
                   <div className="invoice-body-article-price">
-                    <b>{net.toFixed(2)}€</b>
+                    <b>{articles.length > 1 && `${net.toFixed(2)} €`}</b>
                   </div>
                 </div>
               );
@@ -187,13 +186,13 @@ const SinglePage = ({
             <div>
               <p>Netto</p>
               <p>
-                <b>{articles_net_price.toFixed(2)}€</b>
+                <b>{articles_net_price.toFixed(2)} €</b>
               </p>
             </div>
             <div>
-              <p>Versandpauschale</p>
+              <p>Versandkosten</p>
               <p>
-                <b>{porto}€</b>
+                <b>{porto} €</b>
               </p>
             </div>
             <div>
@@ -204,7 +203,7 @@ const SinglePage = ({
                     ((articles_net_price + parseFloat(porto)) *
                       parseFloat(ust)) /
                     100
-                  ).toFixed(2)}
+                  ).toFixed(2)}{" "}
                   €
                 </b>
               </p>
@@ -217,7 +216,7 @@ const SinglePage = ({
                 {(
                   (articles_net_price + parseFloat(porto)) *
                   (1 + parseFloat(ust) / 100)
-                ).toFixed(2)}
+                ).toFixed(2)}{" "}
                 €
               </b>
             </p>

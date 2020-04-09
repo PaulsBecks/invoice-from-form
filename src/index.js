@@ -7,14 +7,15 @@ import { Tab, Container } from "semantic-ui-react";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
 import Company from "./components/Company";
+import Authors from "./components/Authors/Authors";
+import useMigration from "./hooks/useMigration";
 const invoiceSceleton = {
-  articles: []
+  articles: [],
 };
 
 const App = () => {
-  const [invoice, setInvoice] = useState(invoiceSceleton);
+  useMigration();
 
-  console.log(invoice);
   return (
     <div className="invoice-app-container">
       <Container>
@@ -26,7 +27,7 @@ const App = () => {
                 <div className="">
                   <Invoices />
                 </div>
-              )
+              ),
             },
             {
               menuItem: "Kunden",
@@ -34,7 +35,7 @@ const App = () => {
                 <div className="">
                   <Customers />
                 </div>
-              )
+              ),
             },
             {
               menuItem: "Artikel",
@@ -42,7 +43,15 @@ const App = () => {
                 <div className="">
                   <Articles />
                 </div>
-              )
+              ),
+            },
+            {
+              menuItem: "Autoren",
+              render: () => (
+                <div className="">
+                  <Authors />
+                </div>
+              ),
             },
             {
               menuItem: "Firma",
@@ -50,8 +59,8 @@ const App = () => {
                 <div className="">
                   <Company />
                 </div>
-              )
-            }
+              ),
+            },
           ]}
         />
       </Container>

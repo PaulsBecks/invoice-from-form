@@ -6,14 +6,14 @@ export default {
     address: "",
     postCode: "",
     city: "",
-    phone: ""
+    phone: "",
   },
   secondAddress: {
     name: "",
     address: "",
     postCode: "",
     city: "",
-    phone: ""
+    phone: "",
   },
   firstEmail: "",
   secondEmail: "",
@@ -22,5 +22,6 @@ export default {
   bank: "",
   iban: "",
   bic: "",
-  logo: ""
+  logo: "",
+  finalText: "",
 };

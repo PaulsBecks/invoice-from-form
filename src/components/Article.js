@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
-import { Form, Input } from "semantic-ui-react";
+import { Form, Input, Button, Label } from "semantic-ui-react";
+import { useAuthors } from "../hooks";
 
 export default function Article({ article, setArticle }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
+  const [authorSearch, setAuthorSearch] = useState("");
+  const [authors] = useAuthors();
+
+  const filteredAuthors = useMemo(() => {
+    return authors.filter((a) => a && a.name.includes(authorSearch));
+  }, [authors, authorSearch]);
+
+  function addAuthorToArticle(author) {
+    setArticle({ ...article, authors: [...article.authors, author] });
+  }
 
   const handleArticleChange = (e, { name, value }) => {
-    console.log(name, value);
     if (name === "price") {
       value = parseFloat(value);
-      console.log(value);
       if (isNaN(value)) {
         setArticlePrice("");
         return;
@@ -61,16 +70,38 @@ export default function Article({ article, setArticle }) {
           name="price"
           icon="euro sign"
           onChange={(e, { value }) => setArticlePrice(value)}
-          onBlur={e => {
-            console.log("blur");
+          onBlur={(e) => {
             handleArticleChange(e, {
               name: e.target.name,
-              value: e.target.value
+              value: e.target.value,
             });
           }}
           value={articlePrice}
         />
       </Form.Group>
+      <div>
+        <label>
+          <b>Autoren</b>
+        </label>
+        <div>
+          {article.authors.map((a) => (
+            <Label>{a.name}</Label>
+          ))}
+        </div>
+        <Input
+          name="author"
+          placeholder="Suche..."
+          value={authorSearch}
+          onChange={(e, { value }) => setAuthorSearch(value)}
+        />
+        {authorSearch != "" && (
+          <div>
+            {filteredAuthors.map((a) => (
+              <Label onClick={() => addAuthorToArticle(a)}>{a.name}</Label>
+            ))}
+          </div>
+        )}
+      </div>
     </Form>
   );
 }
