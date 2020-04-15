@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Segment, Button, TextArea } from "semantic-ui-react";
+import { Form, Input, Segment, Button } from "semantic-ui-react";
 import { useLocalStorage } from "../hooks";
 import { company as companySceleton } from "../sceletons";
 import DropZone from "./DropZone";
@@ -46,9 +46,9 @@ export default function Company() {
         />
         <Segment>
           <h4>Logo</h4>
-          {company.logo != "" ? (
+          {company.logo !== "" ? (
             <div>
-              <img src={company.logo} />
+              <img src={company.logo} alt="company logo" />
               <Button
                 negative
                 onClick={() => setCompany({ ...company, logo: "" })}
@@ -234,6 +234,14 @@ export default function Company() {
             name="finalText"
           />
         </Form.Field>
+        <Form.Field
+          label="Farbe"
+          control={Input}
+          placeholder="z.B. #ffffff oder rgb(120,0,0)"
+          name="companyColor"
+          onChange={updateCompany}
+          value={company.color}
+        />
       </Form>
     </div>
   );

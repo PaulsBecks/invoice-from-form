@@ -1,3 +1,11 @@
+#singlePage {
+  position: relative;
+}
+.invoice-body {
+  height: 160mm;
+  font-size: 8.5pt;
+}
+
 .invoice-body-top {
   display: flex;
   justify-content: space-between;
@@ -64,6 +72,14 @@
   flex-wrap: wrap;
 }
 
+.invoice-folding-line {
+  position: absolute;
+  top: 104mm;
+  left: 4mm;
+  width: 5mm;
+  border: 1px solid black;
+}
+
 .invoice-body-article-description > div {
   margin-right: 4px;
 }
@@ -75,7 +91,7 @@
 .invoice-header {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .invoice-header p {
@@ -90,31 +106,42 @@
 
 .invoice-header-company-info {
   min-width: 200px;
-}
-.invoice-page-pdf {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 2em 2em 2em 6em;
+  margin-bottom: 15mm;
+  font-size: 8pt;
 }
 
-.invoice-page-pdf p {
-  font-size: 9pt;
+.invoice-page-pdf {
+  height: 100%;
+  padding: 10mm 12mm 13mm 26mm;
 }
 
 .invoice-page-top {
   display: flex;
   flex-direction: column;
+  height: 96mm;
+  justify-content: space-between;
 }
 
 .invoice-footer {
   padding-top: 10px;
   border-top: 1px solid black;
+  font-size: 8.5pt;
+}
+
+.invoice-header-customer-address {
+  margin-bottom: 19mm;
 }
 
 .invoice-header-customer-company {
   margin-bottom: 2em;
+  font-size: 7pt;
+}
+
+.invoice-header-customer-info {
+  height: 22mm;
+  width: 70mm;
+  margin-bottom: 19mm;
+  font-size: 9pt;
 }
 
 .invoice-header-customer-info-name {

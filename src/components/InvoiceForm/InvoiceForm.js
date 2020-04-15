@@ -173,7 +173,7 @@ export default ({ invoice, setInvoice, setInvoices }) => {
               </Accordion.Title>
               <Accordion.Content active={true}>
                 {invoice.customer ? (
-                  <div class="invoice-form-label-container">
+                  <div className="invoice-form-label-container">
                     <Label>
                       {invoice.customer.name}
                       <Icon name="delete" onClick={removeCustomer} />
@@ -186,7 +186,7 @@ export default ({ invoice, setInvoice, setInvoices }) => {
                       onChange={(e, { value }) => setCustomerSearch(value)}
                       value={customerSearch}
                     />
-                    {customerSearch == "" ? (
+                    {customerSearch === "" ? (
                       <Button onClick={toggleNewCustomer}>Neuer Kunde</Button>
                     ) : (
                       <div className="invoice-form-label-container">
@@ -199,7 +199,7 @@ export default ({ invoice, setInvoice, setInvoices }) => {
                             {fc.name}
                           </Label>
                         ))}
-                        {filteredCustomers.length == 0 && (
+                        {filteredCustomers.length === 0 && (
                           <p>No Customers found.</p>
                         )}
                       </div>
@@ -338,7 +338,7 @@ export default ({ invoice, setInvoice, setInvoices }) => {
                     value={articleSearch}
                     onChange={(e, { value }) => setArticleSearch(value)}
                   />
-                  {articleSearch == "" ? (
+                  {articleSearch === "" ? (
                     <Button onClick={toggleNewArticle}>Neuer Artikel</Button>
                   ) : (
                     <div className="invoice-form-label-container">
@@ -405,7 +405,6 @@ export default ({ invoice, setInvoice, setInvoices }) => {
                   />
                   <Form.Field
                     label="Porto"
-                    name="shippingDate"
                     value={porto}
                     name="porto"
                     onChange={(e, { value }) => setPorto(value)}

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { useArticles, useInvoices } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
-import { Table, Button, Icon, Modal } from "semantic-ui-react";
+import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
 
 import "./Articles.css";
@@ -19,7 +19,7 @@ export default () => {
     return invoices.reduce((list, i) => {
       for (let a in i.articles) {
         const article = i.articles[a];
-        if (article.id == invoiceArticle.id) {
+        if (article.id === invoiceArticle.id) {
           return [
             ...list,
             {
@@ -31,7 +31,7 @@ export default () => {
       }
       return list;
     }, []);
-  });
+  }, [invoices, invoiceArticle]);
   const updateArticle = () => {
     let _articles = [...articles];
     _articles[article.id] = article;

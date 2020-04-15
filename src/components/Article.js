@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from "react";
 
-import { Form, Input, Button, Label } from "semantic-ui-react";
+import { Form, Input, Label } from "semantic-ui-react";
 import { useAuthors } from "../hooks";
 
 export default function Article({ article, setArticle }) {
@@ -94,7 +94,7 @@ export default function Article({ article, setArticle }) {
           value={authorSearch}
           onChange={(e, { value }) => setAuthorSearch(value)}
         />
-        {authorSearch != "" && (
+        {authorSearch !== "" && (
           <div>
             {filteredAuthors.map((a) => (
               <Label onClick={() => addAuthorToArticle(a)}>{a.name}</Label>

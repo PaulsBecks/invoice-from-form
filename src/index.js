@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { render } from "react-dom";
 import Customers from "./components/Customers";
 
@@ -9,9 +9,6 @@ import Invoices from "./components/Invoices";
 import Company from "./components/Company";
 import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
-const invoiceSceleton = {
-  articles: [],
-};
 
 const App = () => {
   useMigration();

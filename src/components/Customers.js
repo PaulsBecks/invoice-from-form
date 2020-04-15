@@ -3,7 +3,7 @@ import { useLocalStorage } from "../hooks";
 
 import { Table } from "semantic-ui-react";
 export default () => {
-  const [customers, setCustomer] = useLocalStorage("customers", []);
+  const [customers] = useLocalStorage("customers", []);
 
   return (
     <Table celled>
@@ -19,7 +19,7 @@ export default () => {
       </Table.Header>
 
       <Table.Body>
-        {customers.map(c => (
+        {customers.map((c) => (
           <Table.Row>
             <Table.Cell>{c.name}</Table.Cell>
             <Table.Cell>{c.address}</Table.Cell>

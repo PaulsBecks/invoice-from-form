@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useLocalStorage, useCompany, useInvoices } from "../hooks";
+import { useCompany, useInvoices } from "../hooks";
 
 import { Button, Icon, Table } from "semantic-ui-react";
 import Invoice from "./Invoice";
-import { invoice as invoiceSceleton, invoice } from "../sceletons";
+import { invoice as invoiceSceleton } from "../sceletons";
 import { formatDate } from "../services";
 
 export default () => {

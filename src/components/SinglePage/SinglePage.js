@@ -3,6 +3,7 @@ import Page from "../Page";
 import "./SinglePage.css";
 import { formatDate } from "../../services";
 import { useCompany } from "../../hooks";
+import { Button } from "semantic-ui-react";
 
 const SinglePage = ({
   id,
@@ -13,7 +14,7 @@ const SinglePage = ({
     invoiceNumber,
     porto,
     finalText,
-    customer: { name, ust, discount, address, city, postCode, addition },
+    customer,
     articles = [],
   },
 }) => {
@@ -21,39 +22,54 @@ const SinglePage = ({
   const articles_net_price = articles
     .map(({ price, amount }) => {
       const totalPrice = price * amount;
-      const totalPriceWithDiscount = totalPrice - totalPrice * (discount / 100);
-      const net = totalPriceWithDiscount / (1 + ust / 100);
+      const totalPriceWithDiscount =
+        totalPrice - totalPrice * (customer.discount / 100);
+      const net = totalPriceWithDiscount / (1 + customer.ust / 100);
       return net;
     })
     .reduce((total, x) => parseFloat(x) + total, 0);
 
   return (
     <Page singleMode={true} id={id}>
+      <div
+        className="invoice-folding-line"
+        style={
+          company.companyColor ? { borderColor: company.companyColor } : {}
+        }
+      />
       <div className="invoice-page-pdf">
         <div className="invoice-page-top">
-          <img className="invoice-header-company-logo" src={company.logo} />
+          <img
+            className="invoice-header-company-logo"
+            src={company.logo}
+            alt="company logo"
+          />
           <div className="invoice-header">
             <div className="invoice-header-customer-address">
               <div className="invoice-header-customer-company">
                 {company.name} • {company.firstAddress.address} •{" "}
                 {company.firstAddress.postCode} {company.firstAddress.city}
               </div>
-              <div className="invoice-header-customer-info">
-                <p>
-                  <b>{name}</b>
-                </p>
-                <p className="invoice-header-customer-info-name">
-                  <b>{addition}</b>
-                </p>
-                <p>
-                  <b>{address}</b>
-                </p>
-                <p>
-                  <b>
-                    {postCode} {city}
-                  </b>
-                </p>
-              </div>
+              {customer ? (
+                <div className="invoice-header-customer-info">
+                  <p>
+                    <b>{customer.name}</b>
+                  </p>
+                  <p className="invoice-header-customer-info-name">
+                    <b>{customer.addition}</b>
+                  </p>
+                  <p>
+                    <b>{customer.address}</b>
+                  </p>
+                  <p>
+                    <b>
+                      {customer.postCode} {customer.city}
+                    </b>
+                  </p>
+                </div>
+              ) : (
+                <Button>Kunde hinzufügen</Button>
+              )}
             </div>
             <div className="invoice-header-company-info">
               <p>{company.name}</p>
@@ -65,6 +81,13 @@ const SinglePage = ({
                 {company.firstAddress.postCode} {company.firstAddress.city}
               </p>
               <p>Telefon {company.firstAddress.phone}</p>
+              <br />
+              <p>{company.secondAddress.name}</p>
+              <p>{company.secondAddress.address}</p>
+              <p>
+                {company.secondAddress.postCode} {company.secondAddress.city}
+              </p>
+              <p>Telefon {company.secondAddress.phone}</p>
               <br />
               <p>{company.firstEmail}</p>
               <p>{company.secondEmail}</p>
@@ -111,12 +134,12 @@ const SinglePage = ({
                   <div className="invoice-body-send-to">
                     <p>
                       <b>
-                        {name} • {addition}
+                        {customer.name} • {customer.addition}
                       </b>
                     </p>
                     <p>
                       <b>
-                        {address} • {postCode} {city}
+                        {customer.address} • {customer.postCode} {customer.city}
                       </b>
                     </p>
                   </div>
@@ -144,8 +167,8 @@ const SinglePage = ({
               const multiple = parseInt(amount) > 1;
               const totalPrice = price * amount;
               const totalPriceWithDiscount =
-                totalPrice - totalPrice * (discount / 100);
-              const net = totalPriceWithDiscount / (1 + ust / 100);
+                totalPrice - totalPrice * (customer.discount / 100);
+              const net = totalPriceWithDiscount / (1 + customer.ust / 100);
               return (
                 <div className="invoice-body-article">
                   <div className="invoice-body-article-left">
@@ -166,12 +189,12 @@ const SinglePage = ({
                     } ${price} €${
                       multiple ? ` = ${totalPrice.toFixed(2)}€` : ""
                     }${
-                      discount > 0
-                        ? `, abzüglich ${discount} % Rabatt = ${totalPriceWithDiscount.toFixed(
-                            2
-                          )} €`
+                      customer.discount > 0
+                        ? `, abzüglich ${
+                            customer.discount
+                          } % Rabatt = ${totalPriceWithDiscount.toFixed(2)} €`
                         : ""
-                    } (beinhaltet ${ust} % MwST = ${(
+                    } (beinhaltet ${customer.ust} % MwST = ${(
                       totalPriceWithDiscount - net
                     ).toFixed(2)})`}</div>
                   </div>
@@ -196,12 +219,12 @@ const SinglePage = ({
               </p>
             </div>
             <div>
-              <p>{`+${ust}% Mehrwertsteuer`}</p>
+              <p>{`+${customer.ust}% Mehrwertsteuer`}</p>
               <p>
                 <b>
                   {(
                     ((articles_net_price + parseFloat(porto)) *
-                      parseFloat(ust)) /
+                      parseFloat(customer.ust)) /
                     100
                   ).toFixed(2)}{" "}
                   €
@@ -215,7 +238,7 @@ const SinglePage = ({
               <b>
                 {(
                   (articles_net_price + parseFloat(porto)) *
-                  (1 + parseFloat(ust) / 100)
+                  (1 + parseFloat(customer.ust) / 100)
                 ).toFixed(2)}{" "}
                 €
               </b>
@@ -225,7 +248,12 @@ const SinglePage = ({
             <p className="invoice-body-final-text">{finalText}</p>
           </div>
         </div>
-        <div className="invoice-footer">
+        <div
+          className="invoice-footer"
+          style={
+            company.companyColor ? { borderColor: company.companyColor } : {}
+          }
+        >
           <div className="invoice-footer-executive">
             <b>Geschäftsführung</b> {company.executive}
           </div>

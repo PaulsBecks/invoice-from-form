@@ -14,38 +14,34 @@ const baseStyle = {
   backgroundColor: "#fafafa",
   color: "#bdbdbd",
   outline: "none",
-  transition: "border .24s ease-in-out"
+  transition: "border .24s ease-in-out",
 };
 
 const activeStyle = {
-  borderColor: "#2196f3"
+  borderColor: "#2196f3",
 };
 
 const acceptStyle = {
-  borderColor: "#00e676"
+  borderColor: "#00e676",
 };
 
 const rejectStyle = {
-  borderColor: "#ff1744"
+  borderColor: "#ff1744",
 };
 
 export default function StyledDropzone({ onDrop }) {
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject
-  } = useDropzone({ accept: "image/*" });
+  const { isDragActive, isDragAccept, isDragReject } = useDropzone({
+    accept: "image/*",
+  });
 
   const style = useMemo(
     () => ({
       ...baseStyle,
       ...(isDragActive ? activeStyle : {}),
       ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {})
+      ...(isDragReject ? rejectStyle : {}),
     }),
-    [isDragActive, isDragReject]
+    [isDragActive, isDragReject, isDragAccept]
   );
 
   return (
@@ -55,7 +51,7 @@ export default function StyledDropzone({ onDrop }) {
           <div
             {...getRootProps({
               style,
-              onDrop: event => event.stopPropagation()
+              onDrop: (event) => event.stopPropagation(),
             })}
           >
             <input {...getInputProps()} />
