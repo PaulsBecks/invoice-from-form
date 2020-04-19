@@ -1,6 +1,23 @@
 #singlePage {
   position: relative;
 }
+
+.invoice-header-right-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: auto;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  resize: none;
+}
+
+.invoice-header-right-textarea:hover {
+  border: 1px solid grey;
+}
+
 .invoice-body {
   height: 160mm;
   font-size: 8.5pt;
@@ -54,6 +71,9 @@
   margin-bottom: 3mm;
 }
 
+.invoice-body-bottom {
+  width: 150mm;
+}
 .invoice-body-article {
   display: flex;
   justify-content: space-between;
@@ -63,6 +83,13 @@
 
 .invoice-body-article-left {
   font-size: 8pt;
+}
+
+br {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 0%;
 }
 
 .invoice-body-article-description {
@@ -77,7 +104,7 @@
   top: 104mm;
   left: 4mm;
   width: 5mm;
-  border: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .invoice-body-article-description > div {
@@ -94,10 +121,6 @@
   align-items: flex-end;
 }
 
-.invoice-header p {
-  margin: 0;
-}
-
 .invoice-header-company-logo {
   align-self: flex-end;
   right: 0;
@@ -106,7 +129,8 @@
 
 .invoice-header-company-info {
   min-width: 200px;
-  margin-bottom: 15mm;
+  height: 100%;
+  margin-bottom: 5mm;
   font-size: 8pt;
 }
 
@@ -128,10 +152,6 @@
   font-size: 8.5pt;
 }
 
-.invoice-header-customer-address {
-  margin-bottom: 19mm;
-}
-
 .invoice-header-customer-company {
   margin-bottom: 2em;
   font-size: 7pt;
@@ -146,4 +166,8 @@
 
 .invoice-header-customer-info-name {
   margin-bottom: 0.5em !important;
+}
+
+.invoice-subject-and-below {
+  margin-bottom: 5mm;
 }

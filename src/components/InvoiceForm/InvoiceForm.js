@@ -1,5 +1,10 @@
-import React, { useState, useMemo } from "react";
-import { useLocalStorage } from "../../hooks";
+import React, { useState, useMemo, useEffect } from "react";
+import {
+  useLocalStorage,
+  useInvoices,
+  useCompany,
+  useCustomers,
+} from "../../hooks";
 import {
   Accordion,
   Container,
@@ -11,6 +16,8 @@ import {
   Label,
   Button,
   Checkbox,
+  Dropdown,
+  Tab,
 } from "semantic-ui-react";
 
 import DatePicker from "react-datepicker";
@@ -24,25 +31,38 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./InvoiceForm.css";
 import { calculateTotalPrice } from "../../services";
 import Article from "../Article";
+import CustomerForm from "../CustomerForm/CustomerForm";
+import CompanyForm from "../CompanyForm";
 
 export default ({ invoice, setInvoice, setInvoices }) => {
-  const [customers, setCustomers] = useLocalStorage("customers", []);
-  const [customer, setCustomer] = useState({
-    ...customerSceleton,
-    id: customers.length,
-  });
-  const [newCustomer, setNewCustomer] = useState(undefined);
-  const [customerSearch, setCustomerSearch] = useState("");
+  const [customers, setCustomers] = useCustomers();
+  const [company, setCompany] = useCompany();
+  const [customer, setCustomer] = useState(
+    customers[invoice.customer.id] || invoice.customer
+  );
   const [articles, setArticles] = useLocalStorage("articles", []);
+  const [selectedArticles, setSelectedArticles] = useState(invoice.articles);
   const [article, setArticle] = useState({
     ...articleSceleton,
     id: articles.length,
   });
-  const [articleAmount, setArticleAmount] = useState(1);
-  const [articleSearch, setArticleSearch] = useState("");
+  const [toBePayed, setToBePayed] = useState(1);
+  const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
-  const [invoices] = useLocalStorage("invoices", []);
+  const [invoices] = useInvoices();
   const [porto, setPorto] = useState(invoice.porto);
+
+  useEffect(() => {
+    setInvoice({
+      ...invoice,
+      customer,
+      articles: selectedArticles.map((a) => ({
+        ...articles[a.articleId],
+        ...a,
+      })),
+      company,
+    });
+  }, [customer, selectedArticles, company]);
 
   const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
@@ -62,40 +82,6 @@ export default ({ invoice, setInvoice, setInvoices }) => {
 
   const toggleNewArticle = () => setNewArticle(!newArticle);
 
-  const filteredCustomers = useMemo(
-    () =>
-      customers.filter((c) =>
-        c.name.toLowerCase().includes(customerSearch.toLowerCase())
-      ),
-    [customers, customerSearch]
-  );
-
-  const filteredArticles = useMemo(
-    () =>
-      articles.filter((a) =>
-        a.name.toLowerCase().includes(articleSearch.toLowerCase())
-      ),
-    [articles, articleSearch]
-  );
-
-  const addNewCustomer = () => {
-    setCustomers([...customers, customer]);
-    setInvoice({ ...invoice, customer });
-    toggleNewCustomer();
-  };
-
-  const removeCustomer = () => {
-    setInvoice({ ...invoice, customer: undefined });
-  };
-
-  const handleCustomerChange = (e, { name, value }) => {
-    if (name === "ust" || name === "discount") {
-      value = parseFloat(value);
-      if (isNaN(value)) return;
-    }
-    setCustomer({ ...customer, [name]: value });
-  };
-
   const updateArticleAmount = (id, amountChange) => {
     let _articles = [...articles];
     const article = _articles[id];
@@ -106,30 +92,9 @@ export default ({ invoice, setInvoice, setInvoices }) => {
     setArticles(_articles);
   };
 
-  const addArticleToInvoice = (article) => {
-    setInvoice({
-      ...invoice,
-      articles: [...invoice.articles, { ...article, amount: articleAmount }],
-    });
-    setArticle();
-    setArticleAmount(1);
-  };
-
   const addNewArticle = () => {
     setArticles([...articles, article]);
-    addArticleToInvoice(article);
     toggleNewArticle();
-  };
-
-  const removeArticle = (pos) => {
-    setInvoice({
-      ...invoice,
-      articles: invoice.articles.filter((a, i) => i !== pos),
-    });
-  };
-
-  const toggleNewCustomer = () => {
-    setNewCustomer(!newCustomer);
   };
 
   const saveInvoice = () => {
@@ -150,13 +115,69 @@ export default ({ invoice, setInvoice, setInvoices }) => {
     updateInvoiceArticles(_invoices[invoice.id], -1);
     setInvoices(_invoices);
     setInvoice();
+    const _customers = [...customers];
+    _customers[customer.id] = customer;
+    setCustomers(_customers);
   };
 
   const updateInvoiceDate = (value, name) => {
     setInvoice({ ...invoice, [name]: value.toString() });
   };
 
-  console.log(invoice);
+  const customerOptions = useMemo(() => {
+    let list = [
+      {
+        key: customers.length,
+        value: customers.length,
+        text: `Neuer Kunde`,
+      },
+    ];
+    return list.concat(
+      customers.map((c) => ({
+        key: c.id,
+        text: c.name,
+        value: c.id,
+      }))
+    );
+  }, [customers, customer]);
+
+  const articlesOptions = useMemo(() => {
+    const list = [{ key: articles.length, value: articles.length, text: "" }];
+    return list.concat(
+      articles.map((a) => ({
+        key: a.id,
+        value: a.id,
+        text: a.name,
+      }))
+    );
+  }, [articles]);
+
+  const handleCustomerChange = (e, { value }) => {
+    if (value < customers.length) setCustomer(customers[value]);
+    else setCustomer({ ...customerSceleton, id: customers.length });
+  };
+
+  const handleArticleChange = (id, name, value) => {
+    if (id >= selectedArticles.length) {
+      if (value >= articles.length) {
+        return;
+      }
+      setSelectedArticles([
+        ...selectedArticles,
+        { toBeSend, toBePayed, articleId: value },
+      ]);
+      setToBeSend(1);
+      setToBePayed(1);
+    } else {
+      if (name === "articleId" && value >= articles.length) {
+        setSelectedArticles(selectedArticles.filter((a, i) => i !== id));
+        return;
+      }
+      const _articles = [...selectedArticles];
+      _articles[id][name] = value;
+      setSelectedArticles(_articles);
+    }
+  };
 
   return (
     <div className="invoice-form">
@@ -166,306 +187,239 @@ export default ({ invoice, setInvoice, setInvoices }) => {
             <Card.Header>Rechnungsdaten</Card.Header>
           </Card.Content>
           <Card.Content>
-            <Accordion>
-              <Accordion.Title index={0}>
-                <Icon name="dropdown" />
-                Kunde
-              </Accordion.Title>
-              <Accordion.Content active={true}>
-                {invoice.customer ? (
-                  <div className="invoice-form-label-container">
-                    <Label>
-                      {invoice.customer.name}
-                      <Icon name="delete" onClick={removeCustomer} />
-                    </Label>
-                  </div>
-                ) : (
-                  <div>
-                    <Input
-                      placeholder="Suche..."
-                      onChange={(e, { value }) => setCustomerSearch(value)}
-                      value={customerSearch}
-                    />
-                    {customerSearch === "" ? (
-                      <Button onClick={toggleNewCustomer}>Neuer Kunde</Button>
-                    ) : (
-                      <div className="invoice-form-label-container">
-                        {filteredCustomers.map((fc) => (
-                          <Label
-                            onClick={() =>
-                              setInvoice({ ...invoice, customer: fc })
-                            }
-                          >
-                            {fc.name}
-                          </Label>
-                        ))}
-                        {filteredCustomers.length === 0 && (
-                          <p>No Customers found.</p>
-                        )}
-                      </div>
-                    )}
-
-                    <Modal open={newCustomer} onClose={toggleNewCustomer}>
-                      <Modal.Header>Neuer Kunde</Modal.Header>
-                      <Modal.Content>
+            <Tab
+              panes={[
+                {
+                  menuItem: "Kunde",
+                  render: () => (
+                    <div className="">
+                      <Form>
+                        <Form.Field
+                          label="Kunden"
+                          control={Dropdown}
+                          search
+                          selection
+                          options={customerOptions}
+                          value={customer.id}
+                          onChange={handleCustomerChange}
+                        />
+                      </Form>
+                      <CustomerForm
+                        customer={customer}
+                        setCustomer={setCustomer}
+                      />
+                    </div>
+                  ),
+                },
+                {
+                  menuItem: "Artikel",
+                  render: () => (
+                    <div>
+                      <div>
                         <Form>
-                          <Form.Group width="equal">
-                            <Form.Field
-                              id="form-input-control-name"
-                              control={Input}
-                              label="Name"
-                              placeholder="Name"
-                              name="name"
-                              onChange={handleCustomerChange}
-                              value={customer.name}
+                          {selectedArticles.map((a, i) => (
+                            <div>
+                              <Form.Group widths="equal">
+                                <Form.Input
+                                  fluid
+                                  name="toBeSend"
+                                  type="number"
+                                  label="Zu Senden"
+                                  value={a.toBeSend}
+                                  onChange={(e, { value, name }) =>
+                                    handleArticleChange(i, name, value)
+                                  }
+                                />
+                                <Form.Input
+                                  fluid
+                                  name="toBePayed"
+                                  type="number"
+                                  label="Zu Bezahlen"
+                                  value={a.toBePayed}
+                                  onChange={(e, { value, name }) =>
+                                    handleArticleChange(i, name, value)
+                                  }
+                                />
+
+                                <Form.Field
+                                  control={Dropdown}
+                                  fluid
+                                  label="Artikel"
+                                  name="articleId"
+                                  search
+                                  selection
+                                  options={articlesOptions}
+                                  value={a.articleId}
+                                  onChange={(e, { value, name }) =>
+                                    handleArticleChange(i, name, value)
+                                  }
+                                />
+                              </Form.Group>
+                            </div>
+                          ))}
+                          <Form.Group widths="equal">
+                            <Form.Input
+                              fluid
+                              name="amount"
+                              type="number"
+                              label="Erhalten"
+                              value={toBeSend}
+                              onChange={(e, { value }) => setToBeSend(value)}
                             />
-                            <Form.Field
-                              id="form-input-control-name"
-                              control={Input}
-                              label="Zusatz"
-                              placeholder="Zusatz"
-                              name="addition"
-                              onChange={handleCustomerChange}
-                              value={customer.addition}
+                            <Form.Input
+                              fluid
+                              name="amountPayed"
+                              type="number"
+                              label="Zu Bezahlen"
+                              value={toBePayed}
+                              onChange={(e, { value }) => setToBePayed(value)}
                             />
-                          </Form.Group>
-                          <Form.Group>
+
                             <Form.Field
-                              id="form-input-control-last-name"
-                              control={Input}
-                              label="Anschrift"
-                              placeholder="Musterschstraße 3"
-                              name="address"
-                              onChange={handleCustomerChange}
-                              value={customer.address}
-                            />
-                            <Form.Field
-                              id="form-input-control-last-name"
-                              control={Input}
-                              label="PLZ"
-                              placeholder="PLZ"
-                              name="postCode"
-                              onChange={handleCustomerChange}
-                              value={customer.postCode}
-                            />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Field
-                              id="form-input-control-last-name"
-                              control={Input}
-                              label="Stadt"
-                              placeholder="Stadt"
-                              name="city"
-                              onChange={handleCustomerChange}
-                              value={customer.city}
-                            />
-                          </Form.Group>
-                          <Form.Group>
-                            <Form.Field
-                              id="form-input-control-last-name"
-                              control={Input}
-                              label="MwST"
-                              placeholder="7"
-                              name="ust"
-                              icon="percent"
-                              onChange={handleCustomerChange}
-                              value={customer.ust}
-                            />
-                            <Form.Field
-                              id="form-input-control-last-name"
-                              control={Input}
-                              label="Rabat"
-                              placeholder="0"
-                              icon="percent"
-                              name="discount"
-                              onChange={handleCustomerChange}
-                              value={customer.discount}
+                              control={Dropdown}
+                              fluid
+                              label="Artikel"
+                              name="articleId"
+                              search
+                              selection
+                              options={articlesOptions}
+                              value={article.id}
+                              onChange={(e, { value }) =>
+                                handleArticleChange(
+                                  selectedArticles.length,
+                                  "articleId",
+                                  value
+                                )
+                              }
                             />
                           </Form.Group>
                         </Form>
-                      </Modal.Content>
-                      <Modal.Actions>
-                        <Button
-                          onClick={toggleNewCustomer}
-                          content="Abbrechen"
-                          negative
-                          icon="close"
-                          labelPosition="right"
-                        ></Button>
-                        <Button
-                          onClick={addNewCustomer}
-                          content="Anlegen"
-                          primary
-                          icon="check"
-                          labelPosition="right"
-                        ></Button>
-                      </Modal.Actions>
-                    </Modal>
-                  </div>
-                )}
-              </Accordion.Content>
-              <Accordion.Title index={1}>
-                <Icon name="dropdown" />
-                Artikel
-              </Accordion.Title>
-              <Accordion.Content active={true}>
-                <div className="invoice-form-label-container">
-                  {invoice.articles.map((a, i) => {
-                    return (
-                      <Label>
-                        {a.name}
-                        <Label.Detail>{a.articleAmount}</Label.Detail>
-                        <Icon
-                          name="delete"
-                          onClick={() => removeArticle(i)}
-                        ></Icon>
-                      </Label>
-                    );
-                  })}
-                </div>
-                <div>
-                  <Input
-                    name="amount"
-                    type="number"
-                    label="Menge"
-                    value={articleAmount}
-                    onChange={(e, { value }) => setArticleAmount(value)}
-                  />
-
-                  <Input
-                    name="article"
-                    placeholder="Suche..."
-                    value={articleSearch}
-                    onChange={(e, { value }) => setArticleSearch(value)}
-                  />
-                  {articleSearch === "" ? (
-                    <Button onClick={toggleNewArticle}>Neuer Artikel</Button>
-                  ) : (
-                    <div className="invoice-form-label-container">
-                      {filteredArticles.map((a) => (
-                        <Label onClick={() => addArticleToInvoice(a)}>
-                          {a.name}
-                        </Label>
-                      ))}
+                        <Button onClick={toggleNewArticle}>
+                          Neuen Artikel Anlegen
+                        </Button>
+                      </div>
+                      <Modal open={newArticle} onClose={toggleNewArticle}>
+                        <Modal.Header>Neuer Artikel</Modal.Header>
+                        <Modal.Content>
+                          <Article article={article} setArticle={setArticle} />
+                        </Modal.Content>
+                        <Modal.Actions>
+                          <Button
+                            onClick={toggleNewArticle}
+                            content="Abbrechen"
+                            negative
+                            icon="close"
+                            labelPosition="right"
+                          ></Button>
+                          <Button
+                            onClick={addNewArticle}
+                            content="Anlegen"
+                            primary
+                            icon="check"
+                            labelPosition="right"
+                          ></Button>
+                        </Modal.Actions>
+                      </Modal>
                     </div>
-                  )}
-                </div>
-                <Modal open={newArticle} onClose={toggleNewArticle}>
-                  <Modal.Header>Neuer Artikel</Modal.Header>
-                  <Modal.Content>
-                    <Article article={article} setArticle={setArticle} />
-                  </Modal.Content>
-                  <Modal.Actions>
-                    <Button
-                      onClick={toggleNewArticle}
-                      content="Abbrechen"
-                      negative
-                      icon="close"
-                      labelPosition="right"
-                    ></Button>
-                    <Button
-                      onClick={addNewArticle}
-                      content="Anlegen"
-                      primary
-                      icon="check"
-                      labelPosition="right"
-                    ></Button>
-                  </Modal.Actions>
-                </Modal>
-              </Accordion.Content>
-              <Accordion.Title>
-                <Icon name="dropdown" />
-                Allgemein
-              </Accordion.Title>
-              <Accordion.Content active={true}>
-                <Form>
-                  <Form.Field
-                    label="Rechnungsdatum"
-                    name="invoiceDate"
-                    selected={new Date(invoice.invoiceDate)}
-                    onChange={(v) => updateInvoiceDate(v, "invoiceDate")}
-                    control={DatePicker}
-                    dateFormat="dd/MM/yyyy"
-                  />
-                  <Form.Field
-                    label="Bestelldatum"
-                    name="orderDate"
-                    selected={new Date(invoice.orderDate)}
-                    onChange={(v) => updateInvoiceDate(v, "orderDate")}
-                    control={DatePicker}
-                    dateFormat="dd/MM/yyyy"
-                  />
-                  <Form.Field
-                    label="Versanddatum"
-                    name="shippingDate"
-                    selected={new Date(invoice.shippingDate)}
-                    onChange={(v) => updateInvoiceDate(v, "shippingDate")}
-                    control={DatePicker}
-                    dateFormat="dd/MM/yyyy"
-                  />
-                  <Form.Field
-                    label="Porto"
-                    value={porto}
-                    name="porto"
-                    onChange={(e, { value }) => setPorto(value)}
-                    control={Input}
-                    onBlur={(e) =>
-                      updateInvoice(e, {
-                        name: e.target.name,
-                        value: e.target.value,
-                      })
-                    }
-                    icon="euro"
-                  />
-                  <Form.Field
-                    label="Rechnungsnummer"
-                    name="invoiceNumber"
-                    value={invoice.invoiceNumber}
-                    onChange={updateInvoice}
-                    control={Input}
-                  />
-                  <Form.TextArea
-                    label="Freitext"
-                    value={invoice.finalText}
-                    onChange={updateInvoice}
-                    name="finalText"
-                  />
-                  <Form.Field>
-                    <label>Bezahlt</label>
-                    <Checkbox
-                      onChange={(e, { name, checked }) => {
-                        if (checked) {
-                          setInvoice({
-                            ...invoice,
-                            [name]: checked,
-                            paymentDate: new Date(),
-                          });
-                        } else {
-                          setInvoice({
-                            ...invoice,
-                            [name]: checked,
-                            paymentDate: undefined,
-                          });
-                        }
-                      }}
-                      name="payed"
-                      checked={invoice.payed}
-                      toggle
-                    />
-                  </Form.Field>
-                  {invoice.payed && (
-                    <Form.Field
-                      label="Zahlungseingangsdatum"
-                      name="paymentDate"
-                      selected={new Date(invoice.paymentDate)}
-                      onChange={(v) => updateInvoiceDate(v, "paymentDate")}
-                      control={DatePicker}
-                      dateFormat="dd/MM/yyyy"
-                    />
-                  )}
-                </Form>
-              </Accordion.Content>
-            </Accordion>
+                  ),
+                },
+                {
+                  menuItem: "Allgemein",
+                  render: () => (
+                    <div>
+                      <Form>
+                        <Form.Field
+                          label="Rechnungsdatum"
+                          name="invoiceDate"
+                          selected={new Date(invoice.invoiceDate)}
+                          onChange={(v) => updateInvoiceDate(v, "invoiceDate")}
+                          control={DatePicker}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                        <Form.Field
+                          label="Bestelldatum"
+                          name="orderDate"
+                          selected={new Date(invoice.orderDate)}
+                          onChange={(v) => updateInvoiceDate(v, "orderDate")}
+                          control={DatePicker}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                        <Form.Field
+                          label="Versanddatum"
+                          name="shippingDate"
+                          selected={new Date(invoice.shippingDate)}
+                          onChange={(v) => updateInvoiceDate(v, "shippingDate")}
+                          control={DatePicker}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                        <Form.Field
+                          label="Porto"
+                          value={porto}
+                          name="porto"
+                          onChange={(e, { value }) => setPorto(value)}
+                          control={Input}
+                          onBlur={(e) =>
+                            updateInvoice(e, {
+                              name: e.target.name,
+                              value: e.target.value,
+                            })
+                          }
+                          icon="euro"
+                        />
+                        <Form.Field
+                          label="Rechnungsnummer"
+                          name="invoiceNumber"
+                          value={invoice.invoiceNumber}
+                          onChange={updateInvoice}
+                          control={Input}
+                        />
+                        <Form.Field>
+                          <label>Bezahlt</label>
+                          <Checkbox
+                            onChange={(e, { name, checked }) => {
+                              if (checked) {
+                                setInvoice({
+                                  ...invoice,
+                                  [name]: checked,
+                                  paymentDate: new Date(),
+                                });
+                              } else {
+                                setInvoice({
+                                  ...invoice,
+                                  [name]: checked,
+                                  paymentDate: undefined,
+                                });
+                              }
+                            }}
+                            name="payed"
+                            checked={invoice.payed}
+                            toggle
+                          />
+                        </Form.Field>
+                        {invoice.payed && (
+                          <Form.Field
+                            label="Zahlungseingangsdatum"
+                            name="paymentDate"
+                            selected={new Date(invoice.paymentDate)}
+                            onChange={(v) =>
+                              updateInvoiceDate(v, "paymentDate")
+                            }
+                            control={DatePicker}
+                            dateFormat="dd/MM/yyyy"
+                          />
+                        )}
+                      </Form>
+                    </div>
+                  ),
+                },
+                {
+                  menuItem: "Firma",
+                  render: () => (
+                    <CompanyForm company={company} setCompany={setCompany} />
+                  ),
+                },
+              ]}
+            ></Tab>
           </Card.Content>
         </Card>
         <Button

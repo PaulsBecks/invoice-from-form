@@ -1,12 +1,13 @@
 import React from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { Button } from "semantic-ui-react";
 
-const pxToMm = px => {
+const pxToMm = (px) => {
   return Math.floor(px / document.getElementById("myMm").offsetHeight);
 };
 
-const mmToPx = mm => {
+const mmToPx = (mm) => {
   return document.getElementById("myMm").offsetHeight * mm;
 };
 
@@ -14,7 +15,7 @@ const range = (start, end) => {
   return Array(end - start)
     .join(0)
     .split(0)
-    .map(function(val, id) {
+    .map(function (val, id) {
       return id + start;
     });
 };
@@ -27,8 +28,8 @@ const PrintButton = ({ id, label, fileName }) => (
   */}
     <div id="myMm" style={{ height: "1mm" }} />
 
-    <div
-      className="pa2 ba bw1 b--black bg-yellow black-90 br2 dib pointer dim shadow-1"
+    <Button
+      primary
       onClick={() => {
         const input = document.getElementById(id);
         const inputHeightMm = pxToMm(input.offsetHeight);
@@ -47,11 +48,12 @@ const PrintButton = ({ id, label, fileName }) => (
           numPages,
           range: range(0, numPages),
           comp: inputHeightMm <= a4HeightMm,
-          inputHeightPx: input.offsetHeight
+          inputHeightPx: input.offsetHeight,
         });
 
-        html2canvas(input, { scale: 1 }).then(canvas => {
+        html2canvas(input, { scale: 2 }).then((canvas) => {
           const imgData = canvas.toDataURL("image/png", 1);
+          console.log(imgData);
           let pdf;
           // Document of a4WidthMm wide and inputHeightMm high
           if (inputHeightMm > a4HeightMm) {
@@ -62,7 +64,7 @@ const PrintButton = ({ id, label, fileName }) => (
             pdf = new jsPDF();
           }
 
-          pdf.addImage(imgData, "PNG", 0, 0);
+          pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
           pdf.save(`${fileName}.pdf`);
         });
 
@@ -91,8 +93,8 @@ const PrintButton = ({ id, label, fileName }) => (
         // }, 5000);
       }}
     >
-      {label}
-    </div>
+      Rechnung Drucken
+    </Button>
   </div>
 );
 

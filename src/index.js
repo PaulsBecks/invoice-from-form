@@ -15,52 +15,50 @@ const App = () => {
 
   return (
     <div className="invoice-app-container">
-      <Container>
-        <Tab
-          panes={[
-            {
-              menuItem: "Rechnungen",
-              render: () => (
-                <div className="">
-                  <Invoices />
-                </div>
-              ),
-            },
-            {
-              menuItem: "Kunden",
-              render: () => (
-                <div className="">
-                  <Customers />
-                </div>
-              ),
-            },
-            {
-              menuItem: "Artikel",
-              render: () => (
-                <div className="">
-                  <Articles />
-                </div>
-              ),
-            },
-            {
-              menuItem: "Autoren",
-              render: () => (
-                <div className="">
-                  <Authors />
-                </div>
-              ),
-            },
-            {
-              menuItem: "Firma",
-              render: () => (
-                <div className="">
-                  <Company />
-                </div>
-              ),
-            },
-          ]}
-        />
-      </Container>
+      <Tab
+        panes={[
+          {
+            menuItem: "Rechnungen",
+            render: () => (
+              <div className="">
+                <Invoices />
+              </div>
+            ),
+          },
+          {
+            menuItem: "Kunden",
+            render: () => (
+              <div className="">
+                <Customers />
+              </div>
+            ),
+          },
+          {
+            menuItem: "Artikel",
+            render: () => (
+              <div className="">
+                <Articles />
+              </div>
+            ),
+          },
+          {
+            menuItem: "Autoren",
+            render: () => (
+              <div className="">
+                <Authors />
+              </div>
+            ),
+          },
+          {
+            menuItem: "Firma",
+            render: () => (
+              <div className="">
+                <Company />
+              </div>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

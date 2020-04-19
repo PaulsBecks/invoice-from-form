@@ -14,16 +14,18 @@ export default ({ invoice, setInvoice, setInvoices }) => {
           setInvoices={setInvoices}
         />
       </div>
-      {invoice.customer && (
-        <div className="invoice-page-wrapper">
-          <PrintButton
-            id={"singlePage"}
-            label={"Rechnung Drucken"}
-            fileName={invoice.invoiceNumber}
-          />
-          <SinglePage id={"singlePage"} invoice={invoice} />
-        </div>
-      )}
+      <div className="invoice-page-wrapper">
+        <PrintButton
+          id={"singlePage"}
+          label={"Rechnung Drucken"}
+          fileName={invoice.invoiceNumber}
+        />
+        <SinglePage
+          id={"singlePage"}
+          invoice={invoice}
+          setInvoice={setInvoice}
+        />
+      </div>
     </div>
   );
 };

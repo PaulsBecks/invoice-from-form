@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { useCompany, useInvoices } from "../hooks";
+import { useCompany, useInvoices, useCustomers } from "../hooks";
 
 import { Button, Icon, Table } from "semantic-ui-react";
 import Invoice from "./Invoice";
-import { invoice as invoiceSceleton } from "../sceletons";
+import {
+  invoice as invoiceSceleton,
+  customer as customerSceleton,
+} from "../sceletons";
 import { formatDate } from "../services";
 
 export default () => {
   const [invoices, setInvoices] = useInvoices();
   const [invoiceSelected, setInvoiceSelected] = useState();
   const [company] = useCompany();
+  const [customers] = useCustomers();
 
   if (invoiceSelected) {
     return (
@@ -28,7 +32,11 @@ export default () => {
           setInvoiceSelected({
             ...invoiceSceleton,
             id: invoices.length,
-            finalText: company.finalText,
+            customer: {
+              ...customerSceleton,
+              id: customers.length,
+            },
+            company,
           })
         }
         primary
