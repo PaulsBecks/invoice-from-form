@@ -55,7 +55,7 @@ export default () => {
       </Button>
       {article && (
         <Modal onClose={() => setArticle()} open={true}>
-          <Modal.Header>Edit Article</Modal.Header>
+          <Modal.Header>Artikel</Modal.Header>
           <Modal.Content>
             <Article article={article} setArticle={setArticle} />
           </Modal.Content>

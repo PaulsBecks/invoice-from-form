@@ -6,14 +6,11 @@ import {
   useCustomers,
 } from "../../hooks";
 import {
-  Accordion,
   Container,
   Form,
-  Icon,
   Input,
   Card,
   Modal,
-  Label,
   Button,
   Checkbox,
   Dropdown,
