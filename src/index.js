@@ -3,10 +3,8 @@ import { render } from "react-dom";
 import Customers from "./components/Customers";
 
 import "./index.css";
-import { Tab, Container } from "semantic-ui-react";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
-import Company from "./components/Company";
 import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
 import { useInvoices } from "./hooks";
@@ -14,22 +12,15 @@ import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
 
+import "semantic-ui-less/semantic.less";
+
 const App = () => {
   useMigration();
-  const [invoices] = useInvoices();
-
-  if (!invoices) {
-    return null;
-  }
-
-  if (invoices.length === 0) {
-    return <Home />;
-  }
 
   return (
-    <div className="invoice-app-container">
-      <Router>
-        <TopNavigationBar />
+    <Router>
+      <TopNavigationBar />
+      <div className="invoice-app-container">
         <Switch>
           <Route exact path="/">
             <Home />
@@ -48,8 +39,8 @@ const App = () => {
             <Authors />
           </Route>
         </Switch>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 };
 

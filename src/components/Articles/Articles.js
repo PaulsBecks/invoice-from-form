@@ -70,7 +70,7 @@ export default () => {
             <Button
               onClick={updateArticle}
               content="Speichern"
-              primary
+              positive
               icon="check"
               labelPosition="right"
             ></Button>
@@ -139,13 +139,19 @@ export default () => {
                     ))}
                   </Table.Cell>
                   <Table.Cell>
-                    <Button onClick={() => setArticle(a)} icon="edit"></Button>
+                    <Button
+                      onClick={() => setArticle(a)}
+                      primary
+                      icon="edit"
+                    ></Button>
                     <Button
                       onClick={() => setInvoiceArticle(a)}
                       icon="list"
+                      secondary
                     ></Button>
                     <Button
                       onClick={() => deleteArticle(i)}
+                      negative
                       icon="trash"
                     ></Button>
                   </Table.Cell>
