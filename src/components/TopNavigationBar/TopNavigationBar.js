@@ -32,6 +32,7 @@ export default function TopNavigationBar() {
             <Button content="Autoren" onClick={() => history.push("authors")} />
           </Button.Group>
           <Button
+            size="large"
             className="oi-top-navigation-bar-new-invoice"
             content="Neue Rechnung"
             onClick={() => history.push("/")}

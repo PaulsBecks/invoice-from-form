@@ -295,7 +295,7 @@ export default ({
                     <Button
                       onClick={addNewArticle}
                       content="Anlegen"
-                      primary
+                      positive
                       icon="check"
                       labelPosition="right"
                     ></Button>
