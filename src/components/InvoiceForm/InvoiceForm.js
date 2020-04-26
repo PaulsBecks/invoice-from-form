@@ -4,6 +4,7 @@ import {
   useInvoices,
   useCompany,
   useCustomers,
+  useAuthors,
 } from "../../hooks";
 import {
   Container,
@@ -53,6 +54,7 @@ export default ({
   const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
   const [porto, setPorto] = useState(invoice.porto);
+  const [authors, setAuthors] = useAuthors();
 
   useEffect(() => {
     setInvoice({
@@ -101,6 +103,11 @@ export default ({
       id: articles.length + 1,
     });
     toggleNewArticle();
+    if (article.authors.length > 0) {
+      const _authors = [...authors];
+      _authors[article.authors[0].id] = article.authors[0];
+      setAuthors(_authors);
+    }
   };
 
   const updateInvoiceDate = (value, name) => {

@@ -75,7 +75,7 @@ export default () => {
               </Table.Cell>
               <Table.Cell>
                 <Button icon onClick={() => setInvoiceSelected(i)}>
-                  <Icon name="eye"></Icon>
+                  <Icon name="eye" primary></Icon>
                 </Button>
               </Table.Cell>
             </Table.Row>
