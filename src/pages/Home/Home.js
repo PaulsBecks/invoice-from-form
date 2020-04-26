@@ -5,13 +5,17 @@ import {
   invoice as invoiceSceleton,
   customer as customerSceleton,
 } from "../../sceletons";
+import { useHistory } from "react-router-dom";
 
 export default function Home() {
   const [company] = useCompany();
   const [customers] = useCustomers();
+  const history = useHistory();
+
+  const [invoices, setInvoices] = useInvoices();
   const [invoice, setInvoice] = useState({
     ...invoiceSceleton,
-    id: 0,
+    id: invoices.length,
     customer: {
       ...customerSceleton,
       id: customers.length,
@@ -19,14 +23,16 @@ export default function Home() {
     company,
   });
 
-  const [invoices, setInvoices] = useInvoices();
-
   return (
     <Invoice
       invoice={invoice}
       setInvoice={setInvoice}
       setInvoices={setInvoices}
       invoices={invoices}
+      edit={true}
+      onSave={() => {
+        history.push("/invoices");
+      }}
     />
   );
 }

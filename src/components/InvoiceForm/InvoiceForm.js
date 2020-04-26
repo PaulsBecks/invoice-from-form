@@ -256,7 +256,6 @@ export default ({
                         value={toBePayed}
                         onChange={(e, { value }) => setToBePayed(value)}
                       />
-
                       <Form.Field
                         control={Dropdown}
                         fluid

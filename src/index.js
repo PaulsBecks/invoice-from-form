@@ -11,6 +11,8 @@ import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
 import { useInvoices } from "./hooks";
 import Home from "./pages/Home/Home";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import TopNavigationBar from "./components/TopNavigationBar";
 
 const App = () => {
   useMigration();
@@ -26,42 +28,27 @@ const App = () => {
 
   return (
     <div className="invoice-app-container">
-      <Tab
-        panes={[
-          {
-            menuItem: "Rechnungen",
-            render: () => (
-              <div className="">
-                <Invoices />
-              </div>
-            ),
-          },
-          {
-            menuItem: "Kunden",
-            render: () => (
-              <div className="">
-                <Customers />
-              </div>
-            ),
-          },
-          {
-            menuItem: "Artikel",
-            render: () => (
-              <div className="">
-                <Articles />
-              </div>
-            ),
-          },
-          {
-            menuItem: "Autoren",
-            render: () => (
-              <div className="">
-                <Authors />
-              </div>
-            ),
-          },
-        ]}
-      />
+      <Router>
+        <TopNavigationBar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/invoices">
+            <Invoices />
+          </Route>
+          <Route path="/customers">
+            <Customers />
+          </Route>
+          <Route path="/articles">
+            <Articles />
+          </Route>
+
+          <Route path="/authors">
+            <Authors />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };

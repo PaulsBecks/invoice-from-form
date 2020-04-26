@@ -9,8 +9,14 @@ import "./Invoice.css";
 import { useCustomers } from "../../hooks";
 import { calculateTotalPrice } from "../../services";
 
-export default ({ edit, invoice, setInvoice, invoices, setInvoices }) => {
-  console.log(edit, invoices, invoice);
+export default ({
+  edit,
+  invoice,
+  setInvoice,
+  invoices,
+  setInvoices,
+  onSave,
+}) => {
   if (!invoice || !invoices) {
     return null;
   }
@@ -27,6 +33,9 @@ export default ({ edit, invoice, setInvoice, invoices, setInvoices }) => {
     const _customers = [...customers];
     _customers[invoice.customer.id] = invoice.customer;
     setCustomers(_customers);
+    if (typeof onSave === "function") {
+      onSave();
+    }
   };
 
   const newInvoice = invoice.id === invoices.length;
