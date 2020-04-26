@@ -18,9 +18,11 @@ export default () => {
   if (invoiceSelected) {
     return (
       <Invoice
+        edit
         invoice={invoiceSelected}
         setInvoice={setInvoiceSelected}
         setInvoices={setInvoices}
+        invoices={invoices}
       />
     );
   }

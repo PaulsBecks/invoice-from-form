@@ -1,0 +1,33 @@
+.invoice-page {
+  display: flex;
+  justify-content: center;
+}
+
+.invoice-page-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-button-wrapper {
+  align-self: center;
+  margin: 2em;
+}
+
+.invoice-page-button-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 2em 0;
+}
+
+@media (min-width: 1200px) {
+  .invoice-page {
+    display: flex;
+    flex-direction: row;
+    padding: 2em;
+  }
+
+  .invoice-form-wrapper {
+    width: 30%;
+    margin: 2.5%;
+  }
+}

@@ -4,6 +4,7 @@ import "./SinglePage.css";
 import { formatDate } from "../../services";
 import { useCompany } from "../../hooks";
 import { Button } from "semantic-ui-react";
+import SinglePageOverlay from "./SinglePageOverlay";
 
 const SinglePage = ({
   id,
@@ -19,6 +20,7 @@ const SinglePage = ({
   },
   invoice,
   setInvoice,
+  setFormSelected,
 }) => {
   const articles_net_price = articles
     .map(({ price, toBePayed }) => {
@@ -48,41 +50,67 @@ const SinglePage = ({
       />
       <div className="invoice-page-pdf">
         <div className="invoice-page-top">
-          <img
-            className="invoice-header-company-logo"
-            src={company.logo}
-            alt="company logo"
-          />
+          <SinglePageOverlay
+            onClick={() => setFormSelected(["general", "logo"])}
+          >
+            <div className="invoice-page-image-wrapper">
+              <img
+                className="invoice-header-company-logo"
+                src={company.logo}
+                alt="company logo"
+              />
+            </div>
+          </SinglePageOverlay>
           <div className="invoice-header">
             <div className="invoice-header-customer-address">
-              <div
-                className="invoice-header-customer-company"
-                dangerouslySetInnerHTML={{
-                  __html: company.aboveClientInvoiceAddress,
-                }}
-              ></div>
-              {customer ? (
+              <SinglePageOverlay
+                wrapperClass="invoice-header-customer-company"
+                onClick={() =>
+                  setFormSelected(["general", "aboveClientInvoiceAddress"])
+                }
+              >
                 <div
-                  className="invoice-header-customer-info"
-                  dangerouslySetInnerHTML={{ __html: customer.invoiceAddress }}
-                ></div>
+                  dangerouslySetInnerHTML={{
+                    __html: company.aboveClientInvoiceAddress,
+                  }}
+                />
+              </SinglePageOverlay>
+              {customer ? (
+                <SinglePageOverlay
+                  wrapperClass="invoice-header-customer-info"
+                  onClick={() => setFormSelected(["customer"])}
+                >
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: customer.invoiceAddress,
+                    }}
+                  />
+                </SinglePageOverlay>
               ) : (
                 <Button>Kunde hinzufügen</Button>
               )}
             </div>
-            <div
-              className="invoice-header-company-info"
-              dangerouslySetInnerHTML={{ __html: company.contactInformation }}
-            ></div>
+            <SinglePageOverlay
+              wrapperClass="invoice-header-company-info"
+              onClick={() => setFormSelected(["general", "contactInformation"])}
+            >
+              <div
+                dangerouslySetInnerHTML={{ __html: company.contactInformation }}
+              ></div>
+            </SinglePageOverlay>
           </div>
         </div>
         <div className="invoice-body">
           <div className="invoice-body-top">
             <div className="invoice-subject">
-              <div
-                className="invoice-subject-and-below"
-                dangerouslySetInnerHTML={{ __html: company.subjectAndBelow }}
-              />
+              <SinglePageOverlay
+                wrapperClass="invoice-subject-and-below"
+                onClick={() => setFormSelected(["general", "subjectAndBelow"])}
+              >
+                <div
+                  dangerouslySetInnerHTML={{ __html: company.subjectAndBelow }}
+                />
+              </SinglePageOverlay>
               <div className="invoice-body-subject-key-values">
                 <div className="invoice-body-subject-keys">
                   <div className="invoice-body-order-date">
@@ -102,38 +130,54 @@ const SinglePage = ({
                   </div>
                 </div>
                 <div className="invoice-body-subject-values">
-                  <div className="invoice-body-order-date">
+                  <SinglePageOverlay
+                    onClick={() => setFormSelected(["general", "orderDate"])}
+                    wrapperClass="invoice-body-order-date"
+                  >
                     <p>
                       <b>{formatDate(orderDate)}</b>
                     </p>
-                  </div>
-                  <div className="invoice-body-send-date">
+                  </SinglePageOverlay>
+                  <SinglePageOverlay
+                    onClick={() => setFormSelected(["general", "shippingDate"])}
+                    wrapperClass="invoice-body-send-date"
+                  >
                     <p>
                       <b>{formatDate(shippingDate)}</b>
                     </p>
-                  </div>
-                  {customer && (
+                  </SinglePageOverlay>
+                  <SinglePageOverlay
+                    onClick={() => setFormSelected(["customer"])}
+                  >
                     <div
                       className="invoice-body-send-to"
                       dangerouslySetInnerHTML={{
                         __html: customer.shippingAddress,
                       }}
                     ></div>
-                  )}
+                  </SinglePageOverlay>
                 </div>
               </div>
             </div>
-            <div className="invoice-body-top-right">
-              <div className="invoice-body-invoice-date">
-                <p>
-                  Rechnungsdatum: <b>{formatDate(invoiceDate)}</b>
-                </p>
-              </div>
-              <div className="invoice-body-invoice-nr">
-                <p>
-                  Rechnungsnummer: <b>{invoiceNumber}</b>
-                </p>
-              </div>
+            <div className="invoice-body-invoice-date">
+              <SinglePageOverlay
+                onClick={() => setFormSelected(["general", "invoiceDate"])}
+              >
+                <div className="invoice-body-top-right">
+                  <p>
+                    Rechnungsdatum: <b>{formatDate(invoiceDate)}</b>
+                  </p>
+                </div>
+              </SinglePageOverlay>
+              <SinglePageOverlay
+                onClick={() => setFormSelected(["general", "invoiceNumber"])}
+              >
+                <div className="invoice-body-invoice-nr">
+                  <p>
+                    Rechnungsnummer: <b>{invoiceNumber}</b>
+                  </p>
+                </div>
+              </SinglePageOverlay>
               <div className="invoice-body-invoice-hint">
                 <p>(Bitte bei Zahlung angeben)</p>
               </div>
@@ -159,9 +203,11 @@ const SinglePage = ({
                           </b>
                         </div>
                         <div className="invoice-body-article-title">
-                          <b>„{name}“</b>
+                          <b>{name && `„${name}“,`}</b>
                         </div>
-                        <div className="invoice-body-article-title">{isbn}</div>
+                        <div className="invoice-body-article-title">
+                          {isbn && `${isbn},`}
+                        </div>
                       </div>
                       <div className="invoice-body-artivle-price-calc">{`Preis ${
                         multiple ? "je" : ""
@@ -185,31 +231,37 @@ const SinglePage = ({
               })}
             </div>
             <div className="invoice-body-price-calculation">
-              <div>
+              <div className="invoice-body-price-calculation-label-and-number">
                 <p>Netto</p>
                 <p>
                   <b>{articles_net_price.toFixed(2)} €</b>
                 </p>
               </div>
-              <div>
-                <p>Versandkosten</p>
-                <p>
-                  <b>{porto} €</b>
-                </p>
-              </div>
-              <div>
-                <p>{`+${customer.ust}% Mehrwertsteuer`}</p>
-                <p>
-                  <b>
-                    {(
-                      ((articles_net_price + parseFloat(porto)) *
-                        parseFloat(customer.ust)) /
-                      100
-                    ).toFixed(2)}{" "}
-                    €
-                  </b>
-                </p>
-              </div>
+              <SinglePageOverlay
+                onClick={() => setFormSelected(["general", "porto"])}
+              >
+                <div className="invoice-body-price-calculation-label-and-number">
+                  <p>Versandkosten</p>
+                  <p>
+                    <b>{porto} €</b>
+                  </p>
+                </div>
+              </SinglePageOverlay>
+              <SinglePageOverlay onClick={() => setFormSelected(["customer"])}>
+                <div className="invoice-body-price-calculation-label-and-number">
+                  <p>{`+${customer.ust}% Mehrwertsteuer`}</p>
+                  <p>
+                    <b>
+                      {(
+                        ((articles_net_price + parseFloat(porto)) *
+                          parseFloat(customer.ust)) /
+                        100
+                      ).toFixed(2)}{" "}
+                      €
+                    </b>
+                  </p>
+                </div>
+              </SinglePageOverlay>
             </div>
             <div className="invoice-body-price">
               <p>Rechnungsbetrag</p>
@@ -223,21 +275,29 @@ const SinglePage = ({
                 </b>
               </p>
             </div>
-            <div>
-              <p
-                className="invoice-body-final-text"
-                dangerouslySetInnerHTML={{ __html: company.invoiceText }}
-              ></p>
-            </div>
+            <SinglePageOverlay
+              onClick={() => setFormSelected(["general", "invoiceText"])}
+            >
+              <div>
+                <p
+                  className="invoice-body-final-text"
+                  dangerouslySetInnerHTML={{ __html: company.invoiceText }}
+                ></p>
+              </div>
+            </SinglePageOverlay>
           </div>
         </div>
-        <div
-          className="invoice-footer"
-          style={
-            company.companyColor ? { borderColor: company.companyColor } : {}
-          }
-          dangerouslySetInnerHTML={{ __html: company.footerText }}
-        ></div>
+        <SinglePageOverlay
+          onClick={() => setFormSelected(["general", "footerText"])}
+        >
+          <div
+            className="invoice-footer"
+            style={
+              company.companyColor ? { borderColor: company.companyColor } : {}
+            }
+            dangerouslySetInnerHTML={{ __html: company.footerText }}
+          ></div>
+        </SinglePageOverlay>
       </div>
     </Page>
   );

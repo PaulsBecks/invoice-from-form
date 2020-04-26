@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input } from "semantic-ui-react";
 import RichTextEditor from "react-rte";
+import Editor from "../Editor/Editor";
 
 export default function CustomerForm({ customer, setCustomer }) {
   const [invoiceAddress, setInvoiceAddress] = useState(
@@ -37,14 +38,14 @@ export default function CustomerForm({ customer, setCustomer }) {
       <Form.Group>
         <Form.Field
           control={Input}
-          label="Name"
+          label="Kundenname"
           value={customer.name}
           name="name"
           onChange={handleCustomerChange}
         />
       </Form.Group>
       <Form.Field
-        control={RichTextEditor}
+        control={Editor}
         label={"Rechnungsadresse"}
         onChange={setInvoiceAddress}
         value={invoiceAddress}
@@ -53,7 +54,7 @@ export default function CustomerForm({ customer, setCustomer }) {
         }}
       />
       <Form.Field
-        control={RichTextEditor}
+        control={Editor}
         label={"Lieferadress"}
         onChange={setShippingAddress}
         value={shippingAddress}
@@ -63,7 +64,6 @@ export default function CustomerForm({ customer, setCustomer }) {
       />
       <Form.Group>
         <Form.Field
-          id="form-input-control-last-name"
           control={Input}
           label="MwST"
           placeholder="7"
@@ -73,9 +73,8 @@ export default function CustomerForm({ customer, setCustomer }) {
           value={customer.ust}
         />
         <Form.Field
-          id="form-input-control-last-name"
           control={Input}
-          label="Rabat"
+          label="Kundenrabatt"
           placeholder="0"
           icon="percent"
           name="discount"

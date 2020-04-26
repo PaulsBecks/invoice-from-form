@@ -9,9 +9,20 @@ import Invoices from "./components/Invoices";
 import Company from "./components/Company";
 import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
+import { useInvoices } from "./hooks";
+import Home from "./pages/Home/Home";
 
 const App = () => {
   useMigration();
+  const [invoices] = useInvoices();
+
+  if (!invoices) {
+    return null;
+  }
+
+  if (invoices.length === 0) {
+    return <Home />;
+  }
 
   return (
     <div className="invoice-app-container">
@@ -46,14 +57,6 @@ const App = () => {
             render: () => (
               <div className="">
                 <Authors />
-              </div>
-            ),
-          },
-          {
-            menuItem: "Firma",
-            render: () => (
-              <div className="">
-                <Company />
               </div>
             ),
           },

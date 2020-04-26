@@ -59,7 +59,7 @@
   margin: 0;
 }
 
-.invoice-body-price-calculation > div,
+.invoice-body-price-calculation .invoice-body-price-calculation-label-and-number,
 .invoice-body-price {
   display: flex;
   justify-content: space-between;
@@ -107,12 +107,13 @@ br {
   border-top: 1px solid black;
 }
 
-.invoice-body-article-description > div {
-  margin-right: 4px;
+.invoice-page-image-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.invoice-body-final-text {
-  white-space: pre;
+.invoice-body-article-description > div {
+  margin-right: 4px;
 }
 
 .invoice-header {
@@ -170,4 +171,19 @@ br {
 
 .invoice-subject-and-below {
   margin-bottom: 5mm;
+}
+
+.invoice-overlay-wrapper {
+  position: relative;
+}
+
+.invoice-overlay {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform: translate(0, -100%);
+}
+.invoice-overlay:hover {
+  background: rgba(0.5, 0.5, 0.5, 0.5);
+  cursor: pointer;
 }

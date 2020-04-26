@@ -98,7 +98,11 @@ export default () => {
                     <Table.Cell>{invoice.customer.name}</Table.Cell>
                     <Table.Cell>{invoice.article.amount}</Table.Cell>
                     <Table.Cell>{invoice.article.price}</Table.Cell>
-                    <Table.Cell>{formatDate(invoice.paymentDate)}</Table.Cell>
+                    <Table.Cell>
+                      {invoice.paymentDate
+                        ? formatDate(invoice.paymentDate)
+                        : "Ausstehend"}
+                    </Table.Cell>
                   </Table.Row>
                 ))}
               </Table.Body>
@@ -142,7 +146,7 @@ export default () => {
                     ></Button>
                     <Button
                       onClick={() => deleteArticle(i)}
-                      icon="delete"
+                      icon="trash"
                     ></Button>
                   </Table.Cell>
                 </Table.Row>
