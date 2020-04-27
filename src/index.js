@@ -7,9 +7,8 @@ import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
 import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
-import { useInvoices } from "./hooks";
 import Home from "./pages/Home/Home";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
 
 import "semantic-ui-less/semantic.less";

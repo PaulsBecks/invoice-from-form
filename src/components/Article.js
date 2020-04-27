@@ -1,23 +1,16 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Form, Input, Label, Dropdown } from "semantic-ui-react";
+import { Form, Input, Dropdown } from "semantic-ui-react";
 import { useAuthors } from "../hooks";
 import { author as authorSceleton } from "../sceletons";
 import Author from "./Author";
 import { Segment } from "semantic-ui-react";
+import { formatPrice } from "../services";
 
 export default function Article({ article, setArticle }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
-  const [authorSearch, setAuthorSearch] = useState("");
   const [authors] = useAuthors();
   const [author, setAuthor] = useState();
-  const filteredAuthors = useMemo(() => {
-    return authors.filter((a) => a && a.name.includes(authorSearch));
-  }, [authors, authorSearch]);
-
-  function addAuthorToArticle(author) {
-    setArticle({ ...article, authors: [...article.authors, author] });
-  }
 
   useEffect(() => {
     setArticle({ ...article, authors: [author] });
@@ -25,12 +18,12 @@ export default function Article({ article, setArticle }) {
 
   const handleArticleChange = (e, { name, value }) => {
     if (name === "price") {
-      value = parseFloat(value);
+      value = parseFloat(value.replace(",", "."));
       if (isNaN(value)) {
-        setArticlePrice("");
+        setArticlePrice("0,00");
         return;
       }
-      value = value.toFixed(2);
+      value = formatPrice(value);
       setArticlePrice(value);
     }
     setArticle({ ...article, [name]: value });

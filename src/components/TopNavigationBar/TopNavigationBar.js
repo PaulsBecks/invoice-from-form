@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "semantic-ui-react";
 import { useInvoices } from "../../hooks";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import "./TopNavigationBar.css";
 

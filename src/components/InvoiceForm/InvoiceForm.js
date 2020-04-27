@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import {
   useLocalStorage,
-  useInvoices,
   useCompany,
   useCustomers,
   useAuthors,
@@ -15,7 +14,6 @@ import {
   Button,
   Checkbox,
   Dropdown,
-  Tab,
   Segment,
 } from "semantic-ui-react";
 
@@ -31,6 +29,7 @@ import "./InvoiceForm.css";
 import Article from "../Article";
 import CustomerForm from "../CustomerForm/CustomerForm";
 import CompanyForm from "../CompanyForm";
+import { formatPrice } from "../../services";
 
 export default ({
   invoice,
@@ -39,7 +38,7 @@ export default ({
   wrapperClass,
   setFormSelected,
 }) => {
-  const [customers, setCustomers] = useCustomers();
+  const [customers] = useCustomers();
   const [company, setCompany] = useCompany();
   const [customer, setCustomer] = useState(
     customers[invoice.customer.id] || invoice.customer
@@ -70,12 +69,12 @@ export default ({
 
   const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
-      value = parseFloat(value);
+      value = parseFloat(value.replace(",", "."));
       if (isNaN(value)) {
         setPorto("");
         return;
       }
-      value = value.toFixed(2);
+      value = formatPrice(value);
       setPorto(value);
     }
     if (name === "payed") {
@@ -85,16 +84,6 @@ export default ({
   };
 
   const toggleNewArticle = () => setNewArticle(!newArticle);
-
-  const updateArticleAmount = (id, amountChange) => {
-    let _articles = [...articles];
-    const article = _articles[id];
-    _articles[id] = {
-      ...article,
-      amount: parseFloat(article.amount) + amountChange,
-    };
-    setArticles(_articles);
-  };
 
   const addNewArticle = () => {
     setArticles([...articles, article]);

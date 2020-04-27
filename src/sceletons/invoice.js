@@ -3,7 +3,7 @@ export default {
   shippingDate: new Date().toString(),
   orderDate: new Date().toString(),
   invoiceNumber: "",
-  porto: "5.00",
+  porto: "5,00",
   finalText: "",
-  articles: []
+  articles: [],
 };

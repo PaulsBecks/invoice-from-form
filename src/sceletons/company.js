@@ -1,5 +1,3 @@
-import RichTextEditor from "react-rte";
-
 export default {
   name: "",
   executive: "",

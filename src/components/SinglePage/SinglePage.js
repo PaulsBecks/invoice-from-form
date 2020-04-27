@@ -1,8 +1,7 @@
 import React from "react";
 import Page from "../Page";
 import "./SinglePage.css";
-import { formatDate } from "../../services";
-import { useCompany } from "../../hooks";
+import { formatDate, formatPrice } from "../../services";
 import { Button } from "semantic-ui-react";
 import SinglePageOverlay from "./SinglePageOverlay";
 
@@ -18,8 +17,6 @@ const SinglePage = ({
     articles = [],
     company,
   },
-  invoice,
-  setInvoice,
   setFormSelected,
 }) => {
   const articles_net_price = articles
@@ -31,10 +28,6 @@ const SinglePage = ({
       return net;
     })
     .reduce((total, x) => parseFloat(x) + total, 0);
-
-  const updateInvoice = ({ target: { name, value } }) => {
-    setInvoice({ ...invoice, [name]: value });
-  };
 
   if (!customer) {
     return null;
@@ -212,19 +205,21 @@ const SinglePage = ({
                       <div className="invoice-body-artivle-price-calc">{`Preis ${
                         multiple ? "je" : ""
                       } ${price} €${
-                        multiple ? ` = ${totalPrice.toFixed(2)}€` : ""
+                        multiple ? ` = ${formatPrice(totalPrice)}€` : ""
                       }${
                         customer.discount > 0
                           ? `, abzüglich ${
                               customer.discount
-                            } % Rabatt = ${totalPriceWithDiscount.toFixed(2)} €`
+                            } % Rabatt = ${formatPrice(
+                              totalPriceWithDiscount
+                            )} €`
                           : ""
-                      } (beinhaltet ${customer.ust} % MwST = ${(
+                      } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
                         totalPriceWithDiscount - net
-                      ).toFixed(2)})`}</div>
+                      )})`}</div>
                     </div>
                     <div className="invoice-body-article-price">
-                      <b>{articles.length > 1 && `${net.toFixed(2)} €`}</b>
+                      <b>{articles.length > 1 && `${formatPrice(net)} €`}</b>
                     </div>
                   </div>
                 );
@@ -234,7 +229,7 @@ const SinglePage = ({
               <div className="invoice-body-price-calculation-label-and-number">
                 <p>Netto</p>
                 <p>
-                  <b>{articles_net_price.toFixed(2)} €</b>
+                  <b>{formatPrice(articles_net_price)} €</b>
                 </p>
               </div>
               <SinglePageOverlay
@@ -243,7 +238,7 @@ const SinglePage = ({
                 <div className="invoice-body-price-calculation-label-and-number">
                   <p>Versandkosten</p>
                   <p>
-                    <b>{porto} €</b>
+                    <b>{porto.replace(".", ",")} €</b>
                   </p>
                 </div>
               </SinglePageOverlay>
@@ -252,11 +247,11 @@ const SinglePage = ({
                   <p>{`+${customer.ust}% Mehrwertsteuer`}</p>
                   <p>
                     <b>
-                      {(
+                      {formatPrice(
                         ((articles_net_price + parseFloat(porto)) *
                           parseFloat(customer.ust)) /
-                        100
-                      ).toFixed(2)}{" "}
+                          100
+                      )}{" "}
                       €
                     </b>
                   </p>
@@ -267,10 +262,10 @@ const SinglePage = ({
               <p>Rechnungsbetrag</p>
               <p>
                 <b>
-                  {(
+                  {formatPrice(
                     (articles_net_price + parseFloat(porto)) *
-                    (1 + parseFloat(customer.ust) / 100)
-                  ).toFixed(2)}{" "}
+                      (1 + parseFloat(customer.ust) / 100)
+                  )}{" "}
                   €
                 </b>
               </p>
