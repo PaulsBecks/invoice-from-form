@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import RichTextEditor from "react-rte";
 
+import "./Editor.css";
+
 export default function Editor(props) {
   const [active, setActive] = useState(false);
-  console.log(active);
   return (
     <RichTextEditor
       {...props}
