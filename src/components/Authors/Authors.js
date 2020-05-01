@@ -74,10 +74,15 @@ export default function Authors() {
                   <Table.Cell>{a.contact}</Table.Cell>
                   <Table.Cell>{a.percent} %</Table.Cell>
                   <Table.Cell>
-                    <Button onClick={() => setAuthor(a)} icon="eye"></Button>
+                    <Button
+                      onClick={() => setAuthor(a)}
+                      icon="edit"
+                      primary
+                    ></Button>
                     <Button
                       onClick={() => deleteAuthor(i)}
-                      icon="delete"
+                      negative
+                      icon="trash"
                     ></Button>
                   </Table.Cell>
                 </Table.Row>

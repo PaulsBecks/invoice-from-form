@@ -188,3 +188,7 @@ br {
   background: #22707488;
   cursor: pointer;
 }
+
+.invoice-body-final-text {
+  margin-top: 10px;
+}

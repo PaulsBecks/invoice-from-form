@@ -19,6 +19,10 @@
   margin: 2em 0;
 }
 
+.invoice-page-header {
+  padding: 2em;
+}
+
 @media (min-width: 1200px) {
   .invoice-page {
     display: flex;
@@ -28,6 +32,6 @@
 
   .invoice-form-wrapper {
     width: 30%;
-    margin: 2.5%;
+    margin: 0 2.5%;
   }
 }

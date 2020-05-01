@@ -160,6 +160,11 @@ export default ({
 
   return (
     <div className={wrapperClass}>
+      <div className="invoice-form-buttons">
+        <Button onClick={toggleNewArticle} primary>
+          Neuen Artikel Anlegen
+        </Button>
+      </div>
       <div className={"invoice-form "}>
         {formSelected[0] === "customer" && (
           <Modal open onClose={() => setFormSelected([])}>
@@ -271,9 +276,6 @@ export default ({
                       />
                     </Form.Group>
                   </Form>
-                  <Button onClick={toggleNewArticle}>
-                    Neuen Artikel Anlegen
-                  </Button>
                 </div>
                 <Modal open={newArticle} onClose={toggleNewArticle}>
                   <Modal.Header>Neuer Artikel</Modal.Header>

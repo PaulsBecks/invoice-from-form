@@ -205,7 +205,7 @@ const SinglePage = ({
                       <div className="invoice-body-artivle-price-calc">{`Preis ${
                         multiple ? "je" : ""
                       } ${price} €${
-                        multiple ? ` = ${formatPrice(totalPrice)}€` : ""
+                        multiple ? ` = ${formatPrice(totalPrice)} €` : ""
                       }${
                         customer.discount > 0
                           ? `, abzüglich ${
@@ -216,7 +216,7 @@ const SinglePage = ({
                           : ""
                       } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
                         totalPriceWithDiscount - net
-                      )})`}</div>
+                      )} €)`}</div>
                     </div>
                     <div className="invoice-body-article-price">
                       <b>{articles.length > 1 && `${formatPrice(net)} €`}</b>
@@ -272,10 +272,10 @@ const SinglePage = ({
             </div>
             <SinglePageOverlay
               onClick={() => setFormSelected(["general", "invoiceText"])}
+              wrapperClass="invoice-body-final-text"
             >
               <div>
                 <p
-                  className="invoice-body-final-text"
                   dangerouslySetInnerHTML={{ __html: company.invoiceText }}
                 ></p>
               </div>
