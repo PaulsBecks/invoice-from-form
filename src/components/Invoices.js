@@ -7,7 +7,7 @@ import {
   invoice as invoiceSceleton,
   customer as customerSceleton,
 } from "../sceletons";
-import { formatDate } from "../services";
+import { formatDate, formatPrice } from "../services";
 
 export default () => {
   const [invoices, setInvoices] = useInvoices();
@@ -69,14 +69,16 @@ export default () => {
                   <p>{a.name}</p>
                 ))}
               </Table.Cell>
-              <Table.Cell>{i.totalPrice.toFixed(2)}€</Table.Cell>
+              <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
               <Table.Cell>
                 {i.paymentDate ? formatDate(i.paymentDate) : "Ausstehend"}
               </Table.Cell>
               <Table.Cell>
-                <Button icon onClick={() => setInvoiceSelected(i)}>
-                  <Icon name="eye" primary></Icon>
-                </Button>
+                <Button
+                  primary
+                  icon="edit"
+                  onClick={() => setInvoiceSelected(i)}
+                ></Button>
               </Table.Cell>
             </Table.Row>
           ))}

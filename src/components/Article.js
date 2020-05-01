@@ -10,10 +10,10 @@ import { formatPrice } from "../services";
 export default function Article({ article, setArticle }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
   const [authors] = useAuthors();
-  const [author, setAuthor] = useState();
+  const [author, setAuthor] = useState(article.authors[0]);
 
   useEffect(() => {
-    setArticle({ ...article, authors: [author] });
+    setArticle({ ...article, authors: author ? [author] : [] });
   }, [author]);
 
   const handleArticleChange = (e, { name, value }) => {
@@ -41,7 +41,6 @@ export default function Article({ article, setArticle }) {
   );
 
   const handleAuthorChange = (e, { value }) => {
-    console.log(value);
     if (value === undefined) {
       setAuthor();
     } else if (value < authors.length) {
