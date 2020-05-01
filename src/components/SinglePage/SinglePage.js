@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../Page";
 import "./SinglePage.css";
-import { formatDate, formatPrice } from "../../services";
+import { formatDate, formatPrice, parsePrice } from "../../services";
 import { Button } from "semantic-ui-react";
 import SinglePageOverlay from "./SinglePageOverlay";
 
@@ -21,7 +21,7 @@ const SinglePage = ({
 }) => {
   const articles_net_price = articles
     .map(({ price, toBePayed }) => {
-      const totalPrice = price * toBePayed;
+      const totalPrice = parsePrice(price) * toBePayed;
       const totalPriceWithDiscount =
         totalPrice - totalPrice * (customer.discount / 100);
       const net = totalPriceWithDiscount / (1 + customer.ust / 100);
@@ -180,7 +180,7 @@ const SinglePage = ({
             <div className="invoice-body-article-wrapper">
               {articles.map(({ toBePayed, toBeSend, price, name, isbn }) => {
                 const multiple = parseInt(toBePayed) > 1;
-                const totalPrice = price * toBePayed;
+                const totalPrice = parsePrice(price) * toBePayed;
                 const totalPriceWithDiscount =
                   totalPrice - totalPrice * (customer.discount / 100);
                 const net = totalPriceWithDiscount / (1 + customer.ust / 100);
