@@ -45,8 +45,9 @@ export default ({
       <div className="invoice-page-header">
         <Message
           info
-          content="Klicken Sie auf den Bereich den Sie anpassen wollen. Rechts können Sie Artikel zur Rechnung hinzufügen oder neue erstellen."
-          icon="info"
+          header="Neue Rechnung erstellen"
+          content="Klicken Sie auf den Bereich, den Sie anpassen wollen. Rechts können Sie Artikel zur Rechnung hinzufügen oder neue erstellen."
+          icon="bell"
         />
       </div>
       <div className="invoice-page">

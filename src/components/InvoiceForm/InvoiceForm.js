@@ -121,13 +121,19 @@ export default ({
   }, [customers, customer]);
 
   const articlesOptions = useMemo(() => {
-    const list = [{ key: articles.length, value: articles.length, text: "" }];
+    const list = [];
     return list.concat(
-      articles.map((a) => ({
-        key: a.id,
-        value: a.id,
-        text: a.name,
-      }))
+      articles.map((a) => {
+        let text = a.name.slice(0, 7);
+        if (text !== a.name) {
+          text += "...";
+        }
+        return {
+          key: a.id,
+          value: a.id,
+          text,
+        };
+      })
     );
   }, [articles]);
 
@@ -148,14 +154,14 @@ export default ({
       setToBeSend(1);
       setToBePayed(1);
     } else {
-      if (name === "articleId" && value >= articles.length) {
-        setSelectedArticles(selectedArticles.filter((a, i) => i !== id));
-        return;
-      }
       const _articles = [...selectedArticles];
       _articles[id][name] = value;
       setSelectedArticles(_articles);
     }
+  };
+
+  const removeArticle = (id) => {
+    setSelectedArticles(selectedArticles.filter((a, i) => i !== id));
   };
 
   return (
@@ -167,7 +173,7 @@ export default ({
       </div>
       <div className={"invoice-form "}>
         {formSelected[0] === "customer" && (
-          <Modal open onClose={() => setFormSelected([])}>
+          <Modal open onClose={() => setFormSelected([])} closeIcon>
             <div className="invoice-form-wrap">
               <Form>
                 <Form.Field
@@ -202,7 +208,7 @@ export default ({
                                 fluid
                                 name="toBeSend"
                                 type="number"
-                                label="Zu Senden"
+                                label="Senden"
                                 value={a.toBeSend}
                                 onChange={(e, { value, name }) =>
                                   handleArticleChange(i, name, value)
@@ -212,7 +218,7 @@ export default ({
                                 fluid
                                 name="toBePayed"
                                 type="number"
-                                label="Zu Bezahlen"
+                                label="Bezahlen"
                                 value={a.toBePayed}
                                 onChange={(e, { value, name }) =>
                                   handleArticleChange(i, name, value)
@@ -232,6 +238,14 @@ export default ({
                                   handleArticleChange(i, name, value)
                                 }
                               />
+                              <Form.Field>
+                                <label>&nbsp;</label>
+                                <Button
+                                  icon="trash"
+                                  negative
+                                  onClick={() => removeArticle(i)}
+                                />
+                              </Form.Field>
                             </Form.Group>
                           </div>
                         ))}
@@ -277,7 +291,7 @@ export default ({
                     </Form.Group>
                   </Form>
                 </div>
-                <Modal open={newArticle} onClose={toggleNewArticle}>
+                <Modal open={newArticle} onClose={toggleNewArticle} closeIcon>
                   <Modal.Header>Neuer Artikel</Modal.Header>
                   <Modal.Content>
                     <Article article={article} setArticle={setArticle} />
@@ -303,7 +317,7 @@ export default ({
             </Card.Content>
           </Card>
           {formSelected[0] === "general" && (
-            <Modal open onClose={() => setFormSelected([])}>
+            <Modal open onClose={() => setFormSelected([])} closeIcon>
               <div className="invoice-form-wrap">
                 <Form>
                   <Form.Group fluid widths="equal">

@@ -1,5 +1,5 @@
 .invoice-app-container {
-  margin: 2em;
+  margin: 2em 14em;
 }
 
 .invoice-tab-container {
@@ -8,4 +8,22 @@
 
 body {
   background-color: #f6f6f6;
+}
+
+@media (max-width: 1600px) {
+  .invoice-app-container {
+    margin: 2em 10em;
+  }
+}
+
+@media (max-width: 1500px) {
+  .invoice-app-container {
+    margin: 2em 6em;
+  }
+}
+
+@media (max-width: 1400px) {
+  .invoice-app-container {
+    margin: 2em 2em;
+  }
 }
