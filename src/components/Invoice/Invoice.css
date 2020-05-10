@@ -34,3 +34,15 @@
     margin: 0 2.5%;
   }
 }
+
+@media (min-width: 1400px) {
+  .invoice-form-wrapper {
+    width: 35%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .invoice-form-wrapper {
+    width: 45%;
+  }
+}

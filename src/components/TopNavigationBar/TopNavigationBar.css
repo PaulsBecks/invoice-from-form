@@ -13,3 +13,7 @@
 .oi-top-navigation-bar-new-invoice {
   margin-left: 1em !important;
 }
+
+.billeroo-top-navigation-bar-buttons {
+  display: flex;
+}

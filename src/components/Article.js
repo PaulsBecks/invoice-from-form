@@ -31,7 +31,7 @@ export default function Article({ article, setArticle }) {
 
   const authorOptions = [
     { key: undefined, value: undefined, text: "" },
-    { key: authors.length, value: authors.length, text: "Neuer Kunde" },
+    { key: authors.length, value: authors.length, text: "Neuer Autor" },
   ].concat(
     authors.map((a) => ({
       key: a.id,
