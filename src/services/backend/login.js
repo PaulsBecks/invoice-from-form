@@ -12,6 +12,6 @@ export default async function login(data) {
     }
     return result.data;
   } catch (err) {
-    throw "Die Email und das Passwort ist leider falsch.";
+    throw "Die Email oder das Passwort ist leider falsch.";
   }
 }
