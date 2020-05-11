@@ -1,5 +1,5 @@
 export default async function dataToLocalStorage(data) {
-  const { customers, articles, invoices, authors } = data;
+  const { customers, articles, invoices, authors, company } = data;
 
   if (customers) {
     await localStorage.setItem("customers", JSON.stringify(customers));
@@ -12,5 +12,8 @@ export default async function dataToLocalStorage(data) {
   }
   if (authors) {
     await localStorage.setItem("authors", JSON.stringify(authors));
+  }
+  if (company) {
+    await localStorage.setItem("authors", JSON.stringify(company));
   }
 }

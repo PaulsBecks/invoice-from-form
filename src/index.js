@@ -14,7 +14,7 @@ import TopNavigationBar from "./components/TopNavigationBar";
 import "semantic-ui-less/semantic.less";
 
 const App = () => {
-  useMigration();
+  //useMigration();
 
   return (
     <Router>

@@ -14,7 +14,7 @@ export default ({
   invoice,
   setInvoice,
   invoices,
-  setInvoices,
+  updateInvoice,
   onSave,
 }) => {
   if (!invoice || !invoices) {
@@ -22,17 +22,13 @@ export default ({
   }
   const [active, setActive] = useState(edit);
   const [formSelected, setFormSelected] = useState([]);
-  const [customers, setCustomers] = useCustomers();
+  const [, , , updateCustomer] = useCustomers();
 
   const saveInvoice = () => {
     invoice["totalPrice"] = calculateTotalPrice(invoice);
-    let _invoices = [...invoices];
-    _invoices[invoice.id] = invoice;
-    setInvoices(_invoices);
+    updateInvoice(invoice);
     setInvoice();
-    const _customers = [...customers];
-    _customers[invoice.customer.id] = invoice.customer;
-    setCustomers(_customers);
+    updateCustomer(invoice.customer);
     if (typeof onSave === "function") {
       onSave();
     }
@@ -99,7 +95,6 @@ export default ({
             wrapperClass="invoice-form-wrapper"
             invoice={invoice}
             setInvoice={setInvoice}
-            setInvoices={setInvoices}
             formSelected={formSelected}
             setFormSelected={setFormSelected}
           />

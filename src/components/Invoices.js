@@ -10,7 +10,7 @@ import {
 import { formatDate, formatPrice } from "../services";
 
 export default () => {
-  const [invoices, setInvoices] = useInvoices();
+  const [invoices, , , updateInvoice] = useInvoices();
   const [invoiceSelected, setInvoiceSelected] = useState();
   const [company] = useCompany();
   const [customers] = useCustomers();
@@ -21,7 +21,7 @@ export default () => {
         edit
         invoice={invoiceSelected}
         setInvoice={setInvoiceSelected}
-        setInvoices={setInvoices}
+        updateInvoice={updateInvoice}
         invoices={invoices}
       />
     );
@@ -60,7 +60,7 @@ export default () => {
 
         <Table.Body>
           {invoices.map((i) => (
-            <Table.Row>
+            <Table.Row key={i.id}>
               <Table.Cell>{i.invoiceNumber}</Table.Cell>
               <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
               <Table.Cell>{i.customer.name}</Table.Cell>

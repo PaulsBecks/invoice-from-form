@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Input } from "semantic-ui-react";
 import RichTextEditor from "react-rte";
 import Editor from "../Editor/Editor";
@@ -12,14 +12,14 @@ export default function CustomerForm({ customer, setCustomer }) {
     RichTextEditor.createValueFromString(customer.shippingAddress, "html")
   );
 
-  useEffect(() => {
+  const updateAddresses = (customer) => {
     setInvoiceAddress(
       RichTextEditor.createValueFromString(customer.invoiceAddress, "html")
     );
     setShippingAddress(
       RichTextEditor.createValueFromString(customer.shippingAddress, "html")
     );
-  }, [customer]);
+  };
 
   const handleCustomerChange = (e, { name, value }) => {
     if (name === "ust" || name === "discount") {
@@ -27,10 +27,12 @@ export default function CustomerForm({ customer, setCustomer }) {
       if (isNaN(value)) return;
     }
     setCustomer({ ...customer, [name]: value });
+    updateAddresses(customer);
   };
 
   const updateRichtext = (name, value) => {
     setCustomer({ ...customer, [name]: value.toString("html") });
+    updateAddresses(customer);
   };
 
   return (

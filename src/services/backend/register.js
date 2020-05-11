@@ -6,6 +6,15 @@ const { backendURL } = config();
 const url = backendURL + "/register";
 
 export default async function register(data) {
-  const result = await Axios.post(url, data);
-  return result.data;
+  try {
+    const result = await Axios.post(url, data);
+    return result.data;
+  } catch (err) {
+    const {
+      response: {
+        data: { message },
+      },
+    } = err;
+    throw message;
+  }
 }

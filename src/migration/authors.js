@@ -3,10 +3,6 @@ import { useArticles } from "../hooks";
 
 const VERSION = 2;
 
-function useAddAuthorsToArticles() {
-  const [articles, setArticles] = useArticles();
-
-  setArticles(articles.map((a) => ({ ...a, authors: [] })));
-}
+function useAddAuthorsToArticles() {}
 
 export default () => useMigrationWrapper(useAddAuthorsToArticles, VERSION);

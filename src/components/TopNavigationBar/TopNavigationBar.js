@@ -146,7 +146,6 @@ export default function TopNavigationBar() {
                           JSON.stringify(user)
                         );
                         const data = await getData();
-                        console.log(data);
                         dataToLocalStorage(data);
                       } else {
                         user = await register(loginValues);
@@ -156,12 +155,12 @@ export default function TopNavigationBar() {
                         );
                         const data = await dataFromLocalStorage();
                         postData(data);
+                        return;
                       }
                       setUser(user);
                       setModalIsOpen(false);
                       window.document.location.href = "/";
                     } catch (err) {
-                      console.log(err);
                       setError(err);
                     }
                   }}

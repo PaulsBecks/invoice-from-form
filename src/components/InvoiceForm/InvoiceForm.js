@@ -1,10 +1,5 @@
-import React, { useState, useMemo, useEffect } from "react";
-import {
-  useLocalStorage,
-  useCompany,
-  useCustomers,
-  useAuthors,
-} from "../../hooks";
+import React, { useState, useMemo } from "react";
+import { useCompany, useCustomers, useAuthors, useArticles } from "../../hooks";
 import {
   Container,
   Form,
@@ -43,7 +38,7 @@ export default ({
   const [customer, setCustomer] = useState(
     customers[invoice.customer.id] || invoice.customer
   );
-  const [articles, setArticles] = useLocalStorage("articles", []);
+  const [articles, addToArticles] = useArticles();
   const [selectedArticles, setSelectedArticles] = useState(invoice.articles);
   const [article, setArticle] = useState({
     ...articleSceleton,
@@ -53,19 +48,7 @@ export default ({
   const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
   const [porto, setPorto] = useState(invoice.porto);
-  const [authors, setAuthors] = useAuthors();
-
-  useEffect(() => {
-    setInvoice({
-      ...invoice,
-      customer,
-      articles: selectedArticles.map((a) => ({
-        ...articles[a.articleId],
-        ...a,
-      })),
-      company,
-    });
-  }, [customer, selectedArticles, company]);
+  const [, , , updateAuthor] = useAuthors();
 
   const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
@@ -86,16 +69,14 @@ export default ({
   const toggleNewArticle = () => setNewArticle(!newArticle);
 
   const addNewArticle = () => {
-    setArticles([...articles, article]);
+    addToArticles(article);
     setArticle({
       ...articleSceleton,
       id: articles.length + 1,
     });
     toggleNewArticle();
     if (article.authors.length > 0) {
-      const _authors = [...authors];
-      _authors[article.authors[0].id] = article.authors[0];
-      setAuthors(_authors);
+      updateAuthor(article.authors[0]);
     }
   };
 
@@ -138,8 +119,14 @@ export default ({
   }, [articles]);
 
   const handleCustomerChange = (e, { value }) => {
-    if (value < customers.length) setCustomer(customers[value]);
-    else setCustomer({ ...customerSceleton, id: customers.length });
+    let customer;
+    if (value < customers.length) customer = customers[value];
+    else customer = { ...customerSceleton, id: customers.length };
+    setCustomer(customer);
+    setInvoice({
+      ...invoice,
+      customer,
+    });
   };
 
   const handleArticleChange = (id, name, value) => {
@@ -158,10 +145,24 @@ export default ({
       _articles[id][name] = value;
       setSelectedArticles(_articles);
     }
+    setInvoice({
+      ...invoice,
+      articles: selectedArticles.map((a) => ({
+        ...articles[a.articleId],
+        ...a,
+      })),
+    });
   };
 
   const removeArticle = (id) => {
     setSelectedArticles(selectedArticles.filter((a, i) => i !== id));
+    setInvoice({
+      ...invoice,
+      articles: selectedArticles.map((a) => ({
+        ...articles[a.articleId],
+        ...a,
+      })),
+    });
   };
 
   return (
@@ -187,7 +188,16 @@ export default ({
                 />
               </Form>
               <Segment>
-                <CustomerForm customer={customer} setCustomer={setCustomer} />
+                <CustomerForm
+                  customer={customer}
+                  setCustomer={(customer) => {
+                    setCustomer(customer);
+                    setInvoice({
+                      ...invoice,
+                      customer,
+                    });
+                  }}
+                />
               </Segment>
             </div>
           </Modal>
@@ -420,7 +430,13 @@ export default ({
                 </Form>
                 <CompanyForm
                   company={company}
-                  setCompany={setCompany}
+                  setCompany={(company) => {
+                    setCompany(company);
+                    setInvoice({
+                      ...invoice,
+                      company,
+                    });
+                  }}
                   selected={formSelected[1]}
                 />
               </div>

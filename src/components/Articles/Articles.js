@@ -8,7 +8,7 @@ import "./Articles.css";
 import { formatDate } from "../../services";
 
 export default () => {
-  const [articles, setArticles] = useArticles();
+  const [articles, , removeArticle, updateArticle] = useArticles();
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
   const [invoices] = useInvoices();
@@ -32,18 +32,6 @@ export default () => {
       return list;
     }, []);
   }, [invoices, invoiceArticle]);
-  const updateArticle = () => {
-    let _articles = [...articles];
-    _articles[article.id] = article;
-    setArticles(_articles);
-    setArticle();
-  };
-
-  const deleteArticle = (pos) => {
-    const _articles = [...articles];
-    _articles[pos] = undefined;
-    setArticles(_articles);
-  };
 
   return (
     <div className="articles-tab-container">
@@ -68,7 +56,10 @@ export default () => {
               labelPosition="right"
             ></Button>
             <Button
-              onClick={updateArticle}
+              onClick={() => {
+                updateArticle(article);
+                setArticle();
+              }}
               content="Speichern"
               positive
               icon="check"
@@ -150,7 +141,7 @@ export default () => {
                       secondary
                     ></Button>
                     <Button
-                      onClick={() => deleteArticle(i)}
+                      onClick={() => removeArticle(i)}
                       negative
                       icon="trash"
                     ></Button>

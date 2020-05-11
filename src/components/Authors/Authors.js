@@ -5,21 +5,8 @@ import { author as authorSceleton } from "../../sceletons";
 import Author from "../Author";
 
 export default function Authors() {
-  const [authors, setAuthors] = useAuthors();
+  const [authors, , deleteAuthor, updateAuthor] = useAuthors();
   const [author, setAuthor] = useState();
-
-  function deleteAuthor(id) {
-    const _authors = [...authors];
-    _authors[id] = undefined;
-    setAuthors(_authors);
-  }
-
-  function updateAuthors(id) {
-    const _authors = [...authors];
-    _authors[author.id] = author;
-    setAuthors(_authors);
-    setAuthor();
-  }
 
   return (
     <div>
@@ -44,7 +31,10 @@ export default function Authors() {
               labelPosition="right"
             ></Button>
             <Button
-              onClick={updateAuthors}
+              onClick={() => {
+                updateAuthor(author);
+                setAuthor();
+              }}
               content="Speichern"
               primary
               icon="check"
@@ -68,7 +58,7 @@ export default function Authors() {
           {authors.map(
             (a, i) =>
               a && (
-                <Table.Row>
+                <Table.Row key={a.id}>
                   <Table.Cell>{a.id}</Table.Cell>
                   <Table.Cell>{a.name}</Table.Cell>
                   <Table.Cell>{a.contact}</Table.Cell>

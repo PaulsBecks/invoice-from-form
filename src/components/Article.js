@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Form, Input, Dropdown } from "semantic-ui-react";
 import { useAuthors } from "../hooks";
@@ -11,10 +11,6 @@ export default function Article({ article, setArticle }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
   const [authors] = useAuthors();
   const [author, setAuthor] = useState(article.authors[0]);
-
-  useEffect(() => {
-    setArticle({ ...article, authors: author ? [author] : [] });
-  }, [author]);
 
   const handleArticleChange = (e, { name, value }) => {
     if (name === "price") {
@@ -41,13 +37,16 @@ export default function Article({ article, setArticle }) {
   );
 
   const handleAuthorChange = (e, { value }) => {
+    let author;
     if (value === undefined) {
-      setAuthor();
+      author = undefined;
     } else if (value < authors.length) {
-      setAuthor(authors[value]);
+      author = authors[value];
     } else {
-      setAuthor({ ...authorSceleton, id: authors.length });
+      author = { ...authorSceleton, id: authors.length };
     }
+    setAuthor(author);
+    setArticle({ ...article, authors: author ? [author] : [] });
   };
 
   return (

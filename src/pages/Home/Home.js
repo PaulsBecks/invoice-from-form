@@ -12,7 +12,7 @@ export default function Home() {
   const [customers] = useCustomers();
   const history = useHistory();
 
-  const [invoices, setInvoices] = useInvoices();
+  const [invoices, , , updateInvoice] = useInvoices();
   const [invoice, setInvoice] = useState({
     ...invoiceSceleton,
     id: invoices.length,
@@ -27,7 +27,7 @@ export default function Home() {
     <Invoice
       invoice={invoice}
       setInvoice={setInvoice}
-      setInvoices={setInvoices}
+      updateInvoice={updateInvoice}
       invoices={invoices}
       edit={true}
       onSave={() => {
