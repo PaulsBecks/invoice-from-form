@@ -1,21 +1,32 @@
 import React, { useState } from "react";
-import { useLocalStorage } from "../hooks";
+import { useCustomers } from "../hooks";
 import { customer as customerSceleton } from "../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import CustomerForm from "./CustomerForm/CustomerForm";
 export default () => {
-  const [customers, setCustomers] = useLocalStorage("customers", []);
+  const [
+    customers,
+    addCustomer,
+    removeCustomer,
+    updateCustomer,
+    customersLength,
+  ] = useCustomers();
   const [customer, setCustomer] = useState();
 
   const saveCustomer = () => {
-    setCustomers([...customers, customer]);
+    if (customer.id >= customersLength) {
+      addCustomer(customer);
+    } else {
+      updateCustomer(customer);
+    }
     setCustomer();
   };
+
   return (
     <div>
       <Button
         onClick={() =>
-          setCustomer({ ...customerSceleton, id: customers.length })
+          setCustomer({ ...customerSceleton, id: customersLength })
         }
         primary
       >
@@ -53,11 +64,12 @@ export default () => {
             <Table.HeaderCell>Lieferadress</Table.HeaderCell>
             <Table.HeaderCell>Rabatt</Table.HeaderCell>
             <Table.HeaderCell>MwST</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          {customers.map((c) => (
+          {customers.map((c, i) => (
             <Table.Row>
               <Table.Cell>{c.name}</Table.Cell>
               <Table.Cell>
@@ -68,6 +80,18 @@ export default () => {
               </Table.Cell>
               <Table.Cell>{c.discount}</Table.Cell>
               <Table.Cell>{c.ust}</Table.Cell>
+              <Table.Cell>
+                <Button
+                  onClick={() => setCustomer(c)}
+                  primary
+                  icon="edit"
+                ></Button>
+                <Button
+                  onClick={() => removeCustomer(c.id)}
+                  negative
+                  icon="trash"
+                ></Button>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

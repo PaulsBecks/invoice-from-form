@@ -3,15 +3,16 @@ import { Button, Table, Modal } from "semantic-ui-react";
 import { useAuthors } from "../../hooks";
 import { author as authorSceleton } from "../../sceletons";
 import Author from "../Author";
+import { formatPrice } from "../../services";
 
 export default function Authors() {
-  const [authors, , deleteAuthor, updateAuthor] = useAuthors();
+  const [authors, , deleteAuthor, updateAuthor, authorsLength] = useAuthors();
   const [author, setAuthor] = useState();
 
   return (
     <div>
       <Button
-        onClick={() => setAuthor({ authorSceleton, id: authors.length })}
+        onClick={() => setAuthor({ ...authorSceleton, id: authorsLength })}
         primary
       >
         Neuer Autor

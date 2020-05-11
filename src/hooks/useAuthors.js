@@ -5,10 +5,11 @@ import getData from "../services/backend/getData";
 
 export default function useAuthors() {
   const [authors, setLocalStorageAuthors] = useLocalStorage("authors", []);
-
+  console.log(authors);
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
+      console.log(data);
       if (data && data.authors) {
         setLocalStorageAuthors(data.authors);
       }
@@ -44,5 +45,20 @@ export default function useAuthors() {
     },
     [authors]
   );
-  return [authors, addAuthor, removeAuthor, updateAuthor];
+
+  const getAuthorById = useCallback(
+    (id) => {
+      return authors[id];
+    },
+    [authors]
+  );
+
+  return [
+    authors.filter((a) => a && typeof a === "object"),
+    addAuthor,
+    removeAuthor,
+    updateAuthor,
+    authors.length,
+    getAuthorById,
+  ];
 }

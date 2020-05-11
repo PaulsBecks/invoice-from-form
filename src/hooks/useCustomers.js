@@ -46,5 +46,19 @@ export default function useCustomers() {
     },
     [customers]
   );
-  return [customers, addCustomer, removeCustomer, updateCustomer];
+
+  const getCustomerById = useCallback(
+    (id) => {
+      return customers[id];
+    },
+    [customers]
+  );
+  return [
+    customers.filter((c) => c && typeof c === "object"),
+    addCustomer,
+    removeCustomer,
+    updateCustomer,
+    customers.length,
+    getCustomerById,
+  ];
 }

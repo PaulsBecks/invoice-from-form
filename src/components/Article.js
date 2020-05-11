@@ -9,7 +9,7 @@ import { formatPrice } from "../services";
 
 export default function Article({ article, setArticle }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
-  const [authors] = useAuthors();
+  const [authors, , , , authorsLength, getAuthorById] = useAuthors();
   const [author, setAuthor] = useState(article.authors[0]);
 
   const handleArticleChange = (e, { name, value }) => {
@@ -27,7 +27,7 @@ export default function Article({ article, setArticle }) {
 
   const authorOptions = [
     { key: undefined, value: undefined, text: "" },
-    { key: authors.length, value: authors.length, text: "Neuer Autor" },
+    { key: authorsLength, value: authorsLength, text: "Neuer Autor" },
   ].concat(
     authors.map((a) => ({
       key: a.id,
@@ -40,11 +40,12 @@ export default function Article({ article, setArticle }) {
     let author;
     if (value === undefined) {
       author = undefined;
-    } else if (value < authors.length) {
-      author = authors[value];
+    } else if (value < authorsLength) {
+      author = getAuthorById(value);
     } else {
-      author = { ...authorSceleton, id: authors.length };
+      author = { ...authorSceleton, id: authorsLength };
     }
+    console.log(author, value);
     setAuthor(author);
     setArticle({ ...article, authors: author ? [author] : [] });
   };

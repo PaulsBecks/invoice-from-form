@@ -10,10 +10,16 @@ import {
 import { formatDate, formatPrice } from "../services";
 
 export default () => {
-  const [invoices, , , updateInvoice] = useInvoices();
+  const [
+    invoices,
+    ,
+    removeInvoice,
+    updateInvoice,
+    invoicesLength,
+  ] = useInvoices();
   const [invoiceSelected, setInvoiceSelected] = useState();
   const [company] = useCompany();
-  const [customers] = useCustomers();
+  const [customers, , , , customersLength] = useCustomers();
 
   if (invoiceSelected) {
     return (
@@ -33,10 +39,10 @@ export default () => {
         onClick={() =>
           setInvoiceSelected({
             ...invoiceSceleton,
-            id: invoices.length,
+            id: invoicesLength,
             customer: {
               ...customerSceleton,
-              id: customers.length,
+              id: customersLength,
             },
             company,
           })
@@ -59,29 +65,38 @@ export default () => {
         </Table.Header>
 
         <Table.Body>
-          {invoices.map((i) => (
-            <Table.Row key={i.id}>
-              <Table.Cell>{i.invoiceNumber}</Table.Cell>
-              <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
-              <Table.Cell>{i.customer.name}</Table.Cell>
-              <Table.Cell>
-                {i.articles.map((a) => (
-                  <p>{a.name}</p>
-                ))}
-              </Table.Cell>
-              <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
-              <Table.Cell>
-                {i.paymentDate ? formatDate(i.paymentDate) : "Ausstehend"}
-              </Table.Cell>
-              <Table.Cell>
-                <Button
-                  primary
-                  icon="edit"
-                  onClick={() => setInvoiceSelected(i)}
-                ></Button>
-              </Table.Cell>
-            </Table.Row>
-          ))}
+          {invoices.map(
+            (i) =>
+              i &&
+              typeof i === "object" && (
+                <Table.Row key={i.id}>
+                  <Table.Cell>{i.invoiceNumber}</Table.Cell>
+                  <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
+                  <Table.Cell>{i.customer.name}</Table.Cell>
+                  <Table.Cell>
+                    {i.articles.map((a) => (
+                      <p>{a.name}</p>
+                    ))}
+                  </Table.Cell>
+                  <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
+                  <Table.Cell>
+                    {i.paymentDate ? formatDate(i.paymentDate) : "Ausstehend"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      primary
+                      icon="edit"
+                      onClick={() => setInvoiceSelected(i)}
+                    ></Button>
+                    <Button
+                      negative
+                      icon="trash"
+                      onClick={() => removeInvoice(i.id)}
+                    ></Button>
+                  </Table.Cell>
+                </Table.Row>
+              )
+          )}
         </Table.Body>
       </Table>
     </div>

@@ -12,10 +12,10 @@ export default function Home() {
   const [customers] = useCustomers();
   const history = useHistory();
 
-  const [invoices, , , updateInvoice] = useInvoices();
+  const [invoices, , , updateInvoice, invoicesLength] = useInvoices();
   const [invoice, setInvoice] = useState({
     ...invoiceSceleton,
-    id: invoices.length,
+    id: invoicesLength,
     customer: {
       ...customerSceleton,
       id: customers.length,

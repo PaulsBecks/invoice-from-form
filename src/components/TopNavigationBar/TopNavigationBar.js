@@ -153,6 +153,7 @@ export default function TopNavigationBar() {
                           "user",
                           JSON.stringify(user)
                         );
+
                         const data = await dataFromLocalStorage();
                         postData(data);
                       }

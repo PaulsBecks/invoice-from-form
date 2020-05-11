@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
 import { Form, Input } from "semantic-ui-react";
+import { parsePrice, formatPrice } from "../../services";
 
 export default function Author({ author, setAuthor }) {
   const [authorPrice, setAuthorPrice] = useState(author.percent);
 
   const handleAuthorChange = (e, { name, value }) => {
     if (name === "percent") {
-      value = parseFloat(value);
+      value = parsePrice(value);
       if (isNaN(value)) {
         setAuthorPrice("");
         return;
       }
-      value = value.toFixed(2);
+      value = formatPrice(value);
       setAuthorPrice(value);
     }
     setAuthor({ ...author, [name]: value });

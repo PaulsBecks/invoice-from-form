@@ -44,5 +44,19 @@ export default function useArticles() {
     },
     [articles]
   );
-  return [articles, addArticle, removeArticle, updateArticle];
+
+  const getArticleById = useCallback(
+    (id) => {
+      return articles[id];
+    },
+    [articles]
+  );
+  return [
+    articles.filter((a) => a && typeof a === "object"),
+    addArticle,
+    removeArticle,
+    updateArticle,
+    articles.length,
+    getArticleById,
+  ];
 }

@@ -33,16 +33,23 @@ export default ({
   wrapperClass,
   setFormSelected,
 }) => {
-  const [customers] = useCustomers();
+  const [customers, , , , customersLength, getCustomerById] = useCustomers();
   const [company, setCompany] = useCompany();
   const [customer, setCustomer] = useState(
-    customers[invoice.customer.id] || invoice.customer
+    getCustomerById(invoice.customer.id) || invoice.customer
   );
-  const [articles, addToArticles] = useArticles();
+  const [
+    articles,
+    addToArticles,
+    ,
+    ,
+    articlesLength,
+    getArticleById,
+  ] = useArticles();
   const [selectedArticles, setSelectedArticles] = useState(invoice.articles);
   const [article, setArticle] = useState({
     ...articleSceleton,
-    id: articles.length,
+    id: articlesLength,
   });
   const [toBePayed, setToBePayed] = useState(1);
   const [toBeSend, setToBeSend] = useState(1);
@@ -72,7 +79,7 @@ export default ({
     addToArticles(article);
     setArticle({
       ...articleSceleton,
-      id: articles.length + 1,
+      id: articlesLength + 1,
     });
     toggleNewArticle();
     if (article.authors.length > 0) {
@@ -87,8 +94,8 @@ export default ({
   const customerOptions = useMemo(() => {
     let list = [
       {
-        key: customers.length,
-        value: customers.length,
+        key: customersLength,
+        value: customersLength,
         text: `Neuer Kunde`,
       },
     ];
@@ -120,9 +127,10 @@ export default ({
 
   const handleCustomerChange = (e, { value }) => {
     let customer;
-    if (value < customers.length) customer = customers[value];
-    else customer = { ...customerSceleton, id: customers.length };
+    if (value < customersLength) customer = getCustomerById(value);
+    else customer = { ...customerSceleton, id: customersLength };
     setCustomer(customer);
+    console.log(customer);
     setInvoice({
       ...invoice,
       customer,
@@ -130,36 +138,38 @@ export default ({
   };
 
   const handleArticleChange = (id, name, value) => {
+    let _selectedArticles;
     if (id >= selectedArticles.length) {
-      if (value >= articles.length) {
+      if (value >= articlesLength) {
         return;
       }
-      setSelectedArticles([
+      _selectedArticles = [
         ...selectedArticles,
         { toBeSend, toBePayed, articleId: value },
-      ]);
+      ];
       setToBeSend(1);
       setToBePayed(1);
     } else {
-      const _articles = [...selectedArticles];
-      _articles[id][name] = value;
-      setSelectedArticles(_articles);
+      _selectedArticles = [...selectedArticles];
+      _selectedArticles[id][name] = value;
     }
+    setSelectedArticles(_selectedArticles);
     setInvoice({
       ...invoice,
-      articles: selectedArticles.map((a) => ({
-        ...articles[a.articleId],
+      articles: _selectedArticles.map((a) => ({
         ...a,
+        ...getArticleById(a.articleId),
       })),
     });
   };
 
   const removeArticle = (id) => {
-    setSelectedArticles(selectedArticles.filter((a, i) => i !== id));
+    const _selectedArticles = selectedArticles.filter((a, i) => i !== id);
+    setSelectedArticles(_selectedArticles);
     setInvoice({
       ...invoice,
-      articles: selectedArticles.map((a) => ({
-        ...articles[a.articleId],
+      articles: _selectedArticles.map((a) => ({
+        ...getArticleById(a.articleId),
         ...a,
       })),
     });

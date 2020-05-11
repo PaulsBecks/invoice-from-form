@@ -8,7 +8,13 @@ import "./Articles.css";
 import { formatDate } from "../../services";
 
 export default () => {
-  const [articles, , removeArticle, updateArticle] = useArticles();
+  const [
+    articles,
+    ,
+    removeArticle,
+    updateArticle,
+    articlesLength,
+  ] = useArticles();
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
   const [invoices] = useInvoices();
@@ -17,8 +23,8 @@ export default () => {
       return null;
     }
     return invoices.reduce((list, i) => {
-      for (let a in i.articles) {
-        const article = i.articles[a];
+      for (let aId in i.articles) {
+        const article = i.articles[aId];
         if (article.id === invoiceArticle.id) {
           return [
             ...list,
@@ -36,7 +42,7 @@ export default () => {
   return (
     <div className="articles-tab-container">
       <Button
-        onClick={() => setArticle({ ...articleSceleton, id: articles.length })}
+        onClick={() => setArticle({ ...articleSceleton, id: articlesLength })}
         primary
       >
         Neuer Artikel
