@@ -155,7 +155,6 @@ export default function TopNavigationBar() {
                         );
                         const data = await dataFromLocalStorage();
                         postData(data);
-                        return;
                       }
                       setUser(user);
                       setModalIsOpen(false);
