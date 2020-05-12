@@ -71,7 +71,7 @@ export default function Authors() {
                       primary
                     ></Button>
                     <Button
-                      onClick={() => deleteAuthor(i)}
+                      onClick={() => deleteAuthor(a.id)}
                       negative
                       icon="trash"
                     ></Button>
