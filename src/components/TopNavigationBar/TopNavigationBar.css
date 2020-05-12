@@ -17,3 +17,13 @@
 .billeroo-top-navigation-bar-buttons {
   display: flex;
 }
+
+.billeroo-top-navigation-left {
+  display: flex;
+  align-items: center;
+}
+
+.billeroo-top-navigation-left-logo {
+  height: 3em;
+  margin-right: 1em;
+}

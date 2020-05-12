@@ -22,8 +22,17 @@ export default function TopNavigationBar() {
 
   return (
     <div className="oi-top-navigation-bar">
-      <div>
-        <h2 className="oi-top-navigation-bar-heading">Billeroo</h2>
+      <div className="billeroo-top-navigation-left">
+        <div>
+          <img
+            src="/logo.png"
+            alt="Billeroo Logo"
+            className="billeroo-top-navigation-left-logo"
+          />
+        </div>
+        <Button primary onClick={() => history.push("/")}>
+          <h2 className="oi-top-navigation-bar-heading">Billeroo</h2>
+        </Button>
       </div>
       <div className="billeroo-top-navigation-bar-buttons">
         {invoices.length > 0 && (
@@ -100,8 +109,8 @@ export default function TopNavigationBar() {
             <Modal.Content>
               <Message info>
                 {modalUse === "login"
-                  ? "Melden Sie sich an, um diesen Browser mit ihren Daten zu synchronisieren."
-                  : "Registrieren Sie sich, um ihre Daten auch auf anderen Geräten zu nutzen."}
+                  ? "Melden Sie sich an, um diesen Browser mit Ihren Daten zu synchronisieren."
+                  : "Registrieren Sie sich, um Ihre Daten auch auf anderen Geräten zu nutzen."}
               </Message>
               {error && <Message error>{error}</Message>}
               <Form>
