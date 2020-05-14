@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
 
 import "semantic-ui-less/semantic.less";
+import LandingPage from "./pages/Landing";
 
 const App = () => {
   //useMigration();
@@ -22,6 +23,9 @@ const App = () => {
       <div className="invoice-app-container">
         <Switch>
           <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route exact path="/invoice/new">
             <Home />
           </Route>
           <Route path="/invoices">

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { useInvoices, useCompany, useCustomers } from "../../hooks";
+import { useInvoices, useCompany, useCustomers, useUser } from "../../hooks";
 import Invoice from "../../components/Invoice";
 import {
   invoice as invoiceSceleton,
   customer as customerSceleton,
 } from "../../sceletons";
 import { useHistory } from "react-router-dom";
+import LandingPage from "../Landing";
 
 export default function Home() {
   const [company] = useCompany();
   const [customers] = useCustomers();
   const history = useHistory();
+  const [user] = useUser();
 
   const [invoices, , , updateInvoice, invoicesLength] = useInvoices();
   const [invoice, setInvoice] = useState({
@@ -22,7 +24,6 @@ export default function Home() {
     },
     company,
   });
-
   return (
     <Invoice
       invoice={invoice}

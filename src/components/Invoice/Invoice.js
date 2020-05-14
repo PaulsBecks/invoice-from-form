@@ -28,7 +28,6 @@ export default ({
     invoice["totalPrice"] = calculateTotalPrice(invoice);
     updateInvoice(invoice);
     setInvoice();
-    console.log(invoice.customer);
     updateCustomer(invoice.customer);
     if (typeof onSave === "function") {
       onSave();

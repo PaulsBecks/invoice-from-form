@@ -212,7 +212,7 @@ export default ({
             </div>
           </Modal>
         )}
-        <Container>
+        <div>
           <Card fluid>
             <Card.Content>
               <div className="invoice-form-wrap">
@@ -452,7 +452,7 @@ export default ({
               </div>
             </Modal>
           )}
-        </Container>
+        </div>
       </div>
     </div>
   );

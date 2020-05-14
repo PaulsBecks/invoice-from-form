@@ -15,6 +15,7 @@
 .invoice-page-button-container {
   display: flex;
   justify-content: space-between;
+  max-width: 210mm;
   margin: 2em 0;
 }
 
@@ -44,5 +45,11 @@
 @media (min-width: 1600px) {
   .invoice-form-wrapper {
     width: 45%;
+  }
+}
+@media (max-width: 1400px) {
+  .invoice-page {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
   }
 }

@@ -1,0 +1,135 @@
+.billeroo-landing-page {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+
+.billeroo-title-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  max-width: 70em;
+}
+
+.billeroo-price-section,
+.billeroo-reference-section,
+.billeroo-added-value-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6em 0;
+}
+
+.billeroo-reference-section {
+  margin-bottom: 4em;
+}
+
+.billeroo-title-section-text {
+  max-width: 50em;
+  min-width: 20em;
+}
+
+.billeroo-price-section {
+  width: 100%;
+}
+
+.billeroo-price-section-text,
+.billeroo-reference-section-text,
+.billeroo-added-value-section-text,
+.billeroo-title-section-text {
+  flex: 1;
+}
+
+.billeroo-title-section-text > * {
+  margin-bottom: 2em;
+}
+
+.billeroo-title-section-image {
+  flex: 1;
+  margin-left: 4em;
+}
+
+.billeroo-price-section-text-title,
+.billeroo-reference-section-text-title,
+.billeroo-added-value-section-text-title,
+.billeroo-title-section-text-title {
+  color: #2c7f83;
+  margin-bottom: 1em !important;
+}
+
+.billeroo-reference-section-text-title,
+.billeroo-added-value-section-text-title {
+  text-align: center;
+}
+
+.billeroo-title-section-text-text {
+  font-size: 1.2rem;
+}
+
+.billeroo-reference-section-images-logo {
+  mix-blend-mode: multiply;
+  max-height: 3em;
+}
+
+.billeroo-added-value-section-values {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: space-around;
+  align-items: flex-start;
+  padding: 4em 6em 0em;
+}
+
+.billeroo-added-value-section-value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 15em;
+  margin: 0 2em 4em;
+  text-align: center;
+}
+
+.billeroo-added-value-section-value-icon-wrapper {
+  width: 5em;
+}
+
+.billeroo-added-value-section-value-icon-wrapper > svg {
+  fill: var(--main-theme-color);
+}
+
+.billeroo-landing-page p {
+  font-size: 1.2rem;
+}
+
+.billeroo-alternate-section {
+  background: #2c7f83;
+  color: white;
+  border-radius: 2em;
+}
+
+.billeroo-alternate-section h1 {
+  color: white;
+}
+.billeroo-call-to-action-section {
+  margin: 4em 0;
+}
+
+@media (max-width: 623px) {
+  .billeroo-title-section {
+    flex-direction: column;
+  }
+
+  .billeroo-title-section-image {
+    margin-left: 0;
+    margin-top: 2em;
+  }
+
+  .billeroo-added-value-section-values {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

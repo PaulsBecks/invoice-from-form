@@ -4,7 +4,7 @@ const Page = ({ children, singleMode, id }) => {
   return (
     <div
       id={id}
-      className="bg-white shadow-1 center"
+      className="bg-white shadow-1"
       style={{ width: "210mm", height: singleMode ? "297mm" : "" }}
     >
       {children}
