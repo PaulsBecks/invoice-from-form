@@ -18,7 +18,7 @@ export default function LandingPage() {
           </h1>
           <p className="billeroo-title-section-text-text ">
             Erstelle schnell und einfach Rechnungen für deinen Verlag. Behalte
-            den Überblick deiner bereits angelegte Rechnungen auf allen Geräten
+            den Überblick deiner bereits angelegte Rechnungen auf allen Geräten.
           </p>
           <Button
             content="Rechnung erstellen"

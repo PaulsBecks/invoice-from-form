@@ -14,6 +14,6 @@ export default async function dataToLocalStorage(data) {
     await localStorage.setItem("authors", JSON.stringify(authors));
   }
   if (company) {
-    await localStorage.setItem("authors", JSON.stringify(company));
+    await localStorage.setItem("company", JSON.stringify(company));
   }
 }
