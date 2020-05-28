@@ -5,11 +5,9 @@ import getData from "../services/backend/getData";
 
 export default function useAuthors() {
   const [authors, setLocalStorageAuthors] = useLocalStorage("authors", []);
-  console.log(authors);
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
-      console.log(data);
       if (data && data.authors) {
         setLocalStorageAuthors(data.authors);
       }

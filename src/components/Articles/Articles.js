@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from "react";
-import { useArticles, useInvoices } from "../../hooks";
+import { useArticles, useInvoices, useInvoiceStats } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
 
 import "./Articles.css";
-import { formatDate } from "../../services";
+import { formatDate, parsePrice, formatPrice } from "../../services";
 
 export default () => {
   const [
@@ -18,6 +18,7 @@ export default () => {
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
   const [invoices] = useInvoices();
+  const invoiceStats = useInvoiceStats();
   const filteredInvoices = useMemo(() => {
     if (!invoiceArticle) {
       return null;
@@ -89,19 +90,42 @@ export default () => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {filteredInvoices.map((invoice) => (
-                  <Table.Row>
-                    <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
-                    <Table.Cell>{invoice.customer.name}</Table.Cell>
-                    <Table.Cell>{invoice.article.amount}</Table.Cell>
-                    <Table.Cell>{invoice.article.price}</Table.Cell>
+                {invoiceStats[invoiceArticle.id] &&
+                  invoiceStats[invoiceArticle.id].invoices.map((invoice) => (
+                    <Table.Row>
+                      <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
+                      <Table.Cell>{invoice.customerName}</Table.Cell>
+                      <Table.Cell>{invoice.payed}</Table.Cell>
+                      <Table.Cell>
+                        {formatPrice(
+                          invoice.payed * parsePrice(invoiceArticle.price)
+                        )}{" "}
+                        €
+                      </Table.Cell>
+                      <Table.Cell>
+                        {invoice.paymentDate
+                          ? formatDate(invoice.paymentDate)
+                          : "Ausstehend"}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                {invoiceStats[invoiceArticle.id] && (
+                  <Table.Row active>
+                    <Table.Cell />
+                    <Table.Cell />
                     <Table.Cell>
-                      {invoice.paymentDate
-                        ? formatDate(invoice.paymentDate)
-                        : "Ausstehend"}
+                      {invoiceStats[invoiceArticle.id].totalSold}
                     </Table.Cell>
+                    <Table.Cell>
+                      {formatPrice(
+                        invoiceStats[invoiceArticle.id].totalSold *
+                          parsePrice(invoiceArticle.price)
+                      )}{" "}
+                      €
+                    </Table.Cell>
+                    <Table.Cell />
                   </Table.Row>
-                ))}
+                )}
               </Table.Body>
             </Table>
           </Modal.Content>
@@ -113,7 +137,7 @@ export default () => {
             <Table.HeaderCell>Id</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>ISBN</Table.HeaderCell>
-            <Table.HeaderCell>Menge</Table.HeaderCell>
+            <Table.HeaderCell>Lagerbestand</Table.HeaderCell>
             <Table.HeaderCell>Preis</Table.HeaderCell>
             <Table.HeaderCell>Autoren</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
@@ -128,8 +152,12 @@ export default () => {
                   <Table.Cell>{a.id}</Table.Cell>
                   <Table.Cell>{a.name}</Table.Cell>
                   <Table.Cell>{a.isbn}</Table.Cell>
-                  <Table.Cell>{a.amount}</Table.Cell>
-                  <Table.Cell>{a.price}</Table.Cell>
+                  <Table.Cell>
+                    {invoiceStats[a.id]
+                      ? parseInt(a.amount + "") - invoiceStats[a.id].totalSend
+                      : a.amount}
+                  </Table.Cell>
+                  <Table.Cell>{a.price} €</Table.Cell>
                   <Table.Cell>
                     {a.authors.map((a) => (
                       <p>{a.name}</p>

@@ -29,7 +29,6 @@ export default function useInvoices() {
     (invoiceId) => {
       const _invoices = [...invoices];
       _invoices[invoiceId] = undefined;
-      console.log(_invoices);
       setLocalStorageInvoices(_invoices);
       postData({ invoices: _invoices });
     },

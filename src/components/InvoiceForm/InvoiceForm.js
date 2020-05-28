@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useCompany, useCustomers, useAuthors, useArticles } from "../../hooks";
 import {
-  Container,
   Form,
   Input,
   Card,
@@ -130,7 +129,6 @@ export default ({
     if (value < customersLength) customer = getCustomerById(value);
     else customer = { ...customerSceleton, id: customersLength };
     setCustomer(customer);
-    console.log(customer);
     setInvoice({
       ...invoice,
       customer,

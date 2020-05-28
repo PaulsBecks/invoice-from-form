@@ -45,7 +45,6 @@ export default function Article({ article, setArticle }) {
     } else {
       author = { ...authorSceleton, id: authorsLength };
     }
-    console.log(author, value);
     setAuthor(author);
     setArticle({ ...article, authors: author ? [author] : [] });
   };
