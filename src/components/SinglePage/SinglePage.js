@@ -27,7 +27,7 @@ const SinglePage = ({
       const net = totalPriceWithDiscount / (1 + customer.ust / 100);
       return net;
     })
-    .reduce((total, x) => parseFloat(x) + total, 0);
+    .reduce((total, x) => x + total, 0);
 
   if (!customer) {
     return null;
@@ -248,8 +248,8 @@ const SinglePage = ({
                   <p>
                     <b>
                       {formatPrice(
-                        ((articles_net_price + parseFloat(porto)) *
-                          parseFloat(customer.ust)) /
+                        ((articles_net_price + parsePrice(porto + "")) *
+                          parsePrice(customer.ust + "")) /
                           100
                       )}{" "}
                       €
@@ -263,8 +263,8 @@ const SinglePage = ({
               <p>
                 <b>
                   {formatPrice(
-                    (articles_net_price + parseFloat(porto)) *
-                      (1 + parseFloat(customer.ust) / 100)
+                    (articles_net_price + parsePrice(porto)) *
+                      (1 + parsePrice(customer.ust + "") / 100)
                   )}{" "}
                   €
                 </b>
