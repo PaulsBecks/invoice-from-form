@@ -60,7 +60,7 @@ export default function Footer() {
                 <Link>Impressum</Link>
               </li>
               <li>
-                <Link>Datenschutz</Link>
+                <Link>Datenschutzerklärung</Link>
               </li>
               <li>
                 <Link>AGB</Link>
