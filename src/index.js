@@ -20,29 +20,37 @@ const App = () => {
   return (
     <Router>
       <TopNavigationBar />
-      <div className="invoice-app-container">
-        <Switch>
-          <Route exact path="/">
-            <LandingPage />
-          </Route>
-          <Route exact path="/invoice/new">
-            <Home />
-          </Route>
-          <Route path="/invoices">
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/invoices">
+          <div className="invoice-app-container">
             <Invoices />
-          </Route>
-          <Route path="/customers">
+          </div>
+        </Route>
+        <Route exact path="/invoices/new">
+          <div className="invoice-app-container">
+            <Home />
+          </div>
+        </Route>
+        <Route path="/customers">
+          <div className="invoice-app-container">
             <Customers />
-          </Route>
-          <Route path="/articles">
+          </div>
+        </Route>
+        <Route path="/articles">
+          <div className="invoice-app-container">
             <Articles />
-          </Route>
+          </div>
+        </Route>
 
-          <Route path="/authors">
+        <Route path="/authors">
+          <div className="invoice-app-container">
             <Authors />
-          </Route>
-        </Switch>
-      </div>
+          </div>
+        </Route>
+      </Switch>
     </Router>
   );
 };

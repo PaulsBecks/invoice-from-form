@@ -57,7 +57,7 @@ export default function CustomerForm({ customer, setCustomer }) {
       />
       <Form.Field
         control={Editor}
-        label={"Lieferadress"}
+        label={"Lieferadresse"}
         onChange={setShippingAddress}
         value={shippingAddress}
         onBlur={() => {

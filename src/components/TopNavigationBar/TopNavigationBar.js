@@ -59,7 +59,7 @@ export default function TopNavigationBar() {
               size="large"
               className="oi-top-navigation-bar-new-invoice"
               content="Neue Rechnung"
-              onClick={() => history.push("/invoice/new")}
+              onClick={() => history.push("/invoices/new")}
               secondary
             />
           </div>

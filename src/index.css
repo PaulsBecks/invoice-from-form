@@ -1,3 +1,8 @@
+:root {
+  --primary-color: #2c7f83;
+  --secondary-color: #ffa31a;
+}
+
 .invoice-app-container {
   margin: 2em 14em;
 }

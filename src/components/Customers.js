@@ -61,7 +61,7 @@ export default () => {
           <Table.Row>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Rechnungsadresse</Table.HeaderCell>
-            <Table.HeaderCell>Lieferadress</Table.HeaderCell>
+            <Table.HeaderCell>Lieferadresse</Table.HeaderCell>
             <Table.HeaderCell>Rabatt</Table.HeaderCell>
             <Table.HeaderCell>MwST</Table.HeaderCell>
             <Table.HeaderCell></Table.HeaderCell>
