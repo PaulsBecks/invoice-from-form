@@ -56,7 +56,7 @@
 .billeroo-reference-section-text-title,
 .billeroo-added-value-section-text-title,
 .billeroo-title-section-text-title {
-  color: #2c7f83;
+  color: var(--primary-color);
   margin-bottom: 1em !important;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .billeroo-alternate-section {
-  background: #2c7f83;
+  background: var(--primary-color);
   color: white;
   border-radius: 2em;
 }

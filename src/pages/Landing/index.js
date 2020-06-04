@@ -4,8 +4,10 @@ import "./Landing.css";
 import { Button, Icon, Card, Table } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
+import { useGA } from "../../hooks";
 
 export default function LandingPage() {
+  useGA();
   const history = useHistory();
   const openNewInvoice = () => {
     history.push("/invoices/new");

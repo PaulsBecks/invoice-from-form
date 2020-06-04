@@ -26,6 +26,12 @@ export default function Footer() {
               <li>
                 <Link to="/invoices/new">Rechnung erstellen</Link>
               </li>
+              <li>
+                <Link to="/faq">FAQ</Link>
+              </li>
+              <li>
+                <Link to="/blog">Blog</Link>
+              </li>
             </ul>
           </div>
         </div>

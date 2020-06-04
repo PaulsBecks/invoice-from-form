@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useInvoices, useCompany, useCustomers, useUser } from "../../hooks";
+import { useInvoices, useCompany, useCustomers, useGA } from "../../hooks";
 import Invoice from "../../components/Invoice";
 import {
   invoice as invoiceSceleton,
@@ -11,6 +11,7 @@ export default function Home() {
   const [company] = useCompany();
   const [customers] = useCustomers();
   const history = useHistory();
+  useGA();
 
   const [invoices, , , updateInvoice, invoicesLength] = useInvoices();
   const [invoice, setInvoice] = useState({

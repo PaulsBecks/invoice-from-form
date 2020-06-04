@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Table, Modal } from "semantic-ui-react";
-import { useAuthors } from "../../hooks";
+import { useAuthors, useGA } from "../../hooks";
 import { author as authorSceleton } from "../../sceletons";
 import Author from "../Author";
-import { formatPrice } from "../../services";
 
 export default function Authors() {
   const [authors, , deleteAuthor, updateAuthor, authorsLength] = useAuthors();
   const [author, setAuthor] = useState();
+  useGA();
 
   return (
     <div>

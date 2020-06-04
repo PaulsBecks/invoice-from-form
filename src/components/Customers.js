@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCustomers } from "../hooks";
+import { useCustomers, useGA } from "../hooks";
 import { customer as customerSceleton } from "../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import CustomerForm from "./CustomerForm/CustomerForm";
@@ -12,6 +12,7 @@ export default () => {
     customersLength,
   ] = useCustomers();
   const [customer, setCustomer] = useState();
+  useGA();
 
   const saveCustomer = () => {
     if (customer.id >= customersLength) {

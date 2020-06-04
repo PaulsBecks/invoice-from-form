@@ -13,6 +13,7 @@ import TopNavigationBar from "./components/TopNavigationBar";
 
 import "semantic-ui-less/semantic.less";
 import LandingPage from "./pages/Landing";
+import FAQ from "./pages/FAQ/FAQ";
 
 const App = () => {
   //useMigration();
@@ -24,7 +25,7 @@ const App = () => {
         <Route exact path="/">
           <LandingPage />
         </Route>
-        <Route path="/invoices">
+        <Route exact path="/invoices">
           <div className="invoice-app-container">
             <Invoices />
           </div>
@@ -48,6 +49,11 @@ const App = () => {
         <Route path="/authors">
           <div className="invoice-app-container">
             <Authors />
+          </div>
+        </Route>
+        <Route path="/faq">
+          <div className="invoice-app-container">
+            <FAQ />
           </div>
         </Route>
       </Switch>
