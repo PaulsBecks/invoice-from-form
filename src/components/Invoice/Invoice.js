@@ -68,7 +68,11 @@ export default ({
                 {invoice.customer && (
                   <Button
                     onClick={saveInvoice}
-                    content={newInvoice ? "Anlegen" : "Speichern"}
+                    content={
+                      newInvoice
+                        ? "Anlegen & Schließen"
+                        : "Speichern & Schließen"
+                    }
                     positive
                     icon="check"
                     labelPosition="right"
