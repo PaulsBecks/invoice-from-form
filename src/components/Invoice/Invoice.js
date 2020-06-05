@@ -8,33 +8,38 @@ import { Button, Segment, Icon, Message } from "semantic-ui-react";
 import "./Invoice.css";
 import { useCustomers } from "../../hooks";
 import { calculateTotalPrice } from "../../services";
+import { useHistory, Prompt } from "react-router";
 
 export default ({
-  edit,
+  edit = true,
   invoice,
   setInvoice,
-  invoices,
   updateInvoice,
   onSave,
+  newInvoice,
 }) => {
-  if (!invoice || !invoices) {
-    return null;
+  if (!invoice) {
+    return (
+      <div>
+        404 - Diese Rechnung wurde nicht gefunden. Bitte wenden Sie sich bei
+        fehlern an den Service: service@billeroo.de
+      </div>
+    );
   }
   const [active, setActive] = useState(edit);
   const [formSelected, setFormSelected] = useState([]);
   const [, , , updateCustomer] = useCustomers();
+  const history = useHistory();
 
   const saveInvoice = () => {
     invoice["totalPrice"] = calculateTotalPrice(invoice);
     updateInvoice(invoice);
-    setInvoice();
     updateCustomer(invoice.customer);
     if (typeof onSave === "function") {
       onSave();
     }
+    history.push("/invoices");
   };
-
-  const newInvoice = invoice.id === invoices.length;
 
   return (
     <div>

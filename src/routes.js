@@ -7,7 +7,7 @@ import Authors from "./components/Authors/Authors";
 import useMigration from "./hooks/useMigration";
 import TopNavigationBar from "./components/TopNavigationBar";
 
-import Home from "./pages/Home/Home";
+import InvoiceNew from "./pages/InvoiceNew/InvoiceNew";
 import { Switch, Route } from "react-router-dom";
 
 import LandingPage from "./pages/Landing";
@@ -27,7 +27,7 @@ export default function Routes() {
       </Route>
       <Route exact path="/invoices/new">
         <div className="invoice-app-container">
-          <Home />
+          <InvoiceNew />
         </div>
       </Route>
       <Route path="/customers">

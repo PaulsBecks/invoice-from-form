@@ -45,11 +45,19 @@ export default function useInvoices() {
     [invoices]
   );
 
+  const getInvoiceById = useCallback(
+    (invoiceId) => {
+      return invoices[invoiceId];
+    },
+    [invoices]
+  );
+
   return [
     invoices.filter((i) => i && typeof i === "object"),
     addInvoice,
     removeInvoice,
     updateInvoice,
     invoices.length,
+    getInvoiceById,
   ];
 }

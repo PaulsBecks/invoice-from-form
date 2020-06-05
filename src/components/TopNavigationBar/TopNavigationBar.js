@@ -40,19 +40,19 @@ export default function TopNavigationBar() {
             <Button.Group>
               <Button
                 content="Rechnungen"
-                onClick={() => history.push("invoices")}
+                onClick={() => history.push("/invoices")}
               />
               <Button
                 content="Artikel"
-                onClick={() => history.push("articles")}
+                onClick={() => history.push("/articles")}
               />
               <Button
                 content="Kunden"
-                onClick={() => history.push("customers")}
+                onClick={() => history.push("/customers")}
               />
               <Button
                 content="Autoren"
-                onClick={() => history.push("authors")}
+                onClick={() => history.push("/authors")}
               />
             </Button.Group>
             <Button
