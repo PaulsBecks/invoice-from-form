@@ -40,9 +40,11 @@ export default function Footer() {
           <div className="billeroo-footer-cell">
             <h3>Kontakt</h3>
             <p>
+              <Icon name="mail" />
               service@billeroo.de <br />
             </p>
             <p>
+              <Icon name="phone" />
               +49 152 065543
               <br />
             </p>
@@ -63,10 +65,10 @@ export default function Footer() {
             <h3>Rechtliches</h3>
             <ul>
               <li>
-                <Link>Impressum</Link>
+                <Link to="/imprint">Impressum</Link>
               </li>
               <li>
-                <Link>Datenschutzerklärung</Link>
+                <Link to="/dataprotection">Datenschutzerklärung</Link>
               </li>
               <li>
                 <Link>AGB</Link>

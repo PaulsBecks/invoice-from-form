@@ -2,6 +2,7 @@ import React, { useDebugValue } from "react";
 import { Accordion } from "semantic-ui-react";
 import { useGA } from "../../hooks";
 import "./FAQ.css";
+import Footer from "../../components/Footer";
 
 export default function FAQ() {
   useGA();
@@ -15,8 +16,13 @@ export default function FAQ() {
   ];
   return (
     <div className="billeroo-faq-page">
-      <h1 className="billeroo-faq-page-title">FAQ - Häufig gestellte Fragen</h1>
-      <Accordion defaultActiveIndex={1} panels={panels} />
+      <div className="invoice-app-container">
+        <h1 className="billeroo-faq-page-title">
+          FAQ - Häufig gestellte Fragen
+        </h1>
+        <Accordion defaultActiveIndex={1} panels={panels} />
+      </div>
+      <Footer />
     </div>
   );
 }

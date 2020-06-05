@@ -6,7 +6,7 @@ import "./index.css";
 import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
 import Authors from "./components/Authors/Authors";
-import useMigration from "./hooks/useMigration";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
@@ -14,6 +14,8 @@ import TopNavigationBar from "./components/TopNavigationBar";
 import "semantic-ui-less/semantic.less";
 import LandingPage from "./pages/Landing";
 import FAQ from "./pages/FAQ/FAQ";
+import Imprint from "./pages/Imprint/Imprint";
+import DataProtection from "./pages/DataProtection/DataProtection";
 
 const App = () => {
   //useMigration();
@@ -21,6 +23,7 @@ const App = () => {
   return (
     <Router>
       <TopNavigationBar />
+      <ScrollToTop />
       <Switch>
         <Route exact path="/">
           <LandingPage />
@@ -51,10 +54,15 @@ const App = () => {
             <Authors />
           </div>
         </Route>
+
         <Route path="/faq">
-          <div className="invoice-app-container">
-            <FAQ />
-          </div>
+          <FAQ />
+        </Route>
+        <Route path="/imprint">
+          <Imprint />
+        </Route>
+        <Route path="/dataprotection">
+          <DataProtection />
         </Route>
       </Switch>
     </Router>

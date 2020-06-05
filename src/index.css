@@ -5,6 +5,7 @@
 
 .invoice-app-container {
   margin: 2em 14em;
+  min-height: 100vh;
 }
 
 .invoice-tab-container {
