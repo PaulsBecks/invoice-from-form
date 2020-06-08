@@ -16,6 +16,8 @@ import LandingPage from "./pages/Landing";
 import FAQ from "./pages/FAQ/FAQ";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
+import Stats from "./pages/Stats";
+import { Pricing } from "./pages";
 
 const App = () => {
   //useMigration();
@@ -57,12 +59,17 @@ const App = () => {
             <Authors />
           </div>
         </Route>
-
+        <Route path="/stats">
+          <Stats />
+        </Route>
         <Route path="/faq">
           <FAQ />
         </Route>
         <Route path="/imprint">
           <Imprint />
+        </Route>
+        <Route path="/pricing">
+          <Pricing />
         </Route>
         <Route path="/dataprotection">
           <DataProtection />
