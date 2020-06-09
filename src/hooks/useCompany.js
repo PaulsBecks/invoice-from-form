@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import getData from "../services/backend/getData";
 
 export default function useCompany() {
-  const [company, setCompany] = useLocalStorage("companies", companySceleton);
+  const [company, setCompany] = useLocalStorage("company", companySceleton);
 
   useEffect(() => {
     async function fetchData() {

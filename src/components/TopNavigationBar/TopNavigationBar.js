@@ -10,6 +10,7 @@ import getData from "../../services/backend/getData";
 import dataToLocalStorage from "../../services/localStorage/dataToLocalStorage";
 import dataFromLocalStorage from "../../services/localStorage/dataFromLocalStorage";
 import postData from "../../services/backend/postData";
+import { company as companySceleton } from "../../sceletons";
 
 export default function TopNavigationBar() {
   const [invoices] = useInvoices();
@@ -35,7 +36,7 @@ export default function TopNavigationBar() {
         </Button>
       </div>
       <div className="billeroo-top-navigation-bar-buttons">
-        {invoices.length > 0 && (
+        {(invoices.length > 0 || (user && user.user)) && (
           <div>
             <Button.Group>
               <Button
@@ -55,15 +56,15 @@ export default function TopNavigationBar() {
                 onClick={() => history.push("/authors")}
               />
             </Button.Group>
-            <Button
-              size="large"
-              className="oi-top-navigation-bar-new-invoice"
-              content="Neue Rechnung"
-              onClick={() => history.push("/invoices/new")}
-              secondary
-            />
           </div>
         )}
+        <Button
+          size="large"
+          className="oi-top-navigation-bar-new-invoice"
+          content="Neue Rechnung"
+          onClick={() => history.push("/invoices/new")}
+          secondary
+        />
         <Button
           className="oi-top-navigation-bar-new-invoice"
           onClick={() => setModalIsOpen(true)}
@@ -88,6 +89,7 @@ export default function TopNavigationBar() {
                       invoices: [],
                       customers: [],
                       authors: [],
+                      company: companySceleton,
                     });
                     window.document.location.href = "/";
                   }}

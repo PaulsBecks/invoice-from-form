@@ -9,12 +9,12 @@ export default {
   <b>Bankverbindung</b> Postbank • IBAN DE 00 0000 0000 0000 00 • BIC ABCDEFGHIJKL<br/>\
   <b>Steuernummer</b> 000/000/00000 | <b>USt-IdNr.</b> DE000000000</p>",
   invoiceText:
-    "<p>Zahlen Sie bitte den Rechnungsbetrag bis zum <Datum> unter Angabe der Rechnungsnummer\
+    "<p>Zahlen Sie bitte den Rechnungsbetrag bis zum -Datum- unter Angabe der Rechnungsnummer \
 auf unten stehendes Konto.<br/>\
 Die gelieferte Ware bleibt bis zur vollständigen Bezahlung Eigentum des Verlages.<br/>\
 Vielen Dank für Ihre Bestellung.</p>\
 <p>Mit herzlichen Grüßen.<br/>\
-Musterstadt, den <Datum></p>",
+Musterstadt, den -Datum-</p>",
   subjectAndBelow:
     "<h3>Rechnung</h3>\
   <p><br></p>\

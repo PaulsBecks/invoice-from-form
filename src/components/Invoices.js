@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useInvoices, useGA } from "../hooks";
 
-import { Button, Table } from "semantic-ui-react";
+import { Button, Table, Checkbox, Form } from "semantic-ui-react";
 import { formatDate, formatPrice, printInvoice } from "../services";
 import SinglePage from "./SinglePage/SinglePage";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router";
 import InvoiceNew from "../pages/InvoiceNew/InvoiceNew";
 import InvoiceDetail from "../pages/InvoiceDetail/InvoiceDetail";
+import ReactDatePicker from "react-datepicker";
 
 export default () => {
   const [invoices, , removeInvoice, updateInvoice] = useInvoices();
@@ -61,9 +62,50 @@ export default () => {
                       </Table.Cell>
                       <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
                       <Table.Cell>
-                        {i.paymentDate
-                          ? formatDate(i.paymentDate)
-                          : "Ausstehend"}
+                        <Form style={{ marginBottom: 0 }}>
+                          <Form.Group
+                            style={{
+                              marginBottom: "0",
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Checkbox
+                              onChange={(e, { name, checked }) => {
+                                if (checked) {
+                                  updateInvoice({
+                                    ...i,
+                                    [name]: checked,
+                                    paymentDate: new Date(),
+                                  });
+                                } else {
+                                  updateInvoice({
+                                    ...i,
+                                    [name]: checked,
+                                    paymentDate: undefined,
+                                  });
+                                }
+                              }}
+                              name="payed"
+                              checked={i.payed}
+                              toggle
+                            />
+                            {i.paymentDate ? (
+                              <Form.Field
+                                selected={new Date(i.paymentDate)}
+                                onChange={(v) =>
+                                  updateInvoice({ ...i, paymentDate: v })
+                                }
+                                control={ReactDatePicker}
+                                dateFormat="dd/MM/yyyy"
+                              />
+                            ) : (
+                              <span style={{ marginLeft: "0.5em" }}>
+                                Ausstehend
+                              </span>
+                            )}
+                          </Form.Group>
+                        </Form>
                       </Table.Cell>
                       <Table.Cell>
                         <Button
