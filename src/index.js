@@ -18,6 +18,7 @@ import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import Stats from "./pages/Stats";
 import { Pricing } from "./pages";
+import Home from "./pages/Home";
 
 const App = () => {
   //useMigration();
@@ -36,7 +37,7 @@ const App = () => {
       <ScrollToTop />
       <Switch>
         <Route exact path="/">
-          <LandingPage />
+          <Home />
         </Route>
         <Route path="/invoices">
           <div className="invoice-app-container">
@@ -60,7 +61,9 @@ const App = () => {
           </div>
         </Route>
         <Route path="/stats">
-          <Stats />
+          <div className="invoice-app-container">
+            <Stats />
+          </div>
         </Route>
         <Route path="/faq">
           <FAQ />

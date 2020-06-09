@@ -5,5 +5,6 @@ export { default as useArticles } from "./useArticles";
 export { default as useAuthors } from "./useAuthors";
 export { default as useCustomers } from "./useCustomers";
 export { default as useUser } from "./useUser";
+export { default as useArticleStats } from "./useArticleStats";
 export { default as useInvoiceStats } from "./useInvoiceStats";
 export { default as useGA } from "./useGA";

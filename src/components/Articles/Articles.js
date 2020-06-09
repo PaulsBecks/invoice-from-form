@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useArticles, useInvoiceStats, useGA } from "../../hooks";
+import { useArticles, useArticleStats, useGA } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
@@ -17,7 +17,7 @@ export default () => {
   ] = useArticles();
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
-  const invoiceStats = useInvoiceStats();
+  const invoiceStats = useArticleStats();
   useGA();
 
   return (

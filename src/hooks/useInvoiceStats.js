@@ -3,30 +3,18 @@ import { useMemo } from "react";
 
 export default function useInvoiceStats() {
   const [invoices] = useInvoices();
-  const invoicesStats = useMemo(() => {
-    return invoices.reduce((stats, i) => {
-      for (const aId in i.articles) {
-        const article = i.articles[aId];
-        if (!stats[article.articleId]) {
-          stats[article.articleId] = {
-            totalSold: 0,
-            invoices: [],
-            totalSend: 0,
-          };
-        }
-        stats[article.articleId].totalSold += parseInt(article.toBePayed + "");
-        stats[article.articleId].totalSend += parseInt(article.toBeSend + "");
-        stats[article.articleId].invoices.push({
-          id: i.id,
-          send: article.toBeSend,
-          payed: article.toBePayed,
-          invoiceNumber: i.invoiceNumber,
-          customerName: i.customer.name,
-        });
-      }
-      return stats;
-    }, {});
-  }, [invoices]);
 
-  return invoicesStats;
+  const invoiceStats = useMemo(() => {
+    let invoiceStats = [[], [], [], [], [], [], [], [], [], [], [], []];
+
+    for (let i in invoices) {
+      const invoice = invoices[i];
+      const invoiceDate = new Date(invoice.invoiceDate);
+      const { totalPrice } = invoice;
+      const month = invoiceDate.getMonth();
+      invoiceStats[month].push({ totalPrice });
+    }
+    return invoiceStats;
+  }, [invoices]);
+  return invoiceStats;
 }

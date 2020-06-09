@@ -7,7 +7,6 @@ export default function useGA() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(history);
     ReactGA.pageview(history.location.pathname + history.location.search);
   }, [history]);
 }

@@ -98,6 +98,7 @@ export default () => {
                                 }
                                 control={ReactDatePicker}
                                 dateFormat="dd/MM/yyyy"
+                                transparent
                               />
                             ) : (
                               <span style={{ marginLeft: "0.5em" }}>
