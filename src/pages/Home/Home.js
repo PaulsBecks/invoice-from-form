@@ -8,7 +8,7 @@ export default function Home() {
   if (user.user) {
     return (
       <div className="invoice-app-container">
-        <Stats />;
+        <Stats />
       </div>
     );
   }
