@@ -16,6 +16,11 @@ body {
   background-color: #f6f6f6;
 }
 
+.ui.toggle.checkbox .box::before,
+.ui.toggle.checkbox label::before {
+  background: #b8365588 !important;
+}
+
 @media (max-width: 1600px) {
   .invoice-app-container {
     margin: 2em 10em;
