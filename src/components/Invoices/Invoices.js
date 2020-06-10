@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useInvoices, useGA } from "../../hooks";
 
-import { Button, Table, Checkbox, Form } from "semantic-ui-react";
+import { Button, Table, Checkbox, Form, Modal } from "semantic-ui-react";
 import { formatDate, formatPrice, printInvoice } from "../../services";
 import SinglePage from "../SinglePage/SinglePage";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router";
 import InvoiceNew from "../../pages/InvoiceNew/InvoiceNew";
 import InvoiceDetail from "../../pages/InvoiceDetail/InvoiceDetail";
 import ReactDatePicker from "react-datepicker";
+import sendInvoice from "../../services/sendInvoice";
+import SendEmailInvoiceModal from "../SendEmailInvoiceModal/SendEmailInvoiceModal";
 
 export default () => {
   const [invoices, , removeInvoice, updateInvoice] = useInvoices();
   const [invoiceDownloadSelected, setInvoiceDownloadSelected] = useState();
+  const [invoiceEmailSelected, setInvoiceEmailSelected] = useState();
   useGA();
   const history = useHistory();
   let { path } = useRouteMatch();
@@ -25,6 +28,11 @@ export default () => {
       print();
     }
   }, [invoiceDownloadSelected]);
+
+  async function send(options) {
+    await sendInvoice("singlePage", options);
+    setInvoiceEmailSelected();
+  }
 
   return (
     <Switch>
@@ -120,6 +128,11 @@ export default () => {
                           onClick={() => setInvoiceDownloadSelected(i)}
                         ></Button>
                         <Button
+                          primary
+                          icon="mail"
+                          onClick={() => setInvoiceEmailSelected(i)}
+                        ></Button>
+                        <Button
                           negative
                           icon="trash"
                           onClick={() => removeInvoice(i.id)}
@@ -131,10 +144,20 @@ export default () => {
             </Table.Body>
           </Table>
           <div style={{ position: "absolute", opacity: "0.0" }}>
-            {invoiceDownloadSelected && (
-              <SinglePage id="singlePage" invoice={invoiceDownloadSelected} />
+            {(invoiceDownloadSelected || invoiceEmailSelected) && (
+              <SinglePage
+                id="singlePage"
+                invoice={invoiceDownloadSelected || invoiceEmailSelected}
+              />
             )}
           </div>
+          {invoiceEmailSelected && (
+            <SendEmailInvoiceModal
+              invoice={invoiceEmailSelected}
+              setInvoice={setInvoiceEmailSelected}
+              onSend={send}
+            />
+          )}
         </div>
       </Route>
       <Route exact path={`${path}/new`}>

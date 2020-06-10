@@ -16,7 +16,9 @@ export default function Footer() {
                 <Icon name="twitter" /> Twitter
               </li>
               <li>
-                <Icon name="Instagram" /> Instagram
+                <Link to="https://www.instagram.com/billeroo.de/">
+                  <Icon name="Instagram" /> Instagram
+                </Link>
               </li>
             </ul>
           </div>

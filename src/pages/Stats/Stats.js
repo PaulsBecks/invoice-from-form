@@ -17,38 +17,11 @@ import {
 import { useInvoiceStats, useArticleStats } from "../../hooks";
 import "./Stats.css";
 
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mär",
-  "Apr",
-  "Mai",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Okt",
-  "Nov",
-  "Dez",
-];
-
-const primaryColor = "#2c7f83";
-
-const colors = [
-  "#0d2223",
-  "#123032",
-  "#173e40",
-  "#1b4d4f",
-  "#205b5e",
-  "#25696d",
-  "#2a787b",
-  "#2e868b",
-  "#33959a",
-  "#37a4a9",
-  "#3cb2b8",
-  "#44bdc3",
-  "#53c3c8",
-];
+import {
+  primaryColor,
+  monochromaticColors as colors,
+  monthNames,
+} from "../../constants";
 
 export default function Stats() {
   const invoiceStats = useInvoiceStats();
@@ -91,42 +64,48 @@ export default function Stats() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div style={{ width: "45%", padding: "2em" }}>
-          <h2 className="billeroo-stats-container-title">
-            Artikelumsätze - Anteilig
-          </h2>
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={articleTurnoverSeries}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="Gesamt Umsatz"
-                label
-              >
-                {articleTurnoverSeries.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
+        {articleTurnoverSeries.length > 0 && (
+          <div style={{ width: "45%", padding: "2em" }}>
+            <h2 className="billeroo-stats-container-title">
+              Artikelumsätze - Anteilig
+            </h2>
+            <ResponsiveContainer width="100%" height={400}>
+              <PieChart>
+                <Pie
+                  data={articleTurnoverSeries}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  dataKey="Gesamt Umsatz"
+                  label
+                >
+                  {articleTurnoverSeries.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={colors[index]} />
+                  ))}
+                </Pie>
+                <Tooltip />
 
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </div>
+      {articleTurnoverSeries.length > 0 && (
+        <div>
+          <h2 className="billeroo-stats-container-title">Artikelumsätze</h2>
+          <ResponsiveContainer width="100%" height={400}>
+            <BarChart data={articleTurnoverSeries}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
               <Legend />
-            </PieChart>
+              <Bar dataKey="Gesamt Umsatz" fill={primaryColor} />
+            </BarChart>
           </ResponsiveContainer>
         </div>
-      </div>
-      <h2 className="billeroo-stats-container-title">Artikelumsätze</h2>
-      <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={articleTurnoverSeries}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="Gesamt Umsatz" fill={primaryColor} />
-        </BarChart>
-      </ResponsiveContainer>
+      )}
     </div>
   );
 }
