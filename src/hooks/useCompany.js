@@ -6,7 +6,7 @@ import getData from "../services/backend/getData";
 
 export default function useCompany() {
   const [company, setCompany] = useLocalStorage("company", companySceleton);
-
+  console.log(company);
   useEffect(() => {
     async function fetchData() {
       const data = await getData();

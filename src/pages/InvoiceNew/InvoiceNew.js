@@ -11,6 +11,7 @@ export default function InvoiceNew({ updateInvoice: _updateInvoice }) {
   const [company] = useCompany();
   const [customers] = useCustomers();
   const history = useHistory();
+  const today = new Date();
   useGA();
 
   const [, , , __updateInvoice, invoicesLength] = useInvoices();
@@ -21,6 +22,9 @@ export default function InvoiceNew({ updateInvoice: _updateInvoice }) {
       ...customerSceleton,
       id: customers.length,
     },
+    invoiceNumber: `${today.getFullYear()}${
+      today.getMonth() < 10 ? "0" + today.getMonth() : today.getMonth()
+    }${174 + invoicesLength}`,
     company,
   });
   // if the parent component needs to update invoices it can put the function in the props

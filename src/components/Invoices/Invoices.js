@@ -11,6 +11,8 @@ import ReactDatePicker from "react-datepicker";
 import sendInvoice from "../../services/sendInvoice";
 import SendEmailInvoiceModal from "../SendEmailInvoiceModal/SendEmailInvoiceModal";
 
+import { monochromaticColors } from "../../constants";
+
 export default () => {
   const [invoices, , removeInvoice, updateInvoice] = useInvoices();
   const [invoiceDownloadSelected, setInvoiceDownloadSelected] = useState();
@@ -73,9 +75,9 @@ export default () => {
                         <Form style={{ marginBottom: 0 }}>
                           <Form.Group
                             style={{
-                              marginBottom: "0",
                               display: "flex",
                               alignItems: "center",
+                              margin: "0",
                             }}
                           >
                             <Checkbox
@@ -116,22 +118,28 @@ export default () => {
                           </Form.Group>
                         </Form>
                       </Table.Cell>
-                      <Table.Cell>
+                      <Table.Cell style={{}}>
                         <Button
                           primary
                           icon="edit"
                           onClick={() => history.push(`${path}/${i.id}`)}
                         ></Button>
-                        <Button
-                          secondary
-                          icon="download"
-                          onClick={() => setInvoiceDownloadSelected(i)}
-                        ></Button>
-                        <Button
-                          primary
-                          icon="mail"
-                          onClick={() => setInvoiceEmailSelected(i)}
-                        ></Button>
+                        <Button.Group>
+                          <Button
+                            secondary
+                            icon="download"
+                            onClick={() => setInvoiceDownloadSelected(i)}
+                          ></Button>
+                          <Button
+                            style={{
+                              borderLeft: "1px solid white",
+                              marginRight: "2px",
+                            }}
+                            secondary
+                            icon="mail"
+                            onClick={() => setInvoiceEmailSelected(i)}
+                          ></Button>
+                        </Button.Group>{" "}
                         <Button
                           negative
                           icon="trash"
