@@ -19,6 +19,8 @@ import DataProtection from "./pages/DataProtection/DataProtection";
 import Stats from "./pages/Stats";
 import { Pricing } from "./pages";
 import Home from "./pages/Home";
+import Blog from "./pages/Blog";
+import BlogEntry from "./pages/BlogEntry/BlogEntry";
 
 const App = () => {
   //useMigration();
@@ -67,6 +69,12 @@ const App = () => {
         </Route>
         <Route path="/faq">
           <FAQ />
+        </Route>
+        <Route exact path="/blog">
+          <Blog />
+        </Route>
+        <Route path="/blog/:blogId">
+          <BlogEntry />
         </Route>
         <Route path="/imprint">
           <Imprint />

@@ -32,3 +32,9 @@
 .billeroo-footer-cell a:hover {
   color: #eff0f1;
 }
+
+@media (max-width: 600px) {
+  .billeroo-footer-row {
+    flex-direction: column;
+  }
+}

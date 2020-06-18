@@ -5,6 +5,8 @@ import { Button, Icon, Card, Table } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
 import { useGA } from "../../hooks";
+import BlogCard from "../../components/BlogCard";
+import { blogEntries } from "../../constants";
 
 export default function LandingPage() {
   useGA();
@@ -38,9 +40,9 @@ export default function LandingPage() {
           </div>
           <div className="billeroo-reference-section">
             <div className="billeroo-reference-section-text">
-              <h1 className="billeroo-reference-section-text-title">
+              <h2 className="billeroo-reference-section-text-title">
                 Diese Unternehmen arbeiten bereits mit uns
-              </h1>
+              </h2>
             </div>
             <div className="billeroo-reference-section-images">
               <img
@@ -57,35 +59,41 @@ export default function LandingPage() {
             </div>
             <div className="billeroo-added-value-section-values">
               <div className="billeroo-added-value-section-value">
-                <div className="billeroo-added-value-section-value-icon-wrapper">
-                  <Icon name="calculator" size="big" color="primary" />
+                <div className="billeroo-added-value-section-icon-wrapper">
+                  <img src="/img/undraw_Calculator_0evy.png" />
                 </div>
-                <h2>Kalkulation</h2>
-                <p>
-                  Billeroo rechnet aus allen Angaben, wie Preisen, Rabatten oder
-                  der Mehrwertsteuer direkt die Netto- und Bruttobeträge aus.
-                </p>
+                <div className="billeroo-added-value-section-text-wrapper">
+                  <h2>Kalkulation</h2>
+                  <p>
+                    Billeroo rechnet aus allen Angaben, wie Preisen, Rabatten
+                    oder der Mehrwertsteuer direkt die Netto- und Bruttobeträge
+                    aus.
+                  </p>
+                </div>
               </div>
               <div className="billeroo-added-value-section-value">
-                <div className="billeroo-added-value-section-value-icon-wrapper">
-                  <Icon name="list" size="big" color="primary" />
+                <div className="billeroo-added-value-section-text-wrapper">
+                  <h2>Übersicht</h2>
+                  <p>
+                    Alle Daten auf einen Blick. Rechnungen, Kunden und Artikel
+                    findest du gut sortiert, um dir deine Arbeit zu erleichtern.
+                  </p>
                 </div>
-                <h2>Übersicht</h2>
-                <p>
-                  Alle Daten auf einen Blick. Rechnungen, Kunden und Artikel
-                  findest du gut sortiert, um dir deine Arbeit zu erleichtern.
-                </p>
+                <div className="billeroo-added-value-section-icon-wrapper">
+                  <img src="/img/undraw_online_organizer_ofxm.png" />
+                </div>
               </div>
               <div className="billeroo-added-value-section-value">
-                <div className="billeroo-added-value-section-value-icon-wrapper">
-                  <Icon name="slideshare" size="big" color="primary" />
+                <div className="billeroo-added-value-section-icon-wrapper">
+                  <img src="/img/undraw_work_together_h63l.png" />
                 </div>
-
-                <h2>Kooperation</h2>
-                <p>
-                  Greife von überall auf deine Daten zu und teile sie mit deinen
-                  Kollegen.
-                </p>
+                <div className="billeroo-added-value-section-text-wrapper">
+                  <h2>Kooperation</h2>
+                  <p>
+                    Greife von überall auf deine Daten zu und teile sie mit
+                    deinen Kollegen.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -96,6 +104,14 @@ export default function LandingPage() {
               secondary
               size="huge"
             />
+          </div>
+          <div className="billeroo-blog-section">
+            <h2 className="billeroo-blog-section-title">Blogeinträge</h2>
+            <div className="billeroo-blog-section-entries">
+              {blogEntries.map((be) => (
+                <BlogCard blogEntry={be} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

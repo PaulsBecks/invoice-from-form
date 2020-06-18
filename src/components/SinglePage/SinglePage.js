@@ -47,11 +47,7 @@ const SinglePage = ({
             onClick={() => setFormSelected(["general", "logo"])}
           >
             <div className="invoice-page-image-wrapper">
-              <img
-                className="invoice-header-company-logo"
-                src={company.logo}
-                alt="company logo"
-              />
+              <img className="invoice-header-company-logo" src={company.logo} />
             </div>
           </SinglePageOverlay>
           <div className="invoice-header">
