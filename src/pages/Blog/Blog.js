@@ -19,7 +19,7 @@ export default function Blog() {
       <div className="invoice-app-container">
         <h1>Blogeinträge</h1>
         {blogEntries.map((be) => (
-          <BlogCard blockEntry={be} />
+          <BlogCard blogEntry={be} />
         ))}
       </div>
       <Footer />
