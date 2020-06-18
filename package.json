@@ -25,7 +25,7 @@
     "test": "craco test --env=jsdom",
     "eject": "craco eject",
     "predeploy": "yarn build",
-    "deploy": "NODE_ENV=production yarn build && yarn postbuild && gh-pages -d build",
+    "deploy": "NODE_ENV=production && gh-pages -d build",
     "postbuild": "react-snap"
   },
   "devDependencies": {

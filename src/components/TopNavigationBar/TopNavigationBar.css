@@ -27,3 +27,23 @@
   height: 3em;
   margin-right: 1em;
 }
+
+.billeroo-tabs-menu {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .billeroo-tabs-menu {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .billeroo-tabs-desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .billeroo-top-navigation-left-logo {
+    display: none;
+  }
+}
