@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "react-dom";
+import { hydrate, render } from "react-dom";
 import Customers from "./components/Customers";
 
 import "./index.css";
@@ -7,18 +7,16 @@ import Articles from "./components/Articles";
 import Invoices from "./components/Invoices";
 import Authors from "./components/Authors/Authors";
 import ScrollToTop from "./components/ScrollToTop";
-import InvoiceNew from "./pages/InvoiceNew/InvoiceNew";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
 
 import "semantic-ui-less/semantic.less";
-import LandingPage from "./pages/Landing";
-import FAQ from "./pages/FAQ/FAQ";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import Stats from "./pages/Stats";
 import { Pricing } from "./pages";
 import Home from "./pages/Home";
+import FAQ from "./pages/FAQ";
 import Blog from "./pages/Blog";
 import BlogEntry from "./pages/BlogEntry/BlogEntry";
 
@@ -90,4 +88,10 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+const rootElement = document.getElementById("root");
+
+if (rootElement.hasChildNodes()) {
+  hydrate(<App />, rootElement);
+} else {
+  render(<App />, rootElement);
+}

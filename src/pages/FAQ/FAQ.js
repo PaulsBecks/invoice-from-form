@@ -3,6 +3,7 @@ import { Accordion } from "semantic-ui-react";
 import { useGA } from "../../hooks";
 import "./FAQ.css";
 import Footer from "../../components/Footer";
+import Helmet from 'react-helmet';
 
 export default function FAQ() {
   useGA();
@@ -16,6 +17,13 @@ export default function FAQ() {
   ];
   return (
     <div className="billeroo-faq-page">
+      <Helmet>
+        <title>Billeroo | Häufig gestellte Fragen</title>
+        <meta
+          name="description"
+          content="Wie können wir dir helfen? Finde Antworten auf deine Fragen rund um Billeroo."
+        />
+      </Helmet>
       <div className="invoice-app-container">
         <h1 className="billeroo-faq-page-title">
           FAQ - Häufig gestellte Fragen

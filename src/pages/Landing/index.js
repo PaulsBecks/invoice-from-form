@@ -60,7 +60,10 @@ export default function LandingPage() {
             <div className="billeroo-added-value-section-values">
               <div className="billeroo-added-value-section-value">
                 <div className="billeroo-added-value-section-icon-wrapper">
-                  <img src="/img/undraw_Calculator_0evy.png" />
+                  <img
+                    src="/img/undraw_Calculator_0evy.png"
+                    alt="Ein Mann steht neben einem überlebensgroßen Taschenrechner."
+                  />
                 </div>
                 <div className="billeroo-added-value-section-text-wrapper">
                   <h2>Kalkulation</h2>
@@ -80,12 +83,18 @@ export default function LandingPage() {
                   </p>
                 </div>
                 <div className="billeroo-added-value-section-icon-wrapper">
-                  <img src="/img/undraw_online_organizer_ofxm.png" />
+                  <img
+                    src="/img/undraw_online_organizer_ofxm.png"
+                    alt="Eine Frau sitzt auf einem Browser mit dem andere Webbrowser verknüpft sind."
+                  />
                 </div>
               </div>
               <div className="billeroo-added-value-section-value">
                 <div className="billeroo-added-value-section-icon-wrapper">
-                  <img src="/img/undraw_work_together_h63l.png" />
+                  <img
+                    src="/img/undraw_work_together_h63l.png"
+                    alt="Einige Leute arbeiten zusammen an einer Webseite."
+                  />
                 </div>
                 <div className="billeroo-added-value-section-text-wrapper">
                   <h2>Kooperation</h2>

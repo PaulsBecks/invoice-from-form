@@ -2,6 +2,8 @@ import React from "react";
 import { Table, Icon, Button } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
+import Helmet from "react-helmet";
+
 export default function Pricing() {
   const history = useHistory();
   const openNewInvoice = () => {
@@ -9,6 +11,13 @@ export default function Pricing() {
   };
   return (
     <div>
+      <Helmet>
+        <title>Billeroo | Preise</title>
+        <meta
+          name="description"
+          content="Bis zu 20 Rechnungen kostenlos erstellen pro Monat. Hier findest du die Übersicht über alle Preise und enthaltenen Features."
+        />
+      </Helmet>
       <div className="invoice-app-container">
         <div className="billeroo-price-section">
           <div className="billeroo-price-section-text">
