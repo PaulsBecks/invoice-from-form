@@ -70,17 +70,25 @@ const App = () => {
         </Route>
         <Route path="/stats">
           <div className="invoice-app-container">
-            <Stats />
+            <Suspense fallback={<div></div>}>
+              <Stats />
+            </Suspense>
           </div>
         </Route>
         <Route path="/faq">
-          <FAQ />
+          <Suspense fallback={<div></div>}>
+            <FAQ />
+          </Suspense>
         </Route>
         <Route exact path="/blog">
-          <Blog />
+          <Suspense fallback={<div></div>}>
+            <Blog />
+          </Suspense>
         </Route>
         <Route path="/blog/:blogId">
-          <BlogEntry />
+          <Suspense fallback={<div></div>}>
+            <BlogEntry />
+          </Suspense>
         </Route>
         <Route path="/imprint">
           <Imprint />
