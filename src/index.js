@@ -1,11 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { hydrate, render } from "react-dom";
-import Customers from "./components/Customers";
 
 import "./index.css";
-import Articles from "./components/Articles";
-import Invoices from "./components/Invoices";
-import Authors from "./components/Authors/Authors";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
@@ -13,12 +9,16 @@ import TopNavigationBar from "./components/TopNavigationBar";
 import "semantic-ui-less/semantic.less";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
-import Stats from "./pages/Stats";
 import { Pricing } from "./pages";
-import Home from "./pages/Home";
-import FAQ from "./pages/FAQ";
-import Blog from "./pages/Blog";
-import BlogEntry from "./pages/BlogEntry/BlogEntry";
+const Stats = React.lazy(() => import("./pages/Stats"));
+const FAQ = React.lazy(() => import("./pages/FAQ"));
+const Blog = React.lazy(() => import("./pages/Blog"));
+const BlogEntry = React.lazy(() => import("./pages/BlogEntry/BlogEntry"));
+const Home = React.lazy(() => import("./pages/Home"));
+const Invoices = React.lazy(() => import("./components/Invoices"));
+const Customers = React.lazy(() => import("./components/Customers"));
+const Authors = React.lazy(() => import("./components/Authors/Authors"));
+const Articles = React.lazy(() => import("./components/Articles"));
 
 const App = () => {
   //useMigration();
@@ -41,23 +41,31 @@ const App = () => {
         </Route>
         <Route path="/invoices">
           <div className="invoice-app-container">
-            <Invoices />
+            <Suspense fallback={<div></div>}>
+              <Invoices />
+            </Suspense>
           </div>
         </Route>
         <Route path="/customers">
           <div className="invoice-app-container">
-            <Customers />
+            <Suspense fallback={<div></div>}>
+              <Customers />
+            </Suspense>
           </div>
         </Route>
         <Route path="/articles">
           <div className="invoice-app-container">
-            <Articles />
+            <Suspense fallback={<div></div>}>
+              <Articles />
+            </Suspense>
           </div>
         </Route>
 
         <Route path="/authors">
           <div className="invoice-app-container">
-            <Authors />
+            <Suspense fallback={<div></div>}>
+              <Authors />
+            </Suspense>
           </div>
         </Route>
         <Route path="/stats">
