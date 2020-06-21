@@ -7,7 +7,7 @@ import Author from "./Author";
 import { Segment } from "semantic-ui-react";
 import { formatPrice } from "../services";
 
-export default function Article({ article, setArticle }) {
+export default function Article({ article, setArticle, totalSend = 0 }) {
   const [articlePrice, setArticlePrice] = useState(article.price);
   const [authors, , , , authorsLength, getAuthorById] = useAuthors();
   const [author, setAuthor] = useState(article.authors[0]);
@@ -49,6 +49,12 @@ export default function Article({ article, setArticle }) {
     setArticle({ ...article, authors: author ? [author] : [] });
   };
 
+  const handleAmountChange = (e, { value }) => {
+    const amount = parseInt(value) + totalSend;
+    console.log(amount);
+    setArticle({ ...article, amount });
+  };
+
   return (
     <Form>
       <Form.Group width="equal">
@@ -67,9 +73,9 @@ export default function Article({ article, setArticle }) {
           label="Lagerbestand"
           placeholder="Menge"
           type="number"
-          onChange={handleArticleChange}
+          onChange={handleAmountChange}
           name="amount"
-          value={article.amount}
+          value={parseInt(article.amount) - totalSend}
         />
       </Form.Group>
       <Form.Group>

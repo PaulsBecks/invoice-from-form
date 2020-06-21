@@ -32,7 +32,15 @@ export default () => {
         <Modal onClose={() => setArticle()} open={true}>
           <Modal.Header>Artikel</Modal.Header>
           <Modal.Content>
-            <Article article={article} setArticle={setArticle} />
+            <Article
+              article={article}
+              setArticle={setArticle}
+              totalSend={
+                invoiceStats[article.id]
+                  ? invoiceStats[article.id].totalSend
+                  : 0
+              }
+            />
           </Modal.Content>
           <Modal.Actions>
             <Button
