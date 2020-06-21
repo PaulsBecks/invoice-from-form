@@ -105,7 +105,7 @@ export default ({
         value: c.id,
       }))
     );
-  }, [customers, customer]);
+  }, [customers, customer, customersLength]);
 
   const articlesOptions = useMemo(() => {
     const list = [];

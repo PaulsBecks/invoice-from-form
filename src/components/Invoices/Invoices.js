@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useInvoices, useGA } from "../../hooks";
 
-import { Button, Table, Checkbox, Form, Modal } from "semantic-ui-react";
+import { Button, Table, Checkbox, Form } from "semantic-ui-react";
 import { formatDate, formatPrice, printInvoice } from "../../services";
 import SinglePage from "../SinglePage/SinglePage";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router";
@@ -10,8 +10,7 @@ import InvoiceDetail from "../../pages/InvoiceDetail/InvoiceDetail";
 import ReactDatePicker from "react-datepicker";
 import sendInvoice from "../../services/sendInvoice";
 import SendEmailInvoiceModal from "../SendEmailInvoiceModal/SendEmailInvoiceModal";
-
-import { monochromaticColors } from "../../constants";
+import DeleteAckModal from "../DeleteAckModal";
 
 export default () => {
   const [invoices, , removeInvoice, updateInvoice] = useInvoices();
@@ -140,11 +139,10 @@ export default () => {
                             onClick={() => setInvoiceEmailSelected(i)}
                           ></Button>
                         </Button.Group>{" "}
-                        <Button
-                          negative
-                          icon="trash"
-                          onClick={() => removeInvoice(i.id)}
-                        ></Button>
+                        <DeleteAckModal
+                          onDelete={() => removeInvoice(i.id)}
+                          type="Rechnung"
+                        />
                       </Table.Cell>
                     </Table.Row>
                   )

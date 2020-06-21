@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import InvoiceForm from "../InvoiceForm";
 import PrintButton from "../PrintButton";
 import SinglePage from "../SinglePage/SinglePage";
-import { Button, Segment, Icon, Message } from "semantic-ui-react";
+import { Button, Message } from "semantic-ui-react";
 
 import "./Invoice.css";
 import { useCustomers } from "../../hooks";
 import { calculateTotalPrice } from "../../services";
-import { useHistory, Prompt } from "react-router";
+import { useHistory } from "react-router";
 
 export default ({
   edit = true,

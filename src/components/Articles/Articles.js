@@ -3,7 +3,7 @@ import { useArticles, useArticleStats, useGA } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
-
+import DeleteAckModal from "../DeleteAckModal";
 import "./Articles.css";
 import { formatDate, parsePrice, formatPrice } from "../../services";
 
@@ -154,11 +154,10 @@ export default () => {
                       icon="list"
                       secondary
                     ></Button>
-                    <Button
+                    <DeleteAckModal
+                      type="Artikel"
                       onClick={() => removeArticle(i)}
-                      negative
-                      icon="trash"
-                    ></Button>
+                    />
                   </Table.Cell>
                 </Table.Row>
               )

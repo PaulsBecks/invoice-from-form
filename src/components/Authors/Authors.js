@@ -3,6 +3,7 @@ import { Button, Table, Modal } from "semantic-ui-react";
 import { useAuthors, useGA } from "../../hooks";
 import { author as authorSceleton } from "../../sceletons";
 import Author from "../Author";
+import DeleteAckModal from "../DeleteAckModal";
 
 export default function Authors() {
   const [authors, , deleteAuthor, updateAuthor, authorsLength] = useAuthors();
@@ -70,11 +71,10 @@ export default function Authors() {
                       icon="edit"
                       primary
                     ></Button>
-                    <Button
-                      onClick={() => deleteAuthor(a.id)}
-                      negative
-                      icon="trash"
-                    ></Button>
+                    <DeleteAckModal
+                      onDelete={() => deleteAuthor(a.id)}
+                      type="Autor"
+                    />
                   </Table.Cell>
                 </Table.Row>
               )

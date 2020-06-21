@@ -10,7 +10,6 @@ import "semantic-ui-less/semantic.less";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import { Pricing } from "./pages";
-const Stats = React.lazy(() => import("./pages/Stats"));
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
 const BlogEntry = React.lazy(() => import("./pages/BlogEntry/BlogEntry"));
@@ -37,7 +36,9 @@ const App = () => {
       <ScrollToTop />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Suspense fallback={<div></div>}>
+            <Home />
+          </Suspense>
         </Route>
         <Route path="/invoices">
           <div className="invoice-app-container">
@@ -65,13 +66,6 @@ const App = () => {
           <div className="invoice-app-container">
             <Suspense fallback={<div></div>}>
               <Authors />
-            </Suspense>
-          </div>
-        </Route>
-        <Route path="/stats">
-          <div className="invoice-app-container">
-            <Suspense fallback={<div></div>}>
-              <Stats />
             </Suspense>
           </div>
         </Route>

@@ -3,6 +3,8 @@ import { useCustomers, useGA } from "../hooks";
 import { customer as customerSceleton } from "../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import CustomerForm from "./CustomerForm/CustomerForm";
+import DeleteAckModal from "./DeleteAckModal";
+
 export default () => {
   const [
     customers,
@@ -87,11 +89,10 @@ export default () => {
                   primary
                   icon="edit"
                 ></Button>
-                <Button
-                  onClick={() => removeCustomer(c.id)}
-                  negative
-                  icon="trash"
-                ></Button>
+                <DeleteAckModal
+                  onDelete={() => removeCustomer(c.id)}
+                  type="Kunde"
+                />
               </Table.Cell>
             </Table.Row>
           ))}
