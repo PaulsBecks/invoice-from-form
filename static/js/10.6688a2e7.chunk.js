@@ -1,2 +1,0 @@
-(this["webpackJsonpreact-4798tj"]=this["webpackJsonpreact-4798tj"]||[]).push([[10],{827:function(e,t,a){"use strict";a.r(t);var n=a(13),c=a(0),r=a.n(c),i=a(28),u=a(268),s=a(266);function l(){var e=Object(i.i)();return Object(n.a)(e,1)[0].user?r.a.createElement("div",{className:"invoice-app-container"},r.a.createElement(u.a,null)):r.a.createElement(s.a,null)}a.d(t,"default",(function(){return l}))}}]);
-//# sourceMappingURL=10.6688a2e7.chunk.js.map
