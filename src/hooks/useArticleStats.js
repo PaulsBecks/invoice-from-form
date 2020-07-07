@@ -4,13 +4,14 @@ import { parsePrice } from "../services";
 
 export default function useArticleStats() {
   const [invoices] = useInvoices();
+
   const invoicesStats = useMemo(
     () =>
       invoices.reduce((stats, i) => {
         for (const aId in i.articles) {
           const article = i.articles[aId];
-          if (!stats[article.articleId]) {
-            stats[article.articleId] = {
+          if (!stats[article._id]) {
+            stats[article._id] = {
               totalSold: 0,
               invoices: [],
               totalSend: 0,
@@ -19,13 +20,12 @@ export default function useArticleStats() {
             };
           }
           const toBePayed = parseInt(article.toBePayed + "");
-          console.log(toBePayed * parsePrice(article.price));
-          stats[article.articleId].totalSold += toBePayed;
-          stats[article.articleId].totalSend += parseInt(article.toBeSend + "");
-          stats[article.articleId].totalTurnover +=
+          stats[article._id].totalSold += toBePayed;
+          stats[article._id].totalSend += parseInt(article.toBeSend + "");
+          stats[article._id].totalTurnover +=
             toBePayed * parsePrice(article.price);
-          stats[article.articleId].invoices.push({
-            id: i.id,
+          stats[article._id].invoices.push({
+            _id: i._id,
             send: article.toBeSend,
             payed: article.toBePayed,
             invoiceNumber: i.invoiceNumber,

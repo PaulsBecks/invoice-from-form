@@ -1,60 +1,45 @@
-import { useCallback, useEffect } from "react";
-import postData from "../services/backend/postData";
-import useLocalStorage from "./useLocalStorage";
-import getData from "../services/backend/getData";
+import { useEffect, useState, useCallback } from "react";
+import getCustomers from "../services/backend/getCustomers";
+import postCustomer from "../services/backend/postCustomer";
+
 export default function useCustomers() {
-  const [customers, setLocalStorageCustomers] = useLocalStorage(
-    "customers",
-    []
-  );
+  const [customers, setCustomers] = useState([]);
+
+  async function fetchCustomers() {
+    const customers = await getCustomers();
+    if (customers) {
+      setCustomers(customers);
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData();
-      if (data && data.customers) {
-        setLocalStorageCustomers(data.customers);
-      }
-    }
-    fetchData();
+    fetchCustomers();
   }, []);
 
-  const addCustomer = useCallback(
-    (customer) => {
-      const _customers = [...customers, customer];
-      setLocalStorageCustomers(_customers);
-      postData({ customers: _customers });
-    },
-    [customers]
-  );
+  const addCustomer = async (customer) => {
+    await postCustomer(customer);
+    fetchCustomers();
+  };
 
-  const removeCustomer = useCallback(
-    (customerId) => {
-      const _customers = [...customers];
-      _customers[customerId] = undefined;
-      setLocalStorageCustomers(_customers);
-      postData({ customers: _customers });
-    },
-    [customers]
-  );
+  const removeCustomer = async (customerId) => {
+    await postCustomer({ _id: customerId, deleted: true });
+    fetchCustomers();
+  };
 
-  const updateCustomer = useCallback(
-    (customer) => {
-      const _customers = [...customers];
-      _customers[customer.id] = customer;
-      setLocalStorageCustomers(_customers);
-      postData({ customers: _customers });
-    },
-    [customers]
-  );
+  const updateCustomer = async (customer) => {
+    await postCustomer(customer);
+    fetchCustomers();
+  };
 
   const getCustomerById = useCallback(
     (id) => {
-      return customers[id];
+      return customers.find((c) => c._id === id);
     },
     [customers]
   );
+
   return [
-    customers.filter((c) => c && typeof c === "object"),
+    customers.filter((c) => c && typeof c === "object" && !c.deleted),
     addCustomer,
     removeCustomer,
     updateCustomer,

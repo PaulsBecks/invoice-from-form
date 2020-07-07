@@ -1,5 +1,6 @@
 import useInvoices from "./useInvoices";
 import { useMemo } from "react";
+import { parsePrice } from "../services";
 
 export default function useInvoiceStats() {
   const [invoices] = useInvoices();
@@ -12,7 +13,7 @@ export default function useInvoiceStats() {
       const invoiceDate = new Date(invoice.invoiceDate);
       const { totalPrice } = invoice;
       const month = invoiceDate.getMonth();
-      invoiceStats[month].push({ totalPrice });
+      invoiceStats[month].push({ totalPrice: parsePrice(totalPrice) });
     }
     return invoiceStats;
   }, [invoices]);

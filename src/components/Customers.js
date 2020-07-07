@@ -72,8 +72,8 @@ export default () => {
         </Table.Header>
 
         <Table.Body>
-          {customers.map((c, i) => (
-            <Table.Row>
+          {customers.map((c) => (
+            <Table.Row key={c._id}>
               <Table.Cell>{c.name}</Table.Cell>
               <Table.Cell>
                 <div dangerouslySetInnerHTML={{ __html: c.invoiceAddress }} />
@@ -90,7 +90,7 @@ export default () => {
                   icon="edit"
                 ></Button>
                 <DeleteAckModal
-                  onDelete={() => removeCustomer(c.id)}
+                  onDelete={() => removeCustomer(c._id)}
                   type="Kunde"
                 />
               </Table.Cell>

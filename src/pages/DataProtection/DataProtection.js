@@ -13,7 +13,7 @@ export default function DataProtection() {
           <a
             href="https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679&amp;tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Datenschutz-Grundverordnung (EU) 2016/679
           </a>{" "}
@@ -195,7 +195,7 @@ export default function DataProtection() {
           <a
             href="https://support.google.com/chrome/answer/95647?tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Chrome: Cookies in Chrome löschen, aktivieren und verwalten
           </a>
@@ -204,7 +204,7 @@ export default function DataProtection() {
           <a
             href="https://support.apple.com/de-at/guide/safari/sfri11471/mac?tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Safari: Verwalten von Cookies und Websitedaten mit Safari
           </a>
@@ -213,7 +213,7 @@ export default function DataProtection() {
           <a
             href="https://support.mozilla.org/de/kb/cookies-und-website-daten-in-firefox-loschen?tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Firefox: Cookies löschen, um Daten zu entfernen, die Websites auf
             Ihrem Computer abgelegt haben
@@ -223,7 +223,7 @@ export default function DataProtection() {
           <a
             href="https://support.microsoft.com/de-at/help/17442/windows-internet-explorer-delete-manage-cookies?tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Internet Explorer: Löschen und Verwalten von Cookies
           </a>
@@ -232,7 +232,7 @@ export default function DataProtection() {
           <a
             href="https://support.microsoft.com/de-at/help/4027947/windows-delete-cookies?tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Microsoft Edge: Löschen und Verwalten von Cookies
           </a>
@@ -266,7 +266,7 @@ export default function DataProtection() {
           <a
             href="https://tools.ietf.org/html/rfc6265"
             target="_blank"
-            rel="nofollow noopener"
+            rel="nofollow noopener noreferrer"
           >
             https://tools.ietf.org/html/rfc6265
           </a>
@@ -301,7 +301,7 @@ export default function DataProtection() {
           <a
             href="https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679&amp;from=DE&amp;tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Artikel 6&nbsp; Absatz 1 a DSGVO
           </a>{" "}
@@ -338,7 +338,11 @@ export default function DataProtection() {
           Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das
           Datenschutzrecht verstößt oder Ihre datenschutzrechtlichen Ansprüche
           sonst in einer Weise verletzt worden sind, können Sie sich an die{" "}
-          <a href="https://www.bfdi.bund.de" target="_blank" rel="noopener">
+          <a
+            href="https://www.bfdi.bund.de"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Bundesbeauftragte für den Datenschutz und die Informationsfreiheit
             (BfDI)
           </a>{" "}
@@ -363,7 +367,7 @@ export default function DataProtection() {
           <a
             href="https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679&amp;from=DE&amp;tid=311183069"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Artikel 25 Absatz 1 DSGVO
           </a>

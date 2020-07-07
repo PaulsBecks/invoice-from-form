@@ -48,7 +48,6 @@ export default () => {
                 <Table.HeaderCell>Rechnungsnummer</Table.HeaderCell>
                 <Table.HeaderCell>Rechnungsdatum</Table.HeaderCell>
                 <Table.HeaderCell>Kunde</Table.HeaderCell>
-                <Table.HeaderCell>Artikel</Table.HeaderCell>
                 <Table.HeaderCell>Gesamtpreis</Table.HeaderCell>
                 <Table.HeaderCell>Zahlungseingang</Table.HeaderCell>
                 <Table.HeaderCell></Table.HeaderCell>
@@ -56,97 +55,91 @@ export default () => {
             </Table.Header>
 
             <Table.Body>
-              {invoices.map(
-                (i) =>
-                  i &&
-                  typeof i === "object" && (
-                    <Table.Row key={i.id}>
-                      <Table.Cell>{i.invoiceNumber}</Table.Cell>
-                      <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
-                      <Table.Cell>{i.customer.name}</Table.Cell>
-                      <Table.Cell>
-                        {i.articles.map((a) => (
-                          <p>{a.name}</p>
-                        ))}
-                      </Table.Cell>
-                      <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
-                      <Table.Cell>
-                        <Form style={{ marginBottom: 0 }}>
-                          <Form.Group
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              margin: "0",
+              {invoices.map((invoice, index, invoices) => {
+                const i = invoices[invoices.length - 1 - index];
+                return (
+                  <Table.Row key={i._id}>
+                    <Table.Cell>{i.invoiceNumber}</Table.Cell>
+                    <Table.Cell>{formatDate(i.invoiceDate)}</Table.Cell>
+                    <Table.Cell>{i.customer.name}</Table.Cell>
+                    <Table.Cell>{formatPrice(i.totalPrice)} €</Table.Cell>
+                    <Table.Cell>
+                      <Form style={{ marginBottom: 0 }}>
+                        <Form.Group
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            margin: "0",
+                          }}
+                        >
+                          <Checkbox
+                            onChange={(e, { name, checked }) => {
+                              if (checked) {
+                                updateInvoice({
+                                  ...i,
+                                  [name]: checked,
+                                  paymentDate: new Date(),
+                                });
+                              } else {
+                                updateInvoice({
+                                  ...i,
+                                  [name]: checked,
+                                  paymentDate: undefined,
+                                });
+                              }
                             }}
-                          >
-                            <Checkbox
-                              onChange={(e, { name, checked }) => {
-                                if (checked) {
-                                  updateInvoice({
-                                    ...i,
-                                    [name]: checked,
-                                    paymentDate: new Date(),
-                                  });
-                                } else {
-                                  updateInvoice({
-                                    ...i,
-                                    [name]: checked,
-                                    paymentDate: undefined,
-                                  });
-                                }
-                              }}
-                              name="payed"
-                              checked={i.payed}
-                              toggle
+                            name="payed"
+                            checked={i.payed}
+                            toggle
+                          />
+                          {i.payed && i.paymentDate ? (
+                            <Form.Field
+                              selected={new Date(i.paymentDate)}
+                              onChange={(v) =>
+                                updateInvoice({ ...i, paymentDate: v })
+                              }
+                              control={ReactDatePicker}
+                              dateFormat="dd/MM/yyyy"
+                              transparent
                             />
-                            {i.paymentDate ? (
-                              <Form.Field
-                                selected={new Date(i.paymentDate)}
-                                onChange={(v) =>
-                                  updateInvoice({ ...i, paymentDate: v })
-                                }
-                                control={ReactDatePicker}
-                                dateFormat="dd/MM/yyyy"
-                                transparent
-                              />
-                            ) : (
-                              <span style={{ marginLeft: "0.5em" }}>
-                                Ausstehend
-                              </span>
-                            )}
-                          </Form.Group>
-                        </Form>
-                      </Table.Cell>
-                      <Table.Cell style={{}}>
+                          ) : (
+                            <span style={{ marginLeft: "0.5em" }}>
+                              Ausstehend
+                            </span>
+                          )}
+                        </Form.Group>
+                      </Form>
+                    </Table.Cell>
+                    <Table.Cell style={{}}>
+                      <Button
+                        primary
+                        icon="edit"
+                        onClick={() => history.push(`${path}/${i._id}`)}
+                      ></Button>
+                      <Button.Group>
                         <Button
-                          primary
-                          icon="edit"
-                          onClick={() => history.push(`${path}/${i.id}`)}
+                          secondary
+                          icon="download"
+                          onClick={() => setInvoiceDownloadSelected(i)}
                         ></Button>
-                        <Button.Group>
-                          <Button
-                            secondary
-                            icon="download"
-                            onClick={() => setInvoiceDownloadSelected(i)}
-                          ></Button>
-                          <Button
-                            style={{
-                              borderLeft: "1px solid white",
-                              marginRight: "2px",
-                            }}
-                            secondary
-                            icon="mail"
-                            onClick={() => setInvoiceEmailSelected(i)}
-                          ></Button>
-                        </Button.Group>{" "}
-                        <DeleteAckModal
-                          onDelete={() => removeInvoice(i.id)}
-                          type="Rechnung"
-                        />
-                      </Table.Cell>
-                    </Table.Row>
-                  )
-              )}
+                        <Button
+                          style={{
+                            borderLeft: "1px solid white",
+                            marginRight: "2px",
+                          }}
+                          secondary
+                          icon="mail"
+                          onClick={() => setInvoiceEmailSelected(i)}
+                        ></Button>
+                      </Button.Group>{" "}
+                      <DeleteAckModal
+                        onDelete={() => removeInvoice(i._id)}
+                        type="Rechnung"
+                      />
+                    </Table.Cell>
+                  </Table.Row>
+                );
+              })}
             </Table.Body>
           </Table>
           <div style={{ position: "absolute", opacity: "0.0" }}>

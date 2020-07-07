@@ -1,58 +1,47 @@
-import useLocalStorage from "./useLocalStorage";
-import { useCallback, useEffect } from "react";
-import postData from "../services/backend/postData";
-import getData from "../services/backend/getData";
+import { useCallback, useEffect, useState } from "react";
+import postArticle from "../services/backend/postArticle";
+import getArticles from "../services/backend/getArticles";
 
 export default function useArticles() {
-  const [articles, setLocalStorageArticles] = useLocalStorage("articles", []);
+  const [articles, setArticles] = useState([]);
+
+  async function fetchArticles() {
+    const articles = await getArticles();
+    if (articles) {
+      setArticles(articles);
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData();
-      if (data && data.articles) {
-        setLocalStorageArticles(data.articles);
-      }
-    }
-    fetchData();
+    fetchArticles();
   }, []);
 
-  const addArticle = useCallback(
-    (article) => {
-      const _articles = [...articles, article];
-      setLocalStorageArticles(_articles);
-      postData({ articles: _articles });
-    },
-    [articles]
-  );
+  const addArticle = async (article) => {
+    const _article = await postArticle(article);
+    if (_article) {
+      setArticles([...articles, _article]);
+    }
+  };
 
-  const removeArticle = useCallback(
-    (articleId) => {
-      const _articles = [...articles];
-      _articles[articleId] = undefined;
-      setLocalStorageArticles(_articles);
-      postData({ articles: _articles });
-    },
-    [articles]
-  );
+  const removeArticle = async (id) => {
+    await postArticle({ _id: id, deleted: true });
+    fetchArticles();
+  };
 
-  const updateArticle = useCallback(
-    (article) => {
-      const _articles = [...articles];
-      _articles[article.id] = article;
-      setLocalStorageArticles(_articles);
-      postData({ articles: _articles });
-    },
-    [articles]
-  );
+  const updateArticle = async (article) => {
+    await postArticle(article);
+    fetchArticles();
+  };
 
   const getArticleById = useCallback(
     (id) => {
-      return articles[id];
+      return articles.find((a) => a._id === id);
     },
     [articles]
   );
+
   return [
-    articles.filter((a) => a && typeof a === "object"),
+    articles.filter((a) => a && typeof a === "object" && !a.deleted),
     addArticle,
     removeArticle,
     updateArticle,

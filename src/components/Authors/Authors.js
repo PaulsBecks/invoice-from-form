@@ -60,8 +60,8 @@ export default function Authors() {
           {authors.map(
             (a, i) =>
               a && (
-                <Table.Row key={a.id}>
-                  <Table.Cell>{a.id}</Table.Cell>
+                <Table.Row key={a._id}>
+                  <Table.Cell>{a._id}</Table.Cell>
                   <Table.Cell>{a.name}</Table.Cell>
                   <Table.Cell>{a.contact}</Table.Cell>
                   <Table.Cell>{a.percent} %</Table.Cell>
@@ -72,7 +72,7 @@ export default function Authors() {
                       primary
                     ></Button>
                     <DeleteAckModal
-                      onDelete={() => deleteAuthor(a.id)}
+                      onDelete={() => deleteAuthor(a._id)}
                       type="Autor"
                     />
                   </Table.Cell>

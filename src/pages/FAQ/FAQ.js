@@ -1,9 +1,9 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import { Accordion } from "semantic-ui-react";
 import { useGA } from "../../hooks";
 import "./FAQ.css";
 import Footer from "../../components/Footer";
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet";
 
 export default function FAQ() {
   useGA();

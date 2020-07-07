@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import InvoiceForm from "../InvoiceForm";
 import PrintButton from "../PrintButton";
 import SinglePage from "../SinglePage/SinglePage";
-import { Button, Message } from "semantic-ui-react";
+import { Button, Message, Loader } from "semantic-ui-react";
 
 import "./Invoice.css";
-import { useCustomers } from "../../hooks";
 import { calculateTotalPrice } from "../../services";
 import { useHistory } from "react-router";
+import postCustomer from "../../services/backend/postCustomer";
 
 export default ({
   edit = true,
@@ -19,22 +19,19 @@ export default ({
   newInvoice,
 }) => {
   if (!invoice) {
-    return (
-      <div>
-        404 - Diese Rechnung wurde nicht gefunden. Bitte wenden Sie sich bei
-        fehlern an den Service: service@billeroo.de
-      </div>
-    );
+    return <Loader active={true} />;
   }
+
   const [active, setActive] = useState(edit);
   const [formSelected, setFormSelected] = useState([]);
-  const [, , , updateCustomer] = useCustomers();
   const history = useHistory();
 
-  const saveInvoice = () => {
+  const saveInvoice = async () => {
     invoice["totalPrice"] = calculateTotalPrice(invoice);
-    updateInvoice(invoice);
-    updateCustomer(invoice.customer);
+    // register customer in backend first
+    const customer = await postCustomer(invoice.customer);
+    //add customer to invoice and update the invoice
+    updateInvoice({ ...invoice, customer });
     if (typeof onSave === "function") {
       onSave();
     }

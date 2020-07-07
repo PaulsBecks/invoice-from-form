@@ -1,58 +1,45 @@
-import useLocalStorage from "./useLocalStorage";
-import { useCallback, useEffect } from "react";
-import postData from "../services/backend/postData";
-import getData from "../services/backend/getData";
+import { useEffect, useState, useCallback } from "react";
+import postAuthor from "../services/backend/postAuthor";
+import getAuthors from "../services/backend/getAuthors";
 
 export default function useAuthors() {
-  const [authors, setLocalStorageAuthors] = useLocalStorage("authors", []);
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getData();
-      if (data && data.authors) {
-        setLocalStorageAuthors(data.authors);
-      }
+  const [authors, setLocalStorageAuthors] = useState([]);
+
+  async function fetchAuthors() {
+    const authors = await getAuthors();
+    if (authors) {
+      setLocalStorageAuthors(authors);
     }
-    fetchData();
+  }
+
+  useEffect(() => {
+    fetchAuthors();
   }, []);
 
-  const addAuthor = useCallback(
-    (author) => {
-      const _authors = [...authors, author];
-      setLocalStorageAuthors(_authors);
-      postData({ authors: _authors });
-    },
-    [authors]
-  );
+  const addAuthor = async (author) => {
+    await postAuthor(author);
+    fetchAuthors();
+  };
 
-  const removeAuthor = useCallback(
-    (authorId) => {
-      const _authors = [...authors];
-      _authors[authorId] = undefined;
-      setLocalStorageAuthors(_authors);
-      postData({ authors: _authors });
-    },
-    [authors]
-  );
+  const removeAuthor = async (authorId) => {
+    await postAuthor({ _id: authorId, deleted: true });
+    fetchAuthors();
+  };
 
-  const updateAuthor = useCallback(
-    (author) => {
-      const _authors = [...authors];
-      _authors[author.id] = author;
-      setLocalStorageAuthors(_authors);
-      postData({ authors: _authors });
-    },
-    [authors]
-  );
+  const updateAuthor = async (author) => {
+    await postAuthor(author);
+    fetchAuthors();
+  };
 
   const getAuthorById = useCallback(
     (id) => {
-      return authors[id];
+      return authors.find((a) => a._id === id) || {};
     },
     [authors]
   );
 
   return [
-    authors.filter((a) => a && typeof a === "object"),
+    authors.filter((a) => a && typeof a === "object" && !a.deleted),
     addAuthor,
     removeAuthor,
     updateAuthor,

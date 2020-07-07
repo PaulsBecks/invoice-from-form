@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Landing.css";
-import { Button, Icon, Card, Table } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
 import { useGA } from "../../hooks";
@@ -35,7 +35,10 @@ export default function LandingPage() {
               />
             </div>
             <div className="billeroo-title-section-image">
-              <img src="/img/invoice-example.png" />
+              <img
+                src="/img/invoice-example.png"
+                alt="Beispiel Rechnung von Billeroo"
+              />
             </div>
           </div>
           <div className="billeroo-reference-section">
@@ -48,6 +51,7 @@ export default function LandingPage() {
               <img
                 src="/img/findling-logo.png"
                 className="billeroo-reference-section-images-logo"
+                alt="Logo des Findling-Verlags"
               />
             </div>
           </div>

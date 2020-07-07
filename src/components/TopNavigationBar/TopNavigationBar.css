@@ -32,6 +32,12 @@
   display: none;
 }
 
+.oi-top-navigation-bar-modal-user-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
 @media (max-width: 900px) {
   .billeroo-tabs-menu {
     display: flex;

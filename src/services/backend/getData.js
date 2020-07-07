@@ -10,11 +10,40 @@ export default async function getData() {
     return;
   }
   const jwt = user.token;
-  const result = await Axios.get(url, {
+  const invoicesPromise = Axios.get(url + "/invoices", {
     headers: {
       Authorization: "Bearer " + jwt,
     },
   });
 
-  return result.data;
+  const articlesPromise = Axios.get(url + "/articles", {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
+  const customersPromise = Axios.get(url + "/customers", {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
+  const authorsPromise = Axios.get(url + "/authors", {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
+
+  const [invoices, articles, customers, authors] = await Promise.all([
+    invoicesPromise,
+    articlesPromise,
+    customersPromise,
+    authorsPromise,
+  ]);
+  return {
+    invoices: invoices.data.body,
+    articles: articles.data.body,
+    customers: customers.data.body,
+    authors: authors.data.body,
+  };
 }

@@ -7,6 +7,8 @@ export default function useGA() {
   const history = useHistory();
 
   useEffect(() => {
-    ReactGA.pageview(history.location.pathname + history.location.search);
+    if (process.env.NODE_ENV === "production") {
+      ReactGA.pageview(history.location.pathname + history.location.search);
+    }
   }, [history]);
 }

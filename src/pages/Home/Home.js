@@ -5,7 +5,7 @@ import LandingPage from "../Landing";
 
 export default function Home() {
   const [user] = useUser();
-  if (user.user) {
+  if (user && user.user && !user.user.placeholder) {
     return (
       <div className="invoice-app-container">
         <Stats />

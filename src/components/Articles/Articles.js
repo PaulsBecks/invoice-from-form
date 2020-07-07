@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useArticles, useArticleStats, useGA } from "../../hooks";
+import { useArticles, useArticleStats, useGA, useAuthors } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
 import DeleteAckModal from "../DeleteAckModal";
 import "./Articles.css";
 import { formatDate, parsePrice, formatPrice } from "../../services";
+import useArticleAuthors from "../../hooks/useArticleAuthors";
 
 export default () => {
   const [
@@ -18,6 +19,8 @@ export default () => {
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
   const invoiceStats = useArticleStats();
+  const [, , authorsByArticle] = useArticleAuthors();
+  const [, , , , , getAuthorById] = useAuthors();
   useGA();
 
   return (
@@ -36,8 +39,8 @@ export default () => {
               article={article}
               setArticle={setArticle}
               totalSend={
-                invoiceStats[article.id]
-                  ? invoiceStats[article.id].totalSend
+                invoiceStats[article._id]
+                  ? invoiceStats[article._id].totalSend
                   : 0
               }
             />
@@ -78,9 +81,9 @@ export default () => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {invoiceStats[invoiceArticle.id] &&
-                  invoiceStats[invoiceArticle.id].invoices.map((invoice) => (
-                    <Table.Row>
+                {invoiceStats[invoiceArticle._id] &&
+                  invoiceStats[invoiceArticle._id].invoices.map((invoice) => (
+                    <Table.Row key={invoice._id}>
                       <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
                       <Table.Cell>{invoice.customerName}</Table.Cell>
                       <Table.Cell>{invoice.payed}</Table.Cell>
@@ -97,16 +100,16 @@ export default () => {
                       </Table.Cell>
                     </Table.Row>
                   ))}
-                {invoiceStats[invoiceArticle.id] && (
-                  <Table.Row active>
+                {invoiceStats[invoiceArticle._id] && (
+                  <Table.Row active key="final-row">
                     <Table.Cell />
                     <Table.Cell />
                     <Table.Cell>
-                      {invoiceStats[invoiceArticle.id].totalSold}
+                      {invoiceStats[invoiceArticle._id].totalSold}
                     </Table.Cell>
                     <Table.Cell>
                       {formatPrice(
-                        invoiceStats[invoiceArticle.id].totalSold *
+                        invoiceStats[invoiceArticle._id].totalSold *
                           parsePrice(invoiceArticle.price)
                       )}{" "}
                       €
@@ -136,22 +139,22 @@ export default () => {
           {articles.map(
             (a, i) =>
               a && (
-                <Table.Row>
-                  <Table.Cell>{a.id}</Table.Cell>
-                  <Table.Cell>{a.name}</Table.Cell>
-                  <Table.Cell>{a.isbn}</Table.Cell>
-                  <Table.Cell>
-                    {invoiceStats[a.id]
-                      ? parseInt(a.amount + "") - invoiceStats[a.id].totalSend
+                <Table.Row key={a._id}>
+                  <Table.Cell key="_id">{a._id}</Table.Cell>
+                  <Table.Cell key="name">{a.name}</Table.Cell>
+                  <Table.Cell key="isbn">{a.isbn}</Table.Cell>
+                  <Table.Cell key="amount">
+                    {invoiceStats[a._id]
+                      ? parseInt(a.amount + "") - invoiceStats[a._id].totalSend
                       : a.amount}
                   </Table.Cell>
-                  <Table.Cell>{a.price} €</Table.Cell>
-                  <Table.Cell>
-                    {a.authors.map((a) => (
-                      <p>{a.name}</p>
+                  <Table.Cell key="price">{a.price} €</Table.Cell>
+                  <Table.Cell key="authors">
+                    {authorsByArticle(a._id).map((a) => (
+                      <p key={a._id}>{getAuthorById(a.authorId).name}</p>
                     ))}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell key="buttons">
                     <Button
                       onClick={() => setArticle(a)}
                       primary
@@ -164,7 +167,7 @@ export default () => {
                     ></Button>
                     <DeleteAckModal
                       type="Artikel"
-                      onClick={() => removeArticle(i)}
+                      onDelete={() => removeArticle(a._id)}
                     />
                   </Table.Cell>
                 </Table.Row>

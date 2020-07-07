@@ -1,11 +1,6 @@
-import config from "../../config";
 import Axios from "axios";
 
-const { backendURL } = config();
-
-const url = backendURL + "/data";
-
-export default async function postData(data) {
+export default async function postData(url, data) {
   const user = JSON.parse(localStorage.getItem("user", "{}"));
 
   if (!user.token) {
@@ -20,5 +15,5 @@ export default async function postData(data) {
     },
   });
 
-  return result.data;
+  return result.data.body;
 }

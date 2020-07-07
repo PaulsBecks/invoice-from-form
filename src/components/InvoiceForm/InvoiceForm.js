@@ -35,7 +35,7 @@ export default ({
   const [customers, , , , customersLength, getCustomerById] = useCustomers();
   const [company, setCompany] = useCompany();
   const [customer, setCustomer] = useState(
-    getCustomerById(invoice.customer.id) || invoice.customer
+    getCustomerById(invoice.customer._id) || invoice.customer
   );
   const [
     articles,
@@ -46,10 +46,7 @@ export default ({
     getArticleById,
   ] = useArticles();
   const [selectedArticles, setSelectedArticles] = useState(invoice.articles);
-  const [article, setArticle] = useState({
-    ...articleSceleton,
-    id: articlesLength,
-  });
+  const [article, setArticle] = useState(articleSceleton);
   const [toBePayed, setToBePayed] = useState(1);
   const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
@@ -76,14 +73,7 @@ export default ({
 
   const addNewArticle = () => {
     addToArticles(article);
-    setArticle({
-      ...articleSceleton,
-      id: articlesLength + 1,
-    });
     toggleNewArticle();
-    if (article.authors.length > 0) {
-      updateAuthor(article.authors[0]);
-    }
   };
 
   const updateInvoiceDate = (value, name) => {
@@ -93,22 +83,22 @@ export default ({
   const customerOptions = useMemo(() => {
     let list = [
       {
-        key: customersLength,
-        value: customersLength,
+        key: "empty",
+        value: undefined,
         text: `Neuer Kunde`,
       },
     ];
     return list.concat(
       customers.map((c) => ({
-        key: c.id,
+        key: c._id,
         text: c.name,
-        value: c.id,
+        value: c._id,
       }))
     );
-  }, [customers, customer, customersLength]);
+  }, [customers]);
 
   const articlesOptions = useMemo(() => {
-    const list = [];
+    const list = [{ text: "", key: undefined, value: undefined }];
     return list.concat(
       articles.map((a) => {
         let text = a.name.slice(0, 7);
@@ -116,8 +106,8 @@ export default ({
           text += "...";
         }
         return {
-          key: a.id,
-          value: a.id,
+          key: a._id,
+          value: a._id,
           text,
         };
       })
@@ -141,10 +131,7 @@ export default ({
       if (value >= articlesLength) {
         return;
       }
-      _selectedArticles = [
-        ...selectedArticles,
-        { toBeSend, toBePayed, articleId: value },
-      ];
+      _selectedArticles = [...selectedArticles, { toBeSend, toBePayed }];
       setToBeSend(1);
       setToBePayed(1);
     } else {
@@ -156,7 +143,7 @@ export default ({
       ...invoice,
       articles: _selectedArticles.map((a) => ({
         ...a,
-        ...getArticleById(a.articleId),
+        ...getArticleById(a._id),
       })),
     });
   };
@@ -167,7 +154,7 @@ export default ({
     setInvoice({
       ...invoice,
       articles: _selectedArticles.map((a) => ({
-        ...getArticleById(a.articleId),
+        ...getArticleById(a._id),
         ...a,
       })),
     });
@@ -191,7 +178,7 @@ export default ({
                   search
                   selection
                   options={customerOptions}
-                  value={customer.id}
+                  value={customer._id}
                   onChange={handleCustomerChange}
                 />
               </Form>
@@ -251,7 +238,7 @@ export default ({
                                 search
                                 selection
                                 options={articlesOptions}
-                                value={a.articleId}
+                                value={a._id}
                                 onChange={(e, { value, name }) =>
                                   handleArticleChange(i, name, value)
                                 }
@@ -297,7 +284,7 @@ export default ({
                         search
                         selection
                         options={articlesOptions}
-                        value={article.id}
+                        value={"empty"}
                         onChange={(e, { value }) =>
                           handleArticleChange(
                             selectedArticles.length,
@@ -312,7 +299,11 @@ export default ({
                 <Modal open={newArticle} onClose={toggleNewArticle} closeIcon>
                   <Modal.Header>Neuer Artikel</Modal.Header>
                   <Modal.Content>
-                    <Article article={article} setArticle={setArticle} />
+                    <Article
+                      article={article}
+                      setArticle={setArticle}
+                      authorsEnabled={false}
+                    />
                   </Modal.Content>
                   <Modal.Actions>
                     <Button

@@ -1,59 +1,48 @@
-import useLocalStorage from "./useLocalStorage";
-import postData from "../services/backend/postData";
-import { useCallback, useEffect } from "react";
-import getData from "../services/backend/getData";
+import postInvoice from "../services/backend/postInvoice";
+import { useCallback, useEffect, useState } from "react";
+import getInvoices from "../services/backend/getInvoices";
 
 export default function useInvoices() {
-  const [invoices, setLocalStorageInvoices] = useLocalStorage("invoices", []);
+  const [invoices, setInvoices] = useState([]);
+
+  async function fetchInvoices() {
+    const invoices = await getInvoices();
+    if (invoices) {
+      setInvoices(invoices);
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData();
-      if (data && data.invoices) {
-        setLocalStorageInvoices(data.invoices);
-      }
-    }
-    fetchData();
+    fetchInvoices();
   }, []);
 
-  const addInvoice = useCallback(
-    (invoice) => {
-      const _invoices = [...invoices, invoice];
-      setLocalStorageInvoices(_invoices);
-      postData({ invoices: _invoices });
-    },
-    [invoices]
-  );
+  const addInvoice = async (invoice) => {
+    await postInvoice(invoice);
+    fetchInvoices();
+  };
 
-  const removeInvoice = useCallback(
-    (invoiceId) => {
-      const _invoices = [...invoices];
-      _invoices[invoiceId] = undefined;
-      setLocalStorageInvoices(_invoices);
-      postData({ invoices: _invoices });
-    },
-    [invoices]
-  );
+  const removeInvoice = async (invoiceId) => {
+    await postInvoice({ _id: invoiceId, deleted: true });
+    fetchInvoices();
+  };
 
-  const updateInvoice = useCallback(
-    (invoice) => {
-      const _invoices = [...invoices];
-      _invoices[invoice.id] = invoice;
-      setLocalStorageInvoices(_invoices);
-      postData({ invoices: _invoices });
-    },
-    [invoices]
-  );
+  const updateInvoice = async (invoice) => {
+    await postInvoice(invoice);
+    fetchInvoices();
+  };
 
   const getInvoiceById = useCallback(
     (invoiceId) => {
-      return invoices[invoiceId];
+      const invoice = invoices.find((i) => {
+        return i._id === invoiceId;
+      });
+      return invoice;
     },
     [invoices]
   );
 
   return [
-    invoices.filter((i) => i && typeof i === "object"),
+    invoices.filter((i) => i && typeof i === "object" && !i.deleted),
     addInvoice,
     removeInvoice,
     updateInvoice,

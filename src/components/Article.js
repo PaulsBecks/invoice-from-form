@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 
 import { Form, Input, Dropdown } from "semantic-ui-react";
-import { useAuthors } from "../hooks";
-import { author as authorSceleton } from "../sceletons";
-import Author from "./Author";
-import { Segment } from "semantic-ui-react";
+import { useAuthors, useArticleAuthors } from "../hooks";
 import { formatPrice } from "../services";
 
-export default function Article({ article, setArticle, totalSend = 0 }) {
+export default function Article({
+  article,
+  setArticle,
+  totalSend = 0,
+  authorsEnabled = true,
+}) {
   const [articlePrice, setArticlePrice] = useState(article.price);
-  const [authors, , , , authorsLength, getAuthorById] = useAuthors();
-  const [author, setAuthor] = useState(article.authors[0]);
+  const [
+    ,
+    ,
+    authorsByArticle,
+    addArticleAuthor,
+    removeArticleAuthor,
+  ] = useArticleAuthors();
+
+  const [authors] = useAuthors();
 
   const handleArticleChange = (e, { name, value }) => {
     if (name === "price") {
@@ -25,33 +34,35 @@ export default function Article({ article, setArticle, totalSend = 0 }) {
     setArticle({ ...article, [name]: value });
   };
 
-  const authorOptions = [
-    { key: undefined, value: undefined, text: "" },
-    { key: authorsLength, value: authorsLength, text: "Neuer Autor" },
-  ].concat(
-    authors.map((a) => ({
-      key: a.id,
-      value: a.id,
-      text: a.name,
-    }))
-  );
+  const authorOptions = authors.map((a) => ({
+    key: a._id,
+    value: a._id,
+    text: a.name,
+  }));
 
   const handleAuthorChange = (e, { value }) => {
-    let author;
-    if (value === undefined) {
-      author = undefined;
-    } else if (value < authorsLength) {
-      author = getAuthorById(value);
-    } else {
-      author = { ...authorSceleton, id: authorsLength };
+    // add new articleAuthor if new got added
+    if (value.length > authorsByArticle(article._id).length) {
+      const newAuthors = value.filter(
+        (v) => !authorsByArticle(article._id).find((a) => a.authorId === v)
+      );
+      for (var i in newAuthors) {
+        addArticleAuthor({ authorId: newAuthors[i], articleId: article._id });
+      }
     }
-    setAuthor(author);
-    setArticle({ ...article, authors: author ? [author] : [] });
+    // remove articleAuthors
+    else if (value.length < authorsByArticle(article._id).length) {
+      const removedAuthors = authorsByArticle(article._id).filter(
+        (a) => !value.includes(a.authorId)
+      );
+      for (var ir in removedAuthors) {
+        removeArticleAuthor(removedAuthors[ir]._id);
+      }
+    }
   };
 
   const handleAmountChange = (e, { value }) => {
     const amount = parseInt(value) + totalSend;
-    console.log(amount);
     setArticle({ ...article, amount });
   };
 
@@ -105,19 +116,17 @@ export default function Article({ article, setArticle, totalSend = 0 }) {
           value={articlePrice}
         />
       </Form.Group>
-      <Form.Field
-        label="Wählen Sie einen Autoren aus:"
-        control={Dropdown}
-        search
-        selection
-        options={authorOptions}
-        value={author ? author.id : undefined}
-        onChange={handleAuthorChange}
-      />
-      {author && (
-        <Segment>
-          <Author author={author} setAuthor={setAuthor} />
-        </Segment>
+      {authorsEnabled && (
+        <Form.Field
+          label="Wählen Sie einen Autoren aus:"
+          control={Dropdown}
+          search
+          selection
+          multiple
+          options={authorOptions}
+          value={authorsByArticle(article._id).map((aa) => aa.authorId)}
+          onChange={handleAuthorChange}
+        />
       )}
     </Form>
   );

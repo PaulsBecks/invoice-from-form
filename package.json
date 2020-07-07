@@ -30,7 +30,8 @@
     "eject": "craco eject",
     "predeploy": "yarn build",
     "deploy": "NODE_ENV=production && gh-pages -d build",
-    "postbuild": "react-snap"
+    "postbuild": "react-snap",
+    "sidemap": "node sitemap-builder.js"
   },
   "devDependencies": {
     "@craco/craco": "^5.6.4",

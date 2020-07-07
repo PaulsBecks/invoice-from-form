@@ -1,26 +1,24 @@
-import useLocalStorage from "./useLocalStorage";
-import { company as companySceleton } from "../sceletons";
-import postData from "../services/backend/postData";
-import { useEffect } from "react";
-import getData from "../services/backend/getData";
+import postCompany from "../services/backend/postCompany";
+import { useEffect, useState } from "react";
+import getCompany from "../services/backend/getCompany";
 
 export default function useCompany() {
-  const [company, setCompany] = useLocalStorage("company", companySceleton);
-  console.log(company);
+  const [company, setCompany] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     async function fetchData() {
-      const data = await getData();
-      if (data && data.company) {
-        setCompany(data.company);
-      }
+      const company = await getCompany();
+      setCompany(company);
+      setIsLoading(false);
     }
     fetchData();
   }, []);
 
   const updateCompany = (company) => {
     setCompany(company);
-    postData({ company });
+    postCompany(company);
   };
 
-  return [company, updateCompany];
+  return [company, updateCompany, isLoading];
 }
