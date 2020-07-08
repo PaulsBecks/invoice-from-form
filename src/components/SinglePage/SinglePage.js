@@ -32,6 +32,8 @@ const SinglePage = ({
   if (!customer) {
     return null;
   }
+
+  console.log(articles);
   return (
     <Page singleMode={true} id={id}>
       <div

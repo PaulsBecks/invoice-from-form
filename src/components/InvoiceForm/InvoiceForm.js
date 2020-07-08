@@ -128,10 +128,10 @@ export default ({
   const handleArticleChange = (id, name, value) => {
     let _selectedArticles;
     if (id >= selectedArticles.length) {
-      if (value >= articlesLength) {
-        return;
-      }
-      _selectedArticles = [...selectedArticles, { toBeSend, toBePayed }];
+      _selectedArticles = [
+        ...selectedArticles,
+        { toBeSend, toBePayed, ...getArticleById(value) },
+      ];
       setToBeSend(1);
       setToBePayed(1);
     } else {
