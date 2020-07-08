@@ -14,10 +14,6 @@ import { useHistory } from "react-router-dom";
 import "./TopNavigationBar.css";
 import login from "../../services/backend/login";
 import register from "../../services/backend/register";
-import getData from "../../services/backend/getData";
-import dataToLocalStorage from "../../services/localStorage/dataToLocalStorage";
-import dataFromLocalStorage from "../../services/localStorage/dataFromLocalStorage";
-import postData from "../../services/backend/postData";
 
 export default function TopNavigationBar() {
   const [invoices] = useInvoices();
@@ -92,7 +88,6 @@ export default function TopNavigationBar() {
                     content="Abmelden"
                     onClick={() => {
                       setUser({});
-
                       window.document.location.href = "/";
                     }}
                   />
@@ -110,7 +105,7 @@ export default function TopNavigationBar() {
                       {webhooks.map((wh) => (
                         <Table.Row key={wh._id}>
                           <Table.Cell>
-                            https://api.billeroo.de/webhooks/{wh._id}
+                            https://api.billeroo.de/data/webhooks/{wh._id}
                           </Table.Cell>
                           <Table.Cell>{wh.secret}</Table.Cell>
                           <Table.Cell>
@@ -198,17 +193,12 @@ export default function TopNavigationBar() {
                             "user",
                             JSON.stringify(user)
                           );
-                          const data = await getData();
-                          dataToLocalStorage(data);
                         } else {
                           user = await register(loginValues);
                           await localStorage.setItem(
                             "user",
                             JSON.stringify(user)
                           );
-
-                          const data = await dataFromLocalStorage();
-                          postData(data);
                         }
                         setUser(user);
                         setModalIsOpen(false);
