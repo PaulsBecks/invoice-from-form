@@ -83,7 +83,8 @@ export default function LandingPage() {
                   <h2>Übersicht</h2>
                   <p>
                     Alle Daten auf einen Blick. Rechnungen, Kunden und Artikel
-                    findest du gut sortiert, um dir deine Arbeit zu erleichtern.
+                    findest du gut sortiert in Listen, um deine Arbeit zu
+                    erleichtern.
                   </p>
                 </div>
                 <div className="billeroo-added-value-section-icon-wrapper">

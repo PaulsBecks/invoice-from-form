@@ -37,29 +37,29 @@ export const blogEntries = [
     imgSrc: "/img/undraw_add_document_0hek.png",
     title: "Im Handumdrehen Rechnungen anlegen.",
     shortText:
-      "So erleichtert Billeroo ihnen die tägliche Buchhaltung in ihrem Verlag.",
-    text: `<p>  Rechnungen mit Indesign oder Word anzulegen, kann einiges an Zeit kosten. Zum einen müssen Artikel hinzugefügt und die Informationen des Kunden eingetragen, zum anderen Preise ausgerechnet, Rabatte abgezogen und Mehrwertsteuer berechnet werden. <p>
+      "So erleichtert Billeroo dir die tägliche Buchhaltung in deinem Verlag.",
+    text: `<p>  Rechnungen mit InDesign oder Microsoft Word anzulegen, kann einiges an Zeit kosten. Zum einen müssen Artikel hinzugefügt und die Informationen des Kunden eingetragen, zum anderen Preise ausgerechnet, Rabatte abgezogen und Mehrwertsteuer berechnet werden. <p>
 
-<p>Den Aufwand den man betreibt, um eine einzige Rechnung zu schreiben kann schnell bei 15 Minuten liegen. Das ist Zeit die du mit anderen Aufgaben füllen kannst. Zum Beispiel wichtige Kundenakquise, die Ausgestaltung des nächsten Buches oder Social-Media-Arbeit. Oder du kannst dir endlich mal wieder Zeit nehmen für die wirklich wichtigen Dinge im Leben. </p>
+<p>Den Aufwand den man betreibt, um eine einzige Rechnung zu erstellen, kann schnell bei 15 Minuten liegen. Das ist Zeit, die du mit anderen Aufgaben füllen kannst. Zum Beispiel mit wichtiger Kundenakquise, der Gestaltung und Herstellung des nächsten Printproduktes oder Social-Media-Arbeit. </p>
 <img src="/img/undraw_quality_time_wiyl.png" alt="Eine Frau läuft mit einem Kind an der Hand."/>
 
 <h2>So hilft Billeroo</h2>
 
-<p>Billeroo hilft dir dabei genau diese Zeit zu sparen. Mit wenigen Klicks kannst du Rechnungen erstellen die direkt alle Informationen beinhalten und bereit sind zum Kunden geschickt zu werden.</p>
+<p>Billeroo hilft dir dabei, genau diese Zeit zu sparen. Mit wenigen Klicks kannst du Rechnungen erstellen, die direkt alle Informationen beinhalten und bereit sind, zum Kunden geschickt zu werden.</p>
 
-<p>Im nächsten Schritt folgt die Buchhaltung. Wenn du Billeroo nutzt, musst  du keine Excel-Tabellen, Google Spreadsheet oder handschriftliche Lagerhaltung mehr führen. In Billeroo findest du übersichtlich alle Informationen, die du sonst mühsam sammelst.</p>
+<p>Im nächsten Schritt folgt die Buchhaltung. Wenn du Billeroo nutzt, musst  du keine Excel-Tabellen, Google Spreadsheets oder handschriftliche Lagerhaltung mehr führen. In Billeroo findest du übersichtlich alle Informationen, die du sonst mühsam sammelst.</p>
 
 <img src="/img/undraw_online_information_4ui6.png" alt="Eine Frau schaut auf eine Webseite."/>
 
 <h2>Diese Vorteile bietet ein Account</h2>
 
-<p>Erstell dir einen Account und arbeite mit deinen Kollegen zusammen. Rechnungen müssen nicht mehr hin- und hergeschickt werden. Bist du mal krank kann dein Teammitglied einspringen und die gleichen Aufgaben online erledigen.</p>
+<p>Erstelle dir einen Account und arbeite mit deinen Kollegen zusammen. Rechnungen müssen nicht mehr hin- und hergeschickt werden. Solltest du einen Termin haben oder krank sein, kann dein Teammitglied einspringen und die gleichen Aufgaben online erledigen.</p>
 
-<p>Billeroo bietet dir also die Möglichkeit schnell und einfach deine Rechnungen zu erstellen und zu verwalten und das bis zu 20 Rechnungen im Monat vollkommen kostenlos. Finde mehr über unsere Preise heraus oder <a href="/invoices/new">erstelle gleich jetzt eine Rechnung.</a></p>
+<p>Billeroo bietet dir also die Möglichkeit, schnell und einfach deine Rechnungen zu erstellen und zu verwalten, und das kostenlos bis zu 20 Rechnungen im Monat. Finde mehr über unsere Preise heraus oder <a href="/invoices/new">erstelle gleich jetzt eine Rechnung.</a></p>
 
 <img src="/img/undraw_collaborators_prrw.png" alt="Zwei Menschen arbeiten miteinander."/>
 
-<p>PS: Dir fehlt eine Funktionalität? Wende dich an useren Kundensupport und wir werden sie Zeitnah implementieren. <a href="mailto:support@billeroo.de">support@billeroo.de</a></p>
+<p>PS: Dir fehlt eine Funktionalität? Wende dich an unseren Kundensupport und wir werden sie zeitnah implementieren. <a href="mailto:support@billeroo.de">support@billeroo.de</a></p>
 
 `,
   },
