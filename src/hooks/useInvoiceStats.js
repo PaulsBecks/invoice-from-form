@@ -13,7 +13,11 @@ export default function useInvoiceStats() {
       const invoiceDate = new Date(invoice.invoiceDate);
       const { totalPrice } = invoice;
       const month = invoiceDate.getMonth();
-      invoiceStats[month].push({ totalPrice: parsePrice(totalPrice) });
+      invoiceStats[month].push({
+        totalPrice: parsePrice(totalPrice),
+        totalPriceNet:
+          parsePrice(totalPrice) / (1 + parsePrice(invoice.customer.ust) / 100),
+      });
     }
     return invoiceStats;
   }, [invoices]);

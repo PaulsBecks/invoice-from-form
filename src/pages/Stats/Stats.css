@@ -2,3 +2,32 @@
   color: var(--primary-color);
   text-align: center;
 }
+
+.billeroo-stats-numbers-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 3em 0;
+}
+
+.billeroo-stats-numbers-container-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em;
+}
+
+.billeroo-stats-container-section-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-top: 0.5em;
+}
+
+.billeroo-stats-linechart-tooltip {
+  background: white;
+  border: 1px solid grey;
+  padding: 1em;
+  border-radius: 0.5em;
+}

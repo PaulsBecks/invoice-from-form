@@ -13,7 +13,23 @@ export const monthNames = [
   "Dez",
 ];
 
+export const monthNamesLong = [
+  "Januar",
+  "Februar",
+  "März",
+  "April",
+  "Mai",
+  "Juni",
+  "Juli",
+  "August",
+  "September",
+  "Oktober",
+  "November",
+  "Dezember",
+];
+
 export const primaryColor = "#2c7f83";
+export const secondaryColor = "#ffa31a";
 
 export const monochromaticColors = [
   "#0d2223",
