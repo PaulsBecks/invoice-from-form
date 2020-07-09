@@ -45,7 +45,7 @@ export default function Stats() {
   const articleTurnoverSeries = useMemo(
     () =>
       Object.values(articleStats).map((m) => ({
-        name: m.name.slice(0, 10) + "...",
+        name: m.name ? m.name.slice(0, 10) + "..." : "",
         Gesamtumsatz: m.totalTurnover,
       })),
     [articleStats]

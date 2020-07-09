@@ -33,7 +33,6 @@ const SinglePage = ({
     return null;
   }
 
-  console.log(articles);
   return (
     <Page singleMode={true} id={id}>
       <div
@@ -260,8 +259,8 @@ const SinglePage = ({
               <p>
                 <b>
                   {formatPrice(
-                    (articles_net_price + parsePrice(porto)) *
-                      (1 + parsePrice(customer.ust + "") / 100)
+                    articles_net_price * (1 + parsePrice(customer.ust) / 100) +
+                      parsePrice(porto) * (1 + parsePrice(customer.ust) / 100)
                   )}{" "}
                   €
                 </b>

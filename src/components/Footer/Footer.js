@@ -72,9 +72,6 @@ export default function Footer() {
               <li>
                 <Link to="/dataprotection">Datenschutzerklärung</Link>
               </li>
-              <li>
-                <Link>AGB</Link>
-              </li>
             </ul>
           </div>
         </div>

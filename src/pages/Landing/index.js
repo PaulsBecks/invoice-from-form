@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Landing.css";
-import { Button } from "semantic-ui-react";
+import { Button, CardGroup, Card } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
 import { useGA } from "../../hooks";
@@ -122,9 +122,11 @@ export default function LandingPage() {
           <div className="billeroo-blog-section">
             <h2 className="billeroo-blog-section-title">Blogeinträge</h2>
             <div className="billeroo-blog-section-entries">
-              {blogEntries.map((be) => (
-                <BlogCard blogEntry={be} />
-              ))}
+              <Card.Group centered>
+                {blogEntries.map((be) => (
+                  <BlogCard blogEntry={be} />
+                ))}
+              </Card.Group>
             </div>
           </div>
         </div>

@@ -204,7 +204,7 @@ export default function TopNavigationBar() {
                         setModalIsOpen(false);
                         window.document.location.href = "/";
                       } catch (err) {
-                        setError(err);
+                        setError(err.toString());
                       }
                     }}
                   >

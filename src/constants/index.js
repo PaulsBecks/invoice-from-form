@@ -79,4 +79,15 @@ export const blogEntries = [
 
 `,
   },
+  {
+    id: "1",
+    imgSrc: "/img/undraw_wordpress_utxt.png",
+    title: "Billeroo Woocommerce Webhooks",
+    shortText: "Automatisiert Rechnungen erstellen mit Billeroo und Wordpress",
+    text:
+      '<p>Du kannst jetzt noch mehr Zeit sparen, wenn du einen Woocommerce-Shop hast. Billeroo stellt seit dem neuesten Update ein Feature bereit, dass es dir erlaubt Rechnungen automatisch anlegen zu lassen, wenn ein Kunde einen Artikel in deinem Onlineshop kauft.</p>\
+<p></p>\
+<p>Um Billeroo-Webhooks zu nutzen, kannst du einen neuen Webhook in deinem Billeroo-Profil anlegen und ihn in deinem Woocommerce-Shop hinzufügen. In unseren FAQs findest du eine detailierte Anleitung. </p>\
+<p>Wir übernehmen gerne für dich die Einrichtung. Schicke dafür einfach eine Email an <a href="mailto:service@billeroo.de">service@billeroo.de</a></p>',
+  },
 ];
