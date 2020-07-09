@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useInvoices, useGA } from "../../hooks";
 
-import { Button, Table, Checkbox, Form } from "semantic-ui-react";
+import { Button, Table, Checkbox, Form, Loader } from "semantic-ui-react";
 import { formatDate, formatPrice, printInvoice } from "../../services";
 import SinglePage from "../SinglePage/SinglePage";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router";
@@ -11,11 +11,28 @@ import ReactDatePicker from "react-datepicker";
 import sendInvoice from "../../services/sendInvoice";
 import SendEmailInvoiceModal from "../SendEmailInvoiceModal/SendEmailInvoiceModal";
 import DeleteAckModal from "../DeleteAckModal";
+import useIsInViewport from "use-is-in-viewport";
 
 export default () => {
-  const [invoices, , removeInvoice, updateInvoice] = useInvoices();
+  const [
+    invoices,
+    ,
+    removeInvoice,
+    updateInvoice,
+    ,
+    ,
+    isLoadingInvoices,
+    loadMoreInvoices,
+  ] = useInvoices();
   const [invoiceDownloadSelected, setInvoiceDownloadSelected] = useState();
   const [invoiceEmailSelected, setInvoiceEmailSelected] = useState();
+  const [inViewPort, reloadDiv] = useIsInViewport({});
+
+  useEffect(() => {
+    if (inViewPort && !isLoadingInvoices) {
+      loadMoreInvoices();
+    }
+  }, [inViewPort, isLoadingInvoices]);
   useGA();
   const history = useHistory();
   let { path } = useRouteMatch();
@@ -55,8 +72,7 @@ export default () => {
             </Table.Header>
 
             <Table.Body>
-              {invoices.map((invoice, index, invoices) => {
-                const i = invoices[invoices.length - 1 - index];
+              {invoices.map((i) => {
                 return (
                   <Table.Row key={i._id}>
                     <Table.Cell>{i.invoiceNumber}</Table.Cell>
@@ -142,6 +158,7 @@ export default () => {
               })}
             </Table.Body>
           </Table>
+          <div ref={reloadDiv} />
           <div style={{ position: "absolute", opacity: "0.0" }}>
             {(invoiceDownloadSelected || invoiceEmailSelected) && (
               <SinglePage
