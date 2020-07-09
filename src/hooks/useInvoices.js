@@ -2,10 +2,10 @@ import postInvoice from "../services/backend/postInvoice";
 import { useCallback, useEffect, useState } from "react";
 import getInvoices from "../services/backend/getInvoices";
 
-export default function useInvoices() {
+export default function useInvoices(options = { defaultLimit: 10 }) {
   const [invoices, setInvoices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(options.defaultLimit);
 
   const fetchInvoices = useCallback(async (options) => {
     setIsLoading(true);

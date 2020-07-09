@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { parsePrice } from "../services";
 
 export default function useInvoiceStats() {
-  const [invoices] = useInvoices();
+  const [invoices] = useInvoices({ defaultLimit: -1 });
 
   const invoiceStats = useMemo(() => {
     let invoiceStats = [[], [], [], [], [], [], [], [], [], [], [], []];
