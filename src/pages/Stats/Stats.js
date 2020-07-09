@@ -33,7 +33,10 @@ export default function Stats() {
       invoiceStats.map((m, i) => ({
         name: monthNames[i],
         Gesamtumsatz: m.reduce((total, i) => total + i.totalPrice, 0),
-        GesamtumsatzNet: m.reduce((total, i) => total + i.totalPriceNet, 0),
+        "Gesamtumsatz Netto": m.reduce(
+          (total, i) => total + i.totalPriceNet,
+          0
+        ),
       })),
     [invoiceStats]
   );
@@ -51,19 +54,21 @@ export default function Stats() {
   const month = new Date().getMonth();
 
   const CustomTooltip = ({ active, payload }) => {
-    console.log(payload);
     if (!active) return null;
-    for (const bar of payload) {
-      if (bar <= 0.01) {
+    return payload.map((bar) => {
+      if (bar.value <= 0.01) {
         return null;
       }
       return (
-        <div className="billeroo-stats-linechart-tooltip">
+        <div
+          className="billeroo-stats-linechart-tooltip"
+          style={{ color: bar.color }}
+          key={bar.dataKey}
+        >
           {bar.value.toFixed(2)} €
         </div>
       );
-    }
-    return null;
+    });
   };
   return (
     <div>
@@ -84,7 +89,7 @@ export default function Stats() {
               />
               <Line
                 type="monotone"
-                dataKey="GesamtumsatzNet"
+                dataKey="Gesamtumsatz Netto"
                 stroke={secondaryColor}
               />
             </LineChart>
@@ -140,7 +145,6 @@ export default function Stats() {
           <span className="billeroo-stats-container-section-number">
             <CountUp
               end={Object.values(articleStats).reduce((t, article) => {
-                console.log(t, article);
                 return article.totalSold + t;
               }, 0)}
             />
