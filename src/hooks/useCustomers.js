@@ -1,9 +1,16 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback, useContext } from "react";
 import getCustomers from "../services/backend/getCustomers";
 import postCustomer from "../services/backend/postCustomer";
+import { Context } from "../store/Store";
 
 export default function useCustomers() {
-  const [customers, setCustomers] = useState([]);
+  const [state, dispatch] = useContext(Context);
+
+  const customers = state.customers;
+
+  const setCustomers = (customers) => {
+    dispatch({ type: "SET_CUSTOMERS", payload: customers });
+  };
 
   async function fetchCustomers() {
     const customers = await getCustomers();
@@ -13,7 +20,9 @@ export default function useCustomers() {
   }
 
   useEffect(() => {
-    fetchCustomers();
+    if (customers && customers.length === 0) {
+      fetchCustomers();
+    }
   }, []);
 
   const addCustomer = async (customer) => {

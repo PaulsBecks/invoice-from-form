@@ -1,24 +1,35 @@
 import postInvoice from "../services/backend/postInvoice";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState, useContext } from "react";
 import getInvoices from "../services/backend/getInvoices";
+import { Context } from "../store/Store";
 
-export default function useInvoices(options = { defaultLimit: 10 }) {
-  const [invoices, setInvoices] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [limit, setLimit] = useState(options.defaultLimit);
-
-  const fetchInvoices = useCallback(async (options = {}) => {
-    setIsLoading(true);
-    const invoices = await getInvoices(options);
-    if (invoices) {
-      setInvoices(invoices);
+export default function useInvoices() {
+  const [state, dispatch] = useContext(Context);
+  const invoices = state.invoices;
+  const setInvoices = (invoices) => {
+    dispatch({ type: "SET_INVOICES", payload: invoices });
+  };
+  const limit = state.invoicesLimit;
+  const setLimit = (_limit) => {
+    if (limit < 0) {
+      return;
     }
-    setIsLoading(false);
-  });
+    dispatch({ type: "SET_INVOICES_LIMIT", payload: _limit });
+  };
 
-  useEffect(() => {
-    fetchInvoices({ limit });
-  }, [limit]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchInvoices = useCallback(
+    async (options = {}) => {
+      setIsLoading(true);
+      const _invoices = await getInvoices(options);
+      if (_invoices) {
+        setInvoices(_invoices);
+      }
+      setIsLoading(false);
+    },
+    [invoices, limit]
+  );
 
   const addInvoice = async (invoice) => {
     await postInvoice(invoice);
@@ -45,9 +56,22 @@ export default function useInvoices(options = { defaultLimit: 10 }) {
     [invoices]
   );
 
-  const loadMoreInvoices = useCallback(() => {
-    if (limit < invoices.length + 10) setLimit(limit + 10);
-  }, [limit, invoices]);
+  const loadMoreInvoices = useCallback(
+    (_limit) => {
+      console.log(_limit, limit);
+      if (limit < 0) {
+        return;
+      }
+      if ((_limit && _limit > invoices.length) || _limit < 0) {
+        setLimit(_limit);
+        fetchInvoices({ limit: _limit });
+      } else if (limit < invoices.length + 10) {
+        setLimit(limit + 10);
+        fetchInvoices({ limit: limit + 10 });
+      }
+    },
+    [limit, invoices]
+  );
 
   return [
     invoices.filter((i) => i && typeof i === "object" && !i.deleted),

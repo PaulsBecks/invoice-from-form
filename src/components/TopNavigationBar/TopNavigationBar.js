@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Modal,
@@ -16,7 +16,10 @@ import login from "../../services/backend/login";
 import register from "../../services/backend/register";
 
 export default function TopNavigationBar() {
-  const [invoices] = useInvoices();
+  const [invoices, , , , , , , loadMoreInvoices] = useInvoices();
+  useEffect(() => {
+    loadMoreInvoices(10);
+  }, []);
   const history = useHistory();
   const [loginValues, setLoginValues] = useState({ email: "", password: "" });
   const [modalIsOpen, setModalIsOpen] = useState(false);

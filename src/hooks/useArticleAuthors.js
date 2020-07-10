@@ -1,19 +1,28 @@
-import { useEffect, useCallback, useMemo, useState } from "react";
+import { useEffect, useCallback, useMemo, useContext } from "react";
 import getArticleAuthors from "../services/backend/getArticleAuthors";
 import postArticleAuthors from "../services/backend/postArticleAuthor";
+import { Context } from "../store/Store";
 
 export default function useArticleAuthors() {
-  const [articleAuthors, setLocalStorageArticleAuthors] = useState([]);
+  const [state, dispatch] = useContext(Context);
+
+  const articleAuthors = state.articleAuthors;
+
+  const setArticleAuthors = (articleAuthors) => {
+    dispatch({ type: "SET_ARTICLE_AUTHORS", payload: articleAuthors });
+  };
 
   async function fetchArticleAuthors() {
     const data = await getArticleAuthors();
     if (data) {
-      setLocalStorageArticleAuthors(data);
+      setArticleAuthors(data);
     }
   }
 
   useEffect(() => {
-    fetchArticleAuthors();
+    if (articleAuthors && articleAuthors.length === 0) {
+      fetchArticleAuthors();
+    }
   }, []);
 
   const addArticleAuthor = async (articleAuthor) => {

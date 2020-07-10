@@ -1,9 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useContext } from "react";
 import postArticle from "../services/backend/postArticle";
 import getArticles from "../services/backend/getArticles";
+import { Context } from "../store/Store";
 
 export default function useArticles() {
-  const [articles, setArticles] = useState([]);
+  const [state, dispatch] = useContext(Context);
+
+  const articles = state.articles;
+
+  const setArticles = (articles) => {
+    dispatch({ type: "SET_ARTICLES", payload: articles });
+  };
 
   async function fetchArticles() {
     const articles = await getArticles();
@@ -13,7 +20,9 @@ export default function useArticles() {
   }
 
   useEffect(() => {
-    fetchArticles();
+    if (articles && articles.length === 0) {
+      fetchArticles();
+    }
   }, []);
 
   const addArticle = async (article) => {

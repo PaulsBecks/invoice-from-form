@@ -1,9 +1,12 @@
 import useInvoices from "./useInvoices";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { parsePrice } from "../services";
 
 export default function useInvoiceStats() {
-  const [invoices] = useInvoices({ defaultLimit: -1 });
+  const [invoices, , , , , , , loadMoreInvoices] = useInvoices();
+  useEffect(() => {
+    loadMoreInvoices(-1);
+  }, []);
 
   const invoiceStats = useMemo(() => {
     let invoiceStats = [[], [], [], [], [], [], [], [], [], [], [], []];
