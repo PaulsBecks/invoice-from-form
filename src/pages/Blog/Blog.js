@@ -5,6 +5,7 @@ import BlogCard from "../../components/BlogCard";
 import Helmet from "react-helmet";
 
 import "./Blog.css";
+import { Card } from "semantic-ui-react";
 
 export default function Blog() {
   return (
@@ -18,9 +19,11 @@ export default function Blog() {
       </Helmet>
       <div className="invoice-app-container">
         <h1>Blogeinträge</h1>
-        {blogEntries.map((be) => (
-          <BlogCard blogEntry={be} />
-        ))}
+        <Card.Group>
+          {blogEntries.map((be) => (
+            <BlogCard blogEntry={be} />
+          ))}
+        </Card.Group>
       </div>
       <Footer />
     </div>

@@ -31,7 +31,7 @@ export default ({
     // register customer in backend first
     const customer = await postCustomer(invoice.customer);
     //add customer to invoice and update the invoice
-    updateInvoice({ ...invoice, customer });
+    await updateInvoice({ ...invoice, customer });
     if (typeof onSave === "function") {
       onSave();
     }

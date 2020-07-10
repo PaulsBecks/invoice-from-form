@@ -50,9 +50,6 @@ export default function InvoiceNew({ updateInvoice: _updateInvoice }) {
       updateInvoice={updateInvoice}
       newInvoice
       edit={true}
-      onSave={() => {
-        history.push("/invoices");
-      }}
     />
   );
 }

@@ -2,7 +2,7 @@
 export default {
   name: "Max Mustermann",
   invoiceAddress:
-    "<p>musterdomain.de<br/>\
+    "<p>Max Mustermann<br/>\
   Muster Firma GbR<br/>\
   Musterstraße 2<br/>\
   15366 Musterstadt</p>",

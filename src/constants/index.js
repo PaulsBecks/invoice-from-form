@@ -90,4 +90,29 @@ export const blogEntries = [
 <p>Um Billeroo-Webhooks zu nutzen, kannst du einen neuen Webhook in deinem Billeroo-Profil anlegen und ihn in deinem Woocommerce-Shop hinzufügen. In unseren FAQs findest du eine detailierte Anleitung. </p>\
 <p>Wir übernehmen gerne für dich die Einrichtung. Schicke dafür einfach eine Email an <a href="mailto:service@billeroo.de">service@billeroo.de</a></p>',
   },
+  {
+    id: "2",
+    imgSrc: "/img/woocommerce-new-webhook.png",
+    title: "Anleitung: Billeroo-Webhook in Woocommerce",
+    shortText: "So verknüfst du Billeroo und Woocommerce",
+    text:
+      '<p>Im folgenden werden wir dir erklären wie du deinen Woocommerce-Shop mit Billeroo per Webhook verknüpfen kannst.</p>\
+    <p> Zu aller erst musst du einen neuen Webhook in Billeroo erstellen. Hierfür meldest du dich auf Billeroo an und klickst anschließend oben rechts auf deine Emailadresse.</p>\
+    <img src="/img/open-profile-modal.png" /> \
+    <p> Als nächstes erstellst du einen neuen Webhook in dem du du auf "Webhook anlegen" klickst. </p>\
+    <img src="/img/create-new-webhook.png"/>\
+    <p>Dir sollte nun die neu erstelle Webhook-URL und das Secret angezeigt werden.</p>\
+    <img src="/img/new-webhook.png" />\
+    <p>Jetzt wenden wir uns Woocomerce zu. Melde dich auf deiner Wordpressseite ein und navigiere zu den Wocommerce-Einstellungen.</p>\
+    <img src="/img/woocommerce-settings.png"/>\
+    <p>Wähle den Tab "Erweitert" aus.</p>\
+    <img src="/img/woocommerce-settings-advanced.png"/>\
+    <p>Im Untermenü wählst du jetzt "Webhooks" aus </p>\
+    <img src="/img/woocommerce-settings-webhooks.png" />\
+    <p>Dich sollte ein großer "Webhook erstellen" Button begrüßen. Nachdem du auf den Button geklickt hast, wird dir ein Formular angezeigt. Kopiere die Webhook-URL und das Secret in die jeweiligen Felder. Außerdem musst du bei "Thema" "Produkt erstellt" auswählen und den Status auf Aktiv setzen. Für den Namen kannst du Billeroo eintragen. Zu guter Letzt klickst du auf Webhook speichern.</p>\
+    <img src="/img/woocommerce-webhook-form.png"/>\
+    <p>Wenn dir jetzt "Webhook wurde erfolgreich geupdated" angezeigt wird, hast du es geschafft. Rechnungen werden zukünftig automatisch angelegt.</p>\
+    <img src="/img/webhook-updated-successfully.png"/>\
+    <p>Sollte etwas nicht funktionieren, helfen wir dir gerne <a href="mailto:service@billeroo.de">service@billeroo.de</a>. </p>',
+  },
 ];

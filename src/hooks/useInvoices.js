@@ -7,7 +7,7 @@ export default function useInvoices(options = { defaultLimit: 10 }) {
   const [isLoading, setIsLoading] = useState(true);
   const [limit, setLimit] = useState(options.defaultLimit);
 
-  const fetchInvoices = useCallback(async (options) => {
+  const fetchInvoices = useCallback(async (options = {}) => {
     setIsLoading(true);
     const invoices = await getInvoices(options);
     if (invoices) {
@@ -22,17 +22,17 @@ export default function useInvoices(options = { defaultLimit: 10 }) {
 
   const addInvoice = async (invoice) => {
     await postInvoice(invoice);
-    fetchInvoices();
+    fetchInvoices({ limit });
   };
 
   const removeInvoice = async (invoiceId) => {
     await postInvoice({ _id: invoiceId, deleted: true });
-    fetchInvoices();
+    fetchInvoices({ limit });
   };
 
   const updateInvoice = async (invoice) => {
     await postInvoice(invoice);
-    fetchInvoices();
+    fetchInvoices({ limit });
   };
 
   const getInvoiceById = useCallback(

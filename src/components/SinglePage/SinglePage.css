@@ -1,3 +1,5 @@
+@import url("/fonts/Roboto/Black.ttf");
+
 #singlePage {
   position: relative;
 }
@@ -139,6 +141,9 @@ br {
 .invoice-page-pdf {
   height: 100%;
   padding: 10mm 12mm 13mm 26mm;
+  background: white;
+  box-shadow: 0px 1px 3px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5;
+  font-family: "Roboto", sans-serif;
 }
 
 .invoice-page-top {

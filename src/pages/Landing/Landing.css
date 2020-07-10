@@ -52,6 +52,10 @@
   margin-left: 4em;
 }
 
+.billeroo-title-section-image > img {
+  max-width: 100%;
+}
+
 .billeroo-price-section-text-title,
 .billeroo-reference-section-text-title,
 .billeroo-added-value-section-text-title,
@@ -125,6 +129,10 @@
 .billeroo-added-value-section-icon-wrapper {
   flex-grow: 1;
   flex-basis: 0;
+}
+
+.billeroo-added-value-section-icon-wrapper > img {
+  width: 100%;
 }
 
 .billeroo-added-value-section-text-wrapper {

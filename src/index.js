@@ -1,12 +1,12 @@
 import React, { Suspense } from "react";
 import { hydrate, render } from "react-dom";
 
-import "./index.css";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
 
 import "semantic-ui-less/semantic.less";
+import "./index.css";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import { Pricing } from "./pages";
