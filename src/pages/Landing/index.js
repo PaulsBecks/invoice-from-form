@@ -124,7 +124,7 @@ export default function LandingPage() {
             <div className="billeroo-blog-section-entries">
               <Card.Group centered>
                 {blogEntries.map((be) => (
-                  <BlogCard blogEntry={be} />
+                  <BlogCard blogEntry={be} key={be.id} />
                 ))}
               </Card.Group>
             </div>

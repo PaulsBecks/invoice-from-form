@@ -42,7 +42,7 @@ export default function TopNavigationBar() {
           </Button>
         </div>
         <div className="billeroo-top-navigation-bar-buttons">
-          {(invoices.length > 0 || (user && user.user)) && (
+          {invoices.length > 0 && user && user.user && (
             <div className="billeroo-tabs-desktop">
               <Button.Group>
                 <Button
@@ -71,13 +71,38 @@ export default function TopNavigationBar() {
             onClick={() => history.push("/invoices/new")}
             secondary
           />
-          <Button
-            className="oi-top-navigation-bar-new-invoice"
-            onClick={() => setModalIsOpen(true)}
-            {...(isLoggedIn ? { content: user.user.email } : { icon: "user" })}
-            primary
-          />
-
+          {isLoggedIn ? (
+            <Button
+              className="oi-top-navigation-bar-new-invoice"
+              onClick={() => {
+                setModalIsOpen(true);
+              }}
+              content={user.user.email}
+              primary
+            />
+          ) : (
+            <div className="billeroo-top-navigation-sign-buttons ">
+              <Button
+                className="oi-top-navigation-bar-new-invoice billeroo-top-navigation-sign-in-button"
+                onClick={() => {
+                  setModalIsOpen(true);
+                  setModalUse("login");
+                }}
+                content="Anmelden"
+                inverted
+                basic
+              />
+              <Button
+                className="oi-top-navigation-bar-new-invoice"
+                onClick={() => {
+                  setModalIsOpen(true);
+                  setModalUse("register");
+                }}
+                content="Registrieren"
+                inverted
+              />
+            </div>
+          )}
           {isLoggedIn ? (
             <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
               <Modal.Header>Nutzer</Modal.Header>
@@ -96,9 +121,11 @@ export default function TopNavigationBar() {
                   <h3>Webhooks</h3>
                   <Table>
                     <Table.Header>
-                      <Table.HeaderCell>URL</Table.HeaderCell>
-                      <Table.HeaderCell>Secret</Table.HeaderCell>
-                      <Table.HeaderCell />
+                      <Table.Row>
+                        <Table.HeaderCell>URL</Table.HeaderCell>
+                        <Table.HeaderCell>Secret</Table.HeaderCell>
+                        <Table.HeaderCell />
+                      </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
@@ -170,17 +197,6 @@ export default function TopNavigationBar() {
                       setLoginValues({ ...loginValues, password: value })
                     }
                   />
-                  <Button
-                    onClick={() => {
-                      setModalUse(
-                        modalUse === "register" ? "login" : "register"
-                      );
-                      setError("");
-                    }}
-                    type="button"
-                  >
-                    {modalUse === "register" ? "Anmelden" : "Registrieren"}
-                  </Button>
                   <Button
                     type="submit"
                     primary

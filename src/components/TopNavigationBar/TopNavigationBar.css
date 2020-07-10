@@ -38,6 +38,11 @@
   margin-bottom: 2em;
 }
 
+.billeroo-top-navigation-sign-buttons {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 900px) {
   .billeroo-tabs-menu {
     display: flex;
@@ -45,6 +50,11 @@
   }
   .billeroo-tabs-desktop {
     display: none;
+  }
+}
+@media (max-width: 720px) {
+  .billeroo-top-navigation-sign-in-button {
+    display: none !important;
   }
 }
 
