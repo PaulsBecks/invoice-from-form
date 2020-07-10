@@ -16,6 +16,7 @@ const SinglePage = ({
     customer,
     articles = [],
     company,
+    shippingDisabled,
   },
   setFormSelected,
 }) => {
@@ -107,16 +108,20 @@ const SinglePage = ({
                       <b>Bestelldatum:</b>
                     </p>
                   </div>
-                  <div className="invoice-body-send-date">
-                    <p>
-                      <b>Versanddatum:</b>
-                    </p>
-                  </div>
-                  <div className="invoice-body-send-to">
-                    <p>
-                      <b>Versand an:</b>
-                    </p>
-                  </div>
+                  {!shippingDisabled && (
+                    <div className="invoice-body-send-date">
+                      <p>
+                        <b>Versanddatum:</b>
+                      </p>
+                    </div>
+                  )}
+                  {!shippingDisabled && (
+                    <div className="invoice-body-send-to">
+                      <p>
+                        <b>Versand an:</b>
+                      </p>
+                    </div>
+                  )}
                 </div>
                 <div className="invoice-body-subject-values">
                   <SinglePageOverlay
@@ -127,24 +132,30 @@ const SinglePage = ({
                       <b>{formatDate(orderDate)}</b>
                     </p>
                   </SinglePageOverlay>
-                  <SinglePageOverlay
-                    onClick={() => setFormSelected(["general", "shippingDate"])}
-                    wrapperClass="invoice-body-send-date"
-                  >
-                    <p>
-                      <b>{formatDate(shippingDate)}</b>
-                    </p>
-                  </SinglePageOverlay>
-                  <SinglePageOverlay
-                    onClick={() => setFormSelected(["customer"])}
-                  >
-                    <div
-                      className="invoice-body-send-to"
-                      dangerouslySetInnerHTML={{
-                        __html: customer.shippingAddress,
-                      }}
-                    ></div>
-                  </SinglePageOverlay>
+                  {!shippingDisabled && (
+                    <SinglePageOverlay
+                      onClick={() =>
+                        setFormSelected(["general", "shippingDate"])
+                      }
+                      wrapperClass="invoice-body-send-date"
+                    >
+                      <p>
+                        <b>{formatDate(shippingDate)}</b>
+                      </p>
+                    </SinglePageOverlay>
+                  )}
+                  {!shippingDisabled && (
+                    <SinglePageOverlay
+                      onClick={() => setFormSelected(["customer"])}
+                    >
+                      <div
+                        className="invoice-body-send-to"
+                        dangerouslySetInnerHTML={{
+                          __html: customer.shippingAddress,
+                        }}
+                      ></div>
+                    </SinglePageOverlay>
+                  )}
                 </div>
               </div>
             </div>
@@ -228,24 +239,27 @@ const SinglePage = ({
                   <b>{formatPrice(articles_net_price)} €</b>
                 </p>
               </div>
-              <SinglePageOverlay
-                onClick={() => setFormSelected(["general", "porto"])}
-              >
-                <div className="invoice-body-price-calculation-label-and-number">
-                  <p>Versandkosten (Netto)</p>
-                  <p>
-                    <b>{porto.replace(".", ",")} €</b>
-                  </p>
-                </div>
-              </SinglePageOverlay>
+              {!shippingDisabled && (
+                <SinglePageOverlay
+                  onClick={() => setFormSelected(["general", "porto"])}
+                >
+                  <div className="invoice-body-price-calculation-label-and-number">
+                    <p>Versandkosten (Netto)</p>
+                    <p>
+                      <b>{porto.replace(".", ",")} €</b>
+                    </p>
+                  </div>
+                </SinglePageOverlay>
+              )}
               <SinglePageOverlay onClick={() => setFormSelected(["customer"])}>
                 <div className="invoice-body-price-calculation-label-and-number">
                   <p>{`+${customer.ust}% Mehrwertsteuer`}</p>
                   <p>
                     <b>
                       {formatPrice(
-                        ((articles_net_price + parsePrice(porto + "")) *
-                          parsePrice(customer.ust + "")) /
+                        ((articles_net_price +
+                          (shippingDisabled ? 0 : parsePrice(porto))) *
+                          parsePrice(customer.ust)) /
                           100
                       )}{" "}
                       €
@@ -260,7 +274,8 @@ const SinglePage = ({
                 <b>
                   {formatPrice(
                     articles_net_price * (1 + parsePrice(customer.ust) / 100) +
-                      parsePrice(porto) * (1 + parsePrice(customer.ust) / 100)
+                      (shippingDisabled ? 0 : parsePrice(porto)) *
+                        (1 + parsePrice(customer.ust) / 100)
                   )}{" "}
                   €
                 </b>

@@ -44,6 +44,7 @@ export default ({
   const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
   const [porto, setPorto] = useState(invoice.porto);
+  const [showAdvancedSetting, setShowAdvancedSetting] = useState();
 
   const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
@@ -58,6 +59,7 @@ export default ({
     if (name === "payed") {
       value = checked;
     }
+    console.log(name, value);
     setInvoice({ ...invoice, [name]: value });
   };
 
@@ -299,6 +301,30 @@ export default ({
               </div>
             </Card.Content>
           </Card>
+          <Button
+            content="Erweiterte Einstellungen"
+            onClick={() => setShowAdvancedSetting(true)}
+          />
+          <Modal
+            open={showAdvancedSetting}
+            onClose={() => setShowAdvancedSetting(false)}
+          >
+            <Modal.Header>Erweiterte Einstellungen</Modal.Header>
+            <Modal.Content>
+              <Checkbox
+                toggle
+                label="Versand anzeigen"
+                onChange={() => {
+                  console.log("hey");
+                  updateInvoice(undefined, {
+                    name: "shippingDisabled",
+                    value: !invoice.shippingDisabled,
+                  });
+                }}
+                checked={!invoice.shippingDisabled}
+              />
+            </Modal.Content>
+          </Modal>
           {formSelected[0] === "general" && (
             <Modal open onClose={() => setFormSelected([])} closeIcon>
               <div className="invoice-form-wrap">

@@ -8,10 +8,12 @@ export default (invoice) => {
     })
     .reduce((total, x) => x + total, 0);
 
-  console.log(articlesPrice);
+  if (invoice.shippingDisabled) {
+    return articlesPrice;
+  }
+
   const price =
     articlesPrice +
     +parsePrice(invoice.porto) * (1 + invoice.customer.ust / 100);
-  console.log(price);
   return price;
 };
