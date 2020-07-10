@@ -232,7 +232,7 @@ const SinglePage = ({
                 onClick={() => setFormSelected(["general", "porto"])}
               >
                 <div className="invoice-body-price-calculation-label-and-number">
-                  <p>Versandkosten</p>
+                  <p>Versandkosten (Netto)</p>
                   <p>
                     <b>{porto.replace(".", ",")} €</b>
                   </p>

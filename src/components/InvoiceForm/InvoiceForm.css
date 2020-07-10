@@ -14,3 +14,9 @@
 .invoice-form-buttons {
   margin: 2em 0;
 }
+
+.billeroo-invoice-form-selected-article-card {
+  padding: 0.5em;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.25em;
+}

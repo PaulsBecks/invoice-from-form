@@ -42,7 +42,7 @@ export default function TopNavigationBar() {
           </Button>
         </div>
         <div className="billeroo-top-navigation-bar-buttons">
-          {invoices.length > 0 && user && user.user && (
+          {(invoices.length > 0 || isLoggedIn) && (
             <div className="billeroo-tabs-desktop">
               <Button.Group>
                 <Button

@@ -37,21 +37,13 @@ export default ({
   const [customer, setCustomer] = useState(
     getCustomerById(invoice.customer._id) || invoice.customer
   );
-  const [
-    articles,
-    addToArticles,
-    ,
-    ,
-    articlesLength,
-    getArticleById,
-  ] = useArticles();
+  const [articles, addToArticles, , , , getArticleById] = useArticles();
   const [selectedArticles, setSelectedArticles] = useState(invoice.articles);
   const [article, setArticle] = useState(articleSceleton);
   const [toBePayed, setToBePayed] = useState(1);
   const [toBeSend, setToBeSend] = useState(1);
   const [newArticle, setNewArticle] = useState(undefined);
   const [porto, setPorto] = useState(invoice.porto);
-  const [, , , updateAuthor] = useAuthors();
 
   const updateInvoice = (e, { name, value, checked }) => {
     if (name === "porto") {
@@ -101,10 +93,7 @@ export default ({
     const list = [{ text: "", key: undefined, value: undefined }];
     return list.concat(
       articles.map((a) => {
-        let text = a.name.slice(0, 7);
-        if (text !== a.name) {
-          text += "...";
-        }
+        let text = a.name;
         return {
           key: a._id,
           value: a._id,
@@ -207,7 +196,22 @@ export default ({
                       <div>
                         <h3>Artikel in der Rechnung</h3>
                         {selectedArticles.map((a, i) => (
-                          <div>
+                          <div className="billeroo-invoice-form-selected-article-card">
+                            <Form.Group widths="equal">
+                              <Form.Field
+                                control={Dropdown}
+                                fluid
+                                label="Artikel"
+                                name="articleId"
+                                search
+                                selection
+                                options={articlesOptions}
+                                value={a._id}
+                                onChange={(e, { value, name }) =>
+                                  handleArticleChange(i, name, value)
+                                }
+                              />
+                            </Form.Group>
                             <Form.Group widths="equal">
                               <Form.Input
                                 fluid
@@ -229,20 +233,6 @@ export default ({
                                   handleArticleChange(i, name, value)
                                 }
                               />
-
-                              <Form.Field
-                                control={Dropdown}
-                                fluid
-                                label="Artikel"
-                                name="articleId"
-                                search
-                                selection
-                                options={articlesOptions}
-                                value={a._id}
-                                onChange={(e, { value, name }) =>
-                                  handleArticleChange(i, name, value)
-                                }
-                              />
                               <Form.Field>
                                 <label>&nbsp;</label>
                                 <Button
@@ -260,22 +250,6 @@ export default ({
                     <h3>Artikel hinzufügen</h3>
 
                     <Form.Group widths="equal">
-                      <Form.Input
-                        fluid
-                        name="amount"
-                        type="number"
-                        label="Zu Senden"
-                        value={toBeSend}
-                        onChange={(e, { value }) => setToBeSend(value)}
-                      />
-                      <Form.Input
-                        fluid
-                        name="amountPayed"
-                        type="number"
-                        label="Zu Bezahlen"
-                        value={toBePayed}
-                        onChange={(e, { value }) => setToBePayed(value)}
-                      />
                       <Form.Field
                         control={Dropdown}
                         fluid
@@ -364,7 +338,7 @@ export default ({
                   <Form.Group fluid widths="equal">
                     {formSelected[1] === "porto" && (
                       <Form.Field
-                        label="Porto"
+                        label="Versandkosten (Netto)"
                         value={porto}
                         name="porto"
                         onChange={(e, { value }) => setPorto(value)}
