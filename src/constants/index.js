@@ -93,7 +93,7 @@ export const blogEntries = [
   {
     id: "2",
     imgSrc: "/img/woocommerce-new-webhook.png",
-    title: "Anleitung: Billeroo-Webhook in Woocommerce",
+    title: "Anleitung: Billeroo-Webhook in Woocommerce anlegen",
     shortText: "So verknüfst du Billeroo und Woocommerce",
     text:
       '<p>Im folgenden werden wir dir erklären wie du deinen Woocommerce-Shop mit Billeroo per Webhook verknüpfen kannst.</p>\
