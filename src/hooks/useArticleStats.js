@@ -30,6 +30,7 @@ export default function useArticleStats() {
             payed: article.toBePayed,
             invoiceNumber: i.invoiceNumber,
             customerName: i.customer.name,
+            paymentDate: i.paymentDate,
           });
         }
         return stats;

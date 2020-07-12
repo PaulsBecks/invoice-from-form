@@ -30,6 +30,7 @@
 
 .billeroo-tabs-menu {
   display: none;
+  justify-content: space-around;
 }
 
 .oi-top-navigation-bar-modal-user-container {
@@ -46,7 +47,6 @@
 @media (max-width: 900px) {
   .billeroo-tabs-menu {
     display: flex;
-    justify-content: flex-end;
   }
   .billeroo-tabs-desktop {
     display: none;

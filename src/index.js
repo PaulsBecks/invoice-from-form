@@ -11,6 +11,7 @@ import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import { Pricing } from "./pages";
 import Store from "./store/Store";
+import Services from "./pages/Services";
 
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -61,6 +62,13 @@ const App = () => {
             <div className="invoice-app-container">
               <Suspense fallback={<div></div>}>
                 <Articles />
+              </Suspense>
+            </div>
+          </Route>
+          <Route path="/services">
+            <div className="invoice-app-container">
+              <Suspense fallback={<div></div>}>
+                <Services />
               </Suspense>
             </div>
           </Route>

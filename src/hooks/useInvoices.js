@@ -17,7 +17,7 @@ export default function useInvoices() {
     dispatch({ type: "SET_INVOICES_LIMIT", payload: _limit });
   };
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchInvoices = useCallback(
     async (options = {}) => {
@@ -58,7 +58,6 @@ export default function useInvoices() {
 
   const loadMoreInvoices = useCallback(
     (_limit) => {
-      console.log(_limit, limit);
       if (limit < 0) {
         return;
       }

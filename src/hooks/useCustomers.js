@@ -36,8 +36,9 @@ export default function useCustomers() {
   };
 
   const updateCustomer = async (customer) => {
-    await postCustomer(customer);
+    const c = await postCustomer(customer);
     fetchCustomers();
+    return c;
   };
 
   const getCustomerById = useCallback(

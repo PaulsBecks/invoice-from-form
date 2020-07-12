@@ -9,6 +9,7 @@ import "./Invoice.css";
 import { calculateTotalPrice } from "../../services";
 import { useHistory } from "react-router";
 import postCustomer from "../../services/backend/postCustomer";
+import { useCustomers } from "../../hooks";
 
 export default ({
   edit = true,
@@ -24,12 +25,13 @@ export default ({
 
   const [active, setActive] = useState(edit);
   const [formSelected, setFormSelected] = useState([]);
+  const [, , , updateCustomer] = useCustomers();
   const history = useHistory();
 
   const saveInvoice = async () => {
     invoice["totalPrice"] = calculateTotalPrice(invoice);
     // register customer in backend first
-    const customer = await postCustomer(invoice.customer);
+    const customer = await updateCustomer(invoice.customer);
     //add customer to invoice and update the invoice
     await updateInvoice({ ...invoice, customer });
     if (typeof onSave === "function") {

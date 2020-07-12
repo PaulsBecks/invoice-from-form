@@ -32,7 +32,7 @@ export default () => {
     if (inViewPort && !isLoadingInvoices) {
       loadMoreInvoices();
     }
-  }, [inViewPort, isLoadingInvoices]);
+  }, [inViewPort, isLoadingInvoices, loadMoreInvoices]);
   useGA();
   const history = useHistory();
   let { path } = useRouteMatch();

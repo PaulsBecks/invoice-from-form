@@ -4,6 +4,7 @@ import Reducer from "./Reducer";
 const initialState = {
   invoices: [],
   articles: [],
+  services: [],
   customers: [],
   authors: [],
   articleAuthors: [],
