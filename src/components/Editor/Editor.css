@@ -1,3 +1,7 @@
 .DraftEditor-root {
   font-family: Lato;
 }
+
+.billeroo-editor {
+  min-height: 10em;
+}

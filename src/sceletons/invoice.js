@@ -6,4 +6,5 @@ export default {
   porto: "5,00",
   finalText: "",
   articles: [],
+  services: [],
 };

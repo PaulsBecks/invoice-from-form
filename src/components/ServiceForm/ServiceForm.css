@@ -1,0 +1,8 @@
+.billeroo-service-form-remove-button {
+  margin-top: 0.5em !important;
+}
+
+.billeroo-service-form-remove-button-wrapper {
+  display: flex;
+  align-items: center;
+}

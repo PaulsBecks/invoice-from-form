@@ -7,6 +7,7 @@ export default function Editor(props) {
   const [active, setActive] = useState(false);
   return (
     <RichTextEditor
+      className="billeroo-editor"
       {...props}
       onFocus={() => setActive(true)}
       onBlur={() => {

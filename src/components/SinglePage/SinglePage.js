@@ -17,19 +17,30 @@ const SinglePage = ({
     articles = [],
     company,
     shippingDisabled,
+    services,
   },
   setFormSelected,
 }) => {
-  const articles_net_price = articles
+  const articlesNetPrice = articles
     .map(({ price, toBePayed }) => {
       const totalPrice = parsePrice(price) * toBePayed;
       const totalPriceWithDiscount =
-        totalPrice - totalPrice * (customer.discount / 100);
+        totalPrice * ((100 - customer.discount) / 100);
       const net = totalPriceWithDiscount / (1 + customer.ust / 100);
       return net;
     })
     .reduce((total, x) => x + total, 0);
 
+  const servicesPrice = services
+    .map(({ price }) => {
+      return parsePrice(price);
+    })
+    .reduce((total, x) => x + total, 0);
+
+  const servicesNetPrice =
+    (servicesPrice * (100 - customer.discount)) / (100 + customer.ust);
+
+  const netPrice = articlesNetPrice + servicesNetPrice;
   if (!customer) {
     return null;
   }
@@ -209,24 +220,59 @@ const SinglePage = ({
                           {isbn && `${isbn},`}
                         </div>
                       </div>
-                      <div className="invoice-body-artivle-price-calc">{`Preis ${
-                        multiple ? "je" : ""
-                      } ${price} €${
-                        multiple ? ` = ${formatPrice(totalPrice)} €` : ""
-                      }${
+                      <div className="invoice-body-artivle-price-calc">
+                        <div>{`Preis ${multiple ? "je" : ""} ${price} €${
+                          multiple ? ` = ${formatPrice(totalPrice)} €` : ""
+                        }${
+                          customer.discount > 0
+                            ? `, abzüglich ${
+                                customer.discount
+                              } % Rabatt = ${formatPrice(
+                                totalPriceWithDiscount
+                              )} €`
+                            : ""
+                        } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
+                          totalPriceWithDiscount - net
+                        )} €)`}</div>
+                      </div>
+                    </div>
+                    <div className="invoice-body-article-price">
+                      <b>
+                        {articles.length + services.length > 1 &&
+                          `${formatPrice(net)} €`}
+                      </b>
+                    </div>
+                  </div>
+                );
+              })}
+              {services.map((service) => {
+                const withDiscount =
+                  (parsePrice(service.price) * (100 - customer.discount)) / 100;
+                const net =
+                  withDiscount / ((100 + parsePrice(customer.ust)) / 100);
+                return (
+                  <div className="billeroo-invoice-body-service">
+                    <div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: service.description,
+                        }}
+                      />
+                      <div>{`Preis ${service.price} €${
                         customer.discount > 0
                           ? `, abzüglich ${
                               customer.discount
-                            } % Rabatt = ${formatPrice(
-                              totalPriceWithDiscount
-                            )} €`
+                            } % Rabatt = ${formatPrice(withDiscount)} €`
                           : ""
                       } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
-                        totalPriceWithDiscount - net
+                        withDiscount - net
                       )} €)`}</div>
                     </div>
-                    <div className="invoice-body-article-price">
-                      <b>{articles.length > 1 && `${formatPrice(net)} €`}</b>
+                    <div className="invoice-body-service-price">
+                      <b>
+                        {articles.length + services.length > 1 &&
+                          `${formatPrice(net)} €`}
+                      </b>
                     </div>
                   </div>
                 );
@@ -236,7 +282,7 @@ const SinglePage = ({
               <div className="invoice-body-price-calculation-label-and-number">
                 <p>Netto</p>
                 <p>
-                  <b>{formatPrice(articles_net_price)} €</b>
+                  <b>{formatPrice(netPrice)} €</b>
                 </p>
               </div>
               {!shippingDisabled && (
@@ -257,7 +303,7 @@ const SinglePage = ({
                   <p>
                     <b>
                       {formatPrice(
-                        ((articles_net_price +
+                        ((netPrice +
                           (shippingDisabled ? 0 : parsePrice(porto))) *
                           parsePrice(customer.ust)) /
                           100
@@ -273,7 +319,7 @@ const SinglePage = ({
               <p>
                 <b>
                   {formatPrice(
-                    articles_net_price * (1 + parsePrice(customer.ust) / 100) +
+                    netPrice * (1 + parsePrice(customer.ust) / 100) +
                       (shippingDisabled ? 0 : parsePrice(porto)) *
                         (1 + parsePrice(customer.ust) / 100)
                   )}{" "}

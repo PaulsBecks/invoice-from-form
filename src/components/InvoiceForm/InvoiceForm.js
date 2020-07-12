@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { useCompany, useCustomers, useAuthors, useArticles } from "../../hooks";
+import { useCompany, useCustomers, useArticles } from "../../hooks";
 import {
   Form,
   Input,
@@ -16,14 +16,16 @@ import DatePicker from "react-datepicker";
 import {
   article as articleSceleton,
   customer as customerSceleton,
+  service as serviceSceleton,
 } from "../../sceletons";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./InvoiceForm.css";
 import Article from "../Article";
-import CustomerForm from "../CustomerForm/CustomerForm";
+import CustomerForm from "../CustomerForm";
 import CompanyForm from "../CompanyForm";
 import { formatPrice } from "../../services";
+import ServiceForm from "../ServiceForm";
 
 export default ({
   invoice,
@@ -59,7 +61,6 @@ export default ({
     if (name === "payed") {
       value = checked;
     }
-    console.log(name, value);
     setInvoice({ ...invoice, [name]: value });
   };
 
@@ -151,6 +152,22 @@ export default ({
     });
   };
 
+  const setService = (id, { name, value }) => {
+    const _services = [...invoice.services];
+    _services[id][name] = value;
+    setInvoice({ ...invoice, services: _services });
+  };
+
+  const removeService = (id) => {
+    console.log(id);
+    setInvoice({
+      ...invoice,
+      services: invoice.services.filter((s, i) => {
+        console.log(i, id);
+        return i !== id;
+      }),
+    });
+  };
   return (
     <div className={wrapperClass}>
       <div className="invoice-form-buttons">
@@ -299,6 +316,36 @@ export default ({
                   </Modal.Actions>
                 </Modal>
               </div>
+            </Card.Content>
+          </Card>
+          <Card fluid>
+            <Card.Content>
+              <h3>Dienstleistungen in der Rechnung</h3>
+              <div>
+                {invoice.services.map((service, i) => (
+                  <div className="billeroo-invoice-form-service-form">
+                    <ServiceForm
+                      key={service}
+                      service={service}
+                      onChange={({ name, value }) =>
+                        setService(i, { name, value })
+                      }
+                      onRemove={() => removeService(i)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <Button
+                primary
+                content="Dienstleistung hinzufügen"
+                icon="plus"
+                onClick={() =>
+                  setInvoice({
+                    ...invoice,
+                    services: [...invoice.services, serviceSceleton],
+                  })
+                }
+              />
             </Card.Content>
           </Card>
           <Button

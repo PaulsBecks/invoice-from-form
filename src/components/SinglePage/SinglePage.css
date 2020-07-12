@@ -84,6 +84,10 @@
   align-items: flex-end;
 }
 
+.invoice-body-article-price {
+  white-space: nowrap;
+}
+
 .invoice-body-article-left {
   font-size: 8pt;
 }
@@ -196,4 +200,15 @@ br {
 
 .invoice-body-final-text {
   margin-top: 10px;
+}
+
+.billeroo-invoice-body-service {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25em;
+}
+
+.invoice-body-service-price {
+  align-self: flex-end;
+  white-space: nowrap;
 }
