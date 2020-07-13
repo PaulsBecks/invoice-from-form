@@ -26,9 +26,6 @@ export default function Footer() {
                 <Link to="/invoices/new">Rechnung erstellen</Link>
               </li>
               <li>
-                <Link to="/faq">FAQ</Link>
-              </li>
-              <li>
                 <Link to="/blog">Blog</Link>
               </li>
               <li>
@@ -47,11 +44,11 @@ export default function Footer() {
             </p>
             <p>
               <Icon name="phone" />
-              +49 152 065543
+              +49 152 06555043
               <br />
             </p>
             <p>
-              Billeroo
+              Paul Beck - Softwareentwicklung
               <br />
               Kniprodestraße 22
               <br />
