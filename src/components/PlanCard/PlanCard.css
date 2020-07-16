@@ -1,0 +1,20 @@
+.billeroo-plan-card-header {
+  padding: 2em !important;
+}
+
+.billeroo-plan-card-content-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.billeroo-plan-card-price-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5rem !important;
+}
+
+.billeroo-plan-card-price-month {
+  font-size: 0.9rem;
+}

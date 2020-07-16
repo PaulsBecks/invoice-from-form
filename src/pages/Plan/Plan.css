@@ -1,0 +1,30 @@
+.billeroo-plan-container {
+  display: flex;
+  justify-content: center;
+  padding: 6em 0;
+}
+
+.billeroo-plan-funnel {
+  width: 40em;
+  margin: 2em;
+}
+
+.billeroo-plan-funnel-header {
+  margin-bottom: 1em;
+}
+
+.billeroo-plan-funnel-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.billeroo-plan-funnel-billing-address {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.billeroo-plan-funnel-billing-address > div {
+  display: flex;
+  justify-content: space-between;
+}

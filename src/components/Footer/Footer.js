@@ -29,7 +29,7 @@ export default function Footer() {
                 <Link to="/blog">Blog</Link>
               </li>
               <li>
-                <Link to="/pricing">Preise</Link>
+                <Link to="/plans">Preise</Link>
               </li>
             </ul>
           </div>

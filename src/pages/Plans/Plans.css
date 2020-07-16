@@ -1,0 +1,8 @@
+.billeroo-price-yearly-toggle-container {
+  margin-bottom: 1em;
+}
+
+.billeroo-price-yearly-toggle-container .ui.toggle.checkbox .box::before,
+.ui.toggle.checkbox label::before {
+  background: #22222222 !important;
+}

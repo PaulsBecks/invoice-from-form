@@ -116,3 +116,42 @@ export const blogEntries = [
     <p>Sollte etwas nicht funktionieren, helfen wir dir gerne <a href="mailto:service@billeroo.de">service@billeroo.de</a>. </p>',
   },
 ];
+
+export const plans = {
+  starter: {
+    name: "Billeroo - Starter",
+    iconName: "paper plane",
+    pricePerMonthMonthly: "0",
+    pricePerMonthYearly: "0",
+    invoiceAmount: "20/Monat",
+    woocommerceIcon: "check",
+    supportIcon: "times",
+    onClickLink: "/invoices/new",
+    buttonText: "Jetzt Loslegen",
+    color: primaryColor,
+  },
+  basic: {
+    name: "Billeroo - Basic",
+    iconName: "plane",
+    pricePerMonthMonthly: "10",
+    pricePerMonthYearly: "8",
+    invoiceAmount: "40/Monat",
+    woocommerceIcon: "check",
+    supportIcon: "check",
+    onClickLink: "/plans/basic",
+    buttonText: "Jetzt Buchen",
+    color: primaryColor,
+  },
+  premium: {
+    name: "Billeroo - Premium",
+    iconName: "rocket",
+    pricePerMonthMonthly: "50",
+    pricePerMonthYearly: "45",
+    invoiceAmount: "Endlos",
+    woocommerceIcon: "check",
+    supportIcon: "check",
+    onClickLink: "/plans/premium",
+    buttonText: "Jetzt Buchen",
+    color: primaryColor,
+  },
+};

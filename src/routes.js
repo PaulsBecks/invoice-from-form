@@ -7,7 +7,7 @@ export default (
     <Route exact path="/blog"></Route>
     <Route path="/blog/:blogId"></Route>
     <Route path="/imprint"></Route>
-    <Route path="/pricing"></Route>
+    <Route path="/plans"></Route>
     <Route path="/dataprotection"></Route>
   </Switch>
 );

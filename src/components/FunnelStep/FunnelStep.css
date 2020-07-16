@@ -1,0 +1,15 @@
+.billeroo-plan-funnel-header-step {
+  padding: 0.5em;
+}
+
+.billeroo-plan-funnel-header-step.done {
+  color: var(--primary-color);
+}
+
+.billeroo-plan-funnel-header-step.active {
+  color: black;
+}
+
+.billeroo-plan-funnel-header-step.future {
+  color: grey;
+}

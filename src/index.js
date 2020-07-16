@@ -9,8 +9,9 @@ import "semantic-ui-less/semantic.less";
 import "./index.css";
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
-import { Pricing } from "./pages";
+import { Plans } from "./pages";
 import Store from "./store/Store";
+import Plan from "./pages/Plan/Plan";
 
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -22,8 +23,6 @@ const Authors = React.lazy(() => import("./components/Authors/Authors"));
 const Articles = React.lazy(() => import("./components/Articles"));
 
 const App = () => {
-  //useMigration();
-
   return (
     <Store>
       <Router
@@ -90,8 +89,11 @@ const App = () => {
           <Route path="/imprint">
             <Imprint />
           </Route>
-          <Route path="/pricing">
-            <Pricing />
+          <Route exact path="/plans">
+            <Plans />
+          </Route>
+          <Route path="/plans/:planName">
+            <Plan id={"basic"} />
           </Route>
           <Route path="/dataprotection">
             <DataProtection />

@@ -1,10 +1,10 @@
 import config from "../../config";
-import Axios from "axios";
+import postData from "./postData";
 
 const { backendURL } = config();
 
 const url = backendURL + "/email/invoice";
 
 export default async function emailInvoice(data) {
-  await Axios.post(url, data);
+  await postData(url, data);
 }
