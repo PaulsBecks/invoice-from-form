@@ -1,2 +1,0 @@
-(this["webpackJsonpreact-4798tj"]=this["webpackJsonpreact-4798tj"]||[]).push([[10],{833:function(e,t,a){"use strict";a.r(t);var n=a(14),c=a(0),r=a.n(c),u=a(29),l=a(273),s=a(270);function i(){var e=Object(u.j)(),t=Object(n.a)(e,1)[0];return t&&t.user&&!t.user.placeholder?r.a.createElement("div",{className:"invoice-app-container"},r.a.createElement(l.a,null)):r.a.createElement(s.a,null)}a.d(t,"default",(function(){return i}))}}]);
-//# sourceMappingURL=10.a6d8ec79.chunk.js.map
