@@ -18,10 +18,14 @@ import RegistrationForm from "../../components/RegistrationForm/RegistrationForá
 import postSubscription from "../../services/backend/postSubscription";
 import { PayPalButton } from "react-paypal-button-v2";
 import { parsePrice, formatPrice } from "../../services";
+import useScript from "../../hooks/useScript";
 
 const config = getConfig();
 
 export default function Plan() {
+  useScript(
+    "https://www.paypal.com/sdk/js?client-id=AbwB2ya2xnKMusFqpFcMWxvdQedgb1bLnbVJTp1LCnmGUUk2oGqOCGgRri6qheSnAuk2qSzMRl0p3bJH&vault=true"
+  );
   const history = useHistory();
   const location = useLocation();
   const [yearly, setYearly] = useState({});
