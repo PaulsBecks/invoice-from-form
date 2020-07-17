@@ -11,7 +11,7 @@ import {
   Checkbox,
 } from "semantic-ui-react";
 import FunnelStep from "../../components/FunnelStep/FunnelStep";
-import { useUser } from "../../hooks";
+import { useUser, useGA } from "../../hooks";
 import { plans } from "../../constants";
 import PlanCard from "../../components/PlanCard/PlanCard";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForḿ";
@@ -24,6 +24,7 @@ export default function Plan() {
   const history = useHistory();
   const location = useLocation();
   const [yearly, setYearly] = useState({});
+  useGA();
   useEffect(() => {
     setYearly(new URLSearchParams(location.search).get("yearly"));
   }, [location]);

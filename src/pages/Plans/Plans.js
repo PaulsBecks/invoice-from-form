@@ -6,8 +6,10 @@ import { plans } from "../../constants";
 import PlanCard from "../../components/PlanCard/PlanCard";
 
 import "./Plans.css";
+import { useGA } from "../../hooks";
 export default function Plans() {
   const [yearlyPrices, setYearlyPrices] = useState(true);
+  useGA();
   return (
     <div>
       <Helmet>

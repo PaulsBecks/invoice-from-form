@@ -14,7 +14,6 @@ export default function Settings() {
   const history = useHistory();
   const [currentSubscription] = useCurrentSubscription();
 
-  console.log(currentSubscription);
   return (
     <div className="billeroo-settings-container">
       <div>
