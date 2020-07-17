@@ -1,0 +1,25 @@
+.billeroo-settings-container {
+  display: flex;
+  flex-direction: column;
+  content: center;
+  margin: 2em auto;
+  max-width: 50em;
+}
+
+.billeroo-user-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+
+.billeroo-current-subscription {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.billeroo-current-subscription > div {
+  margin: 1em 0;
+}

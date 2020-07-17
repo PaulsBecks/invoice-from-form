@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import getConfig from "../../config";
-import { useParams, useLocation } from "react-router";
+import { useParams, useLocation, useHistory } from "react-router";
 import "./Plan.css";
 import {
   Input,
@@ -15,10 +15,13 @@ import { useUser } from "../../hooks";
 import { plans } from "../../constants";
 import PlanCard from "../../components/PlanCard/PlanCard";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForḿ";
+import postSubscription from "../../services/backend/postSubscription";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const config = getConfig();
 
 export default function Plan() {
+  const history = useHistory();
   const location = useLocation();
   const [yearly, setYearly] = useState({});
   useEffect(() => {
@@ -30,7 +33,6 @@ export default function Plan() {
     true,
     true,
   ]);
-  const [registrationErrorMessage, setRegistrationErrorMessage] = useState();
   const [user, setUser] = useUser();
   const [address, setAddress] = useState({
     name: "",
@@ -48,7 +50,7 @@ export default function Plan() {
 
   const { planName } = useParams();
   const plan = plans[planName];
-  plan["id"] = config.paypalPlanIds[planName];
+  plan["id"] = config.paypalPlanIds[yearly ? "yearly" : "monthly"][planName];
   // control step one button
   useEffect(() => {
     const steps = [...nextStepButtonDisabled];
@@ -76,29 +78,6 @@ export default function Plan() {
     steps[2] = !agbAccepted;
     setNextStepButtonDisabled(steps);
   }, [user, address, agbAccepted]);
-
-  useEffect(() => {
-    if (!nextStepButtonDisabled.reduce((b, d) => b || d, false)) {
-      window.paypal
-        .Buttons({
-          style: {
-            shape: "rect",
-            color: "blue",
-            layout: "vertical",
-            label: "subscribe",
-          },
-          createSubscription: function (data, actions) {
-            return actions.subscription.create({
-              plan_id: plan.id,
-            });
-          },
-          onApprove: function (data, actions) {
-            alert(data.subscriptionID);
-          },
-        })
-        .render("#paypal-button-container");
-    }
-  }, [nextStepButtonDisabled]);
 
   return (
     <div className="billeroo-plan-container">
@@ -215,14 +194,30 @@ export default function Plan() {
                 <Form>
                   <Checkbox
                     label="Ich erkläre mich mit den AGB von Billeroo einverstanden."
-                    value={agbAccepted}
+                    checked={agbAccepted}
                     onChange={(e, a) => {
                       setAgbAccepted(a.checked);
                     }}
                   />
                 </Form>
                 {!nextStepButtonDisabled[2] && (
-                  <div id="paypal-button-container"></div>
+                  <PayPalButton
+                    options={{ vault: true }}
+                    createSubscription={(data, actions) => {
+                      return actions.subscription.create({
+                        plan_id: plan.id,
+                      });
+                    }}
+                    onApprove={async function (data, actions) {
+                      await postSubscription({
+                        paypalData: data,
+                        billingAddress: address,
+                        plan,
+                        yearly,
+                      });
+                      history.push("/thankyou");
+                    }}
+                  />
                 )}
               </div>
             )}

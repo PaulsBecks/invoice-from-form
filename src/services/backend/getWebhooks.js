@@ -4,7 +4,7 @@ const { backendURL } = config();
 
 const url = backendURL + "/data/webhooks";
 
-export default async function getData() {
+export default async function getWebhooks() {
   const user = JSON.parse(localStorage.getItem("user"), "{}");
   if (!user || !user.token) {
     return;

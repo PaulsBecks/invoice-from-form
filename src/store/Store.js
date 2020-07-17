@@ -7,6 +7,7 @@ const initialState = {
   services: [],
   customers: [],
   authors: [],
+  subscriptions: [],
   articleAuthors: [],
   invoicesLimit: 10,
 };

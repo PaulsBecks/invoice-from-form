@@ -26,7 +26,6 @@ export default function TopNavigationBar() {
   const [user, setUser] = useUser();
   const [modalUse, setModalUse] = useState("register");
   const [error, setError] = useState("");
-  const [webhooks, addWebhook, deleteWebhook] = useWebhooks();
   const isLoggedIn = user && user.user && !user.user.placeholder;
 
   return (
@@ -78,7 +77,7 @@ export default function TopNavigationBar() {
             <Button
               className="oi-top-navigation-bar-new-invoice"
               onClick={() => {
-                setModalIsOpen(true);
+                history.push("/settings");
               }}
               content={user.user.email}
               primary
@@ -106,134 +105,76 @@ export default function TopNavigationBar() {
               />
             </div>
           )}
-          {isLoggedIn ? (
-            <Modal open={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-              <Modal.Header>Nutzer</Modal.Header>
-              <Modal.Content>
-                <div className="oi-top-navigation-bar-modal-user-container">
-                  <p>Angemeldet als {user.user.email}</p>
-                  <Button
-                    content="Abmelden"
-                    onClick={() => {
-                      setUser({});
-                      window.document.location.href = "/";
-                    }}
-                  />
-                </div>
-                <div>
-                  <h3>Webhooks</h3>
-                  <Table>
-                    <Table.Header>
-                      <Table.Row>
-                        <Table.HeaderCell>URL</Table.HeaderCell>
-                        <Table.HeaderCell>Secret</Table.HeaderCell>
-                        <Table.HeaderCell />
-                      </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                      {webhooks.map((wh) => (
-                        <Table.Row key={wh._id}>
-                          <Table.Cell>
-                            https://api.billeroo.de/data/webhooks/{wh._id}
-                          </Table.Cell>
-                          <Table.Cell>{wh.secret}</Table.Cell>
-                          <Table.Cell>
-                            <Button
-                              negative
-                              onClick={() => deleteWebhook(wh._id)}
-                              icon="trash"
-                            />
-                          </Table.Cell>
-                        </Table.Row>
-                      ))}
-                    </Table.Body>
-                    <Table.Footer fullWidth>
-                      <Table.Row>
-                        <Table.HeaderCell colSpan="3">
-                          <Button
-                            content="Webhook anlegen"
-                            onClick={addWebhook}
-                          />
-                        </Table.HeaderCell>
-                      </Table.Row>
-                    </Table.Footer>
-                  </Table>
-                </div>
-              </Modal.Content>
-            </Modal>
-          ) : (
-            <Modal
-              open={modalIsOpen}
-              onClose={() => {
-                setModalIsOpen(false);
-                setError("");
-              }}
-            >
-              <Modal.Header>
-                {modalUse === "login" ? "Anmelden" : "Registrieren"}
-              </Modal.Header>
-              <Modal.Content>
-                <Message info>
-                  {modalUse === "login"
-                    ? "Melden Sie sich an, um diesen Browser mit Ihren Daten zu synchronisieren."
-                    : "Registrieren Sie sich, um Ihre Daten auch auf anderen Geräten zu nutzen."}
-                </Message>
-                {error && <Message error>{error}</Message>}
-                <Form>
-                  <Form.Field
-                    label="Email"
-                    placeholder="Email"
-                    control={Input}
-                    value={loginValues.email}
-                    onChange={(e, { value }) =>
-                      setLoginValues({ ...loginValues, email: value })
-                    }
-                  />
-                  <Form.Field
-                    label="Passwort"
-                    placeholder="Passwort"
-                    control={Input}
-                    type="password"
-                    value={loginValues.password}
-                    onChange={(e, { value }) =>
-                      setLoginValues({ ...loginValues, password: value })
-                    }
-                  />
-                  <Button
-                    type="submit"
-                    primary
-                    onClick={async () => {
-                      let user;
-                      try {
-                        if (modalUse === "login") {
-                          user = await login(loginValues);
-                          await localStorage.setItem(
-                            "user",
-                            JSON.stringify(user)
-                          );
-                        } else {
-                          user = await register(loginValues);
-                          await localStorage.setItem(
-                            "user",
-                            JSON.stringify(user)
-                          );
-                        }
-                        setUser(user);
-                        setModalIsOpen(false);
-                        window.document.location.href = "/";
-                      } catch (err) {
-                        setError(err.toString());
+          <Modal
+            open={modalIsOpen}
+            onClose={() => {
+              setModalIsOpen(false);
+              setError("");
+            }}
+          >
+            <Modal.Header>
+              {modalUse === "login" ? "Anmelden" : "Registrieren"}
+            </Modal.Header>
+            <Modal.Content>
+              <Message info>
+                {modalUse === "login"
+                  ? "Melden Sie sich an, um diesen Browser mit Ihren Daten zu synchronisieren."
+                  : "Registrieren Sie sich, um Ihre Daten auch auf anderen Geräten zu nutzen."}
+              </Message>
+              {error && <Message error>{error}</Message>}
+              <Form>
+                <Form.Field
+                  label="Email"
+                  placeholder="Email"
+                  control={Input}
+                  value={loginValues.email}
+                  onChange={(e, { value }) =>
+                    setLoginValues({ ...loginValues, email: value })
+                  }
+                />
+                <Form.Field
+                  label="Passwort"
+                  placeholder="Passwort"
+                  control={Input}
+                  type="password"
+                  value={loginValues.password}
+                  onChange={(e, { value }) =>
+                    setLoginValues({ ...loginValues, password: value })
+                  }
+                />
+                <Button
+                  type="submit"
+                  primary
+                  onClick={async () => {
+                    let user;
+                    try {
+                      if (modalUse === "login") {
+                        user = await login(loginValues);
+                        await localStorage.setItem(
+                          "user",
+                          JSON.stringify(user)
+                        );
+                      } else {
+                        user = await register(loginValues);
+                        await localStorage.setItem(
+                          "user",
+                          JSON.stringify(user)
+                        );
                       }
-                    }}
-                  >
-                    {modalUse === "login" ? "Anmelden" : "Registrieren"}
-                    <Icon name="right chevron" />
-                  </Button>
-                </Form>
-              </Modal.Content>
-            </Modal>
-          )}
+                      setUser(user);
+                      setModalIsOpen(false);
+                      window.document.location.href = "/";
+                    } catch (err) {
+                      setError(err.toString());
+                    }
+                  }}
+                >
+                  {modalUse === "login" ? "Anmelden" : "Registrieren"}
+                  <Icon name="right chevron" />
+                </Button>
+              </Form>
+            </Modal.Content>
+          </Modal>
         </div>
       </div>
       <div className="billeroo-tabs-menu">

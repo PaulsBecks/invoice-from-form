@@ -21,6 +21,9 @@ const Reducer = (state, action) => {
     case "SET_ARTICLE_AUTHORS":
       return { ...state, articleAuthors: action.payload };
 
+    case "SET_SUBSCRIPTIONS":
+      return { ...state, subscriptions: action.payload };
+
     default:
       return state;
   }

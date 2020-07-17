@@ -4,14 +4,17 @@ import { hydrate, render } from "react-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
+import getConfig from "./config";
 
 import "semantic-ui-less/semantic.less";
 import "./index.css";
+
 import Imprint from "./pages/Imprint/Imprint";
 import DataProtection from "./pages/DataProtection/DataProtection";
 import { Plans } from "./pages";
 import Store from "./store/Store";
 import Plan from "./pages/Plan/Plan";
+import Settings from "./pages/Settings/Settings";
 
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -80,6 +83,9 @@ const App = () => {
             <Suspense fallback={<div></div>}>
               <Blog />
             </Suspense>
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
           <Route path="/blog/:blogId">
             <Suspense fallback={<div></div>}>

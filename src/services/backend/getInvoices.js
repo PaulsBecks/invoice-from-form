@@ -4,7 +4,7 @@ const { backendURL } = config();
 
 const url = backendURL + "/data/invoices";
 
-export default async function getData({ limit }) {
+export default async function getInvoices({ limit }) {
   const user = JSON.parse(localStorage.getItem("user"), "{}");
   if (!user || !user.token) {
     return;
