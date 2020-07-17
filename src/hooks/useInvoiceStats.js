@@ -6,7 +6,7 @@ export default function useInvoiceStats() {
   const [invoices, , , , , , , loadMoreInvoices] = useInvoices();
   useEffect(() => {
     loadMoreInvoices(-1);
-  }, []);
+  }, []); // eslint-disable-line
 
   const invoiceStats = useMemo(() => {
     let invoiceStats = [[], [], [], [], [], [], [], [], [], [], [], []];

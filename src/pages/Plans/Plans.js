@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Icon, Button, Checkbox } from "semantic-ui-react";
+import { Checkbox } from "semantic-ui-react";
 import Footer from "../../components/Footer";
 import Helmet from "react-helmet";
 import { plans } from "../../constants";

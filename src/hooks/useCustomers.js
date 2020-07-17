@@ -23,7 +23,7 @@ export default function useCustomers() {
     if (customers && customers.length === 0) {
       fetchCustomers();
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const addCustomer = async (customer) => {
     await postCustomer(customer);

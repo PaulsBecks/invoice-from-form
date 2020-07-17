@@ -8,7 +8,6 @@ import { Button, Message, Loader } from "semantic-ui-react";
 import "./Invoice.css";
 import { calculateTotalPrice } from "../../services";
 import { useHistory } from "react-router";
-import postCustomer from "../../services/backend/postCustomer";
 import { useCustomers } from "../../hooks";
 
 export default ({

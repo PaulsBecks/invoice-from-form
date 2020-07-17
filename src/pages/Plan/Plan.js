@@ -17,6 +17,7 @@ import PlanCard from "../../components/PlanCard/PlanCard";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForḿ";
 import postSubscription from "../../services/backend/postSubscription";
 import { PayPalButton } from "react-paypal-button-v2";
+import { parsePrice, formatPrice } from "../../services";
 
 const config = getConfig();
 
@@ -78,7 +79,7 @@ export default function Plan() {
     steps[1] = !secondTabDone;
     steps[2] = !agbAccepted;
     setNextStepButtonDisabled(steps);
-  }, [user, address, agbAccepted]);
+  }, [user, address, agbAccepted]); //eslint-disable-line
 
   return (
     <div className="billeroo-plan-container">
@@ -88,7 +89,7 @@ export default function Plan() {
             1. Kontakt
           </FunnelStep>
           <FunnelStep id={1} activeStep={funnelState}>
-            2. Adresse
+            2. Rechnungsaddresse
           </FunnelStep>
           <FunnelStep id={2} activeStep={funnelState}>
             3. Bestätigung
@@ -163,12 +164,16 @@ export default function Plan() {
 
             {funnelState === 2 && (
               <div className="billeroo-plan-funnel-step">
-                <p>
-                  {plan.name} erwerben für den Account <b>{user.user.email}</b>
-                </p>
+                <div className="billeroo-plan-funnel-step-ack">
+                  <h4>Account</h4>
+                  <p>
+                    {plan.name} erwerben für den Account{" "}
+                    <b>{user.user.email}</b>
+                  </p>
+                </div>
 
-                <div>
-                  <h5>Rechnungsaddresse</h5>
+                <div className="billeroo-plan-funnel-step-ack">
+                  <h4>Rechnungsaddresse</h4>
                   <div className="billeroo-plan-funnel-billing-address">
                     <div>
                       <span>Name:</span>
@@ -190,6 +195,19 @@ export default function Plan() {
                       <span>Ort:</span>
                       <span>{address.town}</span>
                     </div>
+                  </div>
+
+                  <div className="billeroo-plan-funnel-step-ack">
+                    <h4>Preis </h4>
+                    <p>
+                      {yearly
+                        ? "12 x " +
+                          formatPrice(plan.pricePerMonthYearly) +
+                          " € = " +
+                          formatPrice(parsePrice(plan.pricePerMonthYearly) * 12)
+                        : formatPrice(plan.pricePerMonthMonthly)}{" "}
+                      €
+                    </p>
                   </div>
                 </div>
                 <Form>

@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  Icon,
-  Message,
-  Table,
-} from "semantic-ui-react";
-import { useInvoices, useUser, useWebhooks } from "../../hooks";
+import { Button, Modal, Form, Input, Icon, Message } from "semantic-ui-react";
+import { useInvoices, useUser } from "../../hooks";
 import { useHistory } from "react-router-dom";
 
 import "./TopNavigationBar.css";
@@ -19,7 +11,7 @@ export default function TopNavigationBar() {
   const [invoices, , , , , , , loadMoreInvoices] = useInvoices();
   useEffect(() => {
     loadMoreInvoices(10);
-  }, []);
+  }, []); // eslint-disable-line
   const history = useHistory();
   const [loginValues, setLoginValues] = useState({ email: "", password: "" });
   const [modalIsOpen, setModalIsOpen] = useState(false);

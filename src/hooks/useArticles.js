@@ -23,7 +23,7 @@ export default function useArticles() {
     if (articles && articles.length === 0) {
       fetchArticles();
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const addArticle = async (article) => {
     const _article = await postArticle(article);

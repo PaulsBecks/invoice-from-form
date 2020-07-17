@@ -23,7 +23,7 @@ export default function useSubscriptions() {
     if (subscriptions && subscriptions.length === 0) {
       fetchSubscriptions();
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const addSubscription = async (subscription) => {
     const _subscription = await postSubscription(subscription);

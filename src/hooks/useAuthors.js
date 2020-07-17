@@ -23,7 +23,7 @@ export default function useAuthors() {
     if (authors && authors.length === 0) {
       fetchAuthors();
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const addAuthor = async (author) => {
     await postAuthor(author);

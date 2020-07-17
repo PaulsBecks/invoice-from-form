@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useInvoices, useGA } from "../../hooks";
 
-import { Button, Table, Checkbox, Form, Loader } from "semantic-ui-react";
+import { Button, Table, Checkbox, Form } from "semantic-ui-react";
 import { formatDate, formatPrice, printInvoice } from "../../services";
 import SinglePage from "../SinglePage/SinglePage";
 import { Switch, Route, useRouteMatch, useHistory } from "react-router";

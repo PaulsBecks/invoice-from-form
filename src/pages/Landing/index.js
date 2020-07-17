@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./Landing.css";
-import { Button, CardGroup, Card } from "semantic-ui-react";
+import { Button, Card } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import Footer from "../../components/Footer";
 import { useGA } from "../../hooks";

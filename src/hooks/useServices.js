@@ -23,7 +23,7 @@ export default function useServices() {
     if (services && services.length === 0) {
       fetchServices();
     }
-  }, []);
+  }, []); //eslint-disable-line
 
   const addService = async (service) => {
     const _service = await postService(service);

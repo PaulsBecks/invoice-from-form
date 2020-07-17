@@ -28,7 +28,7 @@ export default function useInvoices() {
       }
       setIsLoading(false);
     },
-    [invoices, limit]
+    [invoices, limit] //eslint-disable-line
   );
 
   const addInvoice = async (invoice) => {
@@ -69,7 +69,7 @@ export default function useInvoices() {
         fetchInvoices({ limit: limit + 10 });
       }
     },
-    [limit, invoices]
+    [limit, invoices] //eslint-disable-line
   );
 
   return [

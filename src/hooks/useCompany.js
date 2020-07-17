@@ -13,7 +13,7 @@ export default function useCompany() {
       setIsLoading(false);
     }
     fetchData();
-  }, []);
+  }, []); //eslint-disable-line
 
   const updateCompany = (company) => {
     setCompany(company);

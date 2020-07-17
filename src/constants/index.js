@@ -121,8 +121,8 @@ export const plans = {
   starter: {
     name: "Billeroo - Starter",
     iconName: "paper plane",
-    pricePerMonthMonthly: "0",
-    pricePerMonthYearly: "0",
+    pricePerMonthMonthly: "0,00",
+    pricePerMonthYearly: "0,00",
     invoiceAmount: "20/Monat",
     woocommerceIcon: "check",
     supportIcon: "times",
@@ -133,8 +133,8 @@ export const plans = {
   basic: {
     name: "Billeroo - Basic",
     iconName: "plane",
-    pricePerMonthMonthly: "10",
-    pricePerMonthYearly: "8",
+    pricePerMonthMonthly: "10,00",
+    pricePerMonthYearly: "8,00",
     invoiceAmount: "40/Monat",
     woocommerceIcon: "check",
     supportIcon: "check",
@@ -145,8 +145,8 @@ export const plans = {
   premium: {
     name: "Billeroo - Premium",
     iconName: "rocket",
-    pricePerMonthMonthly: "50",
-    pricePerMonthYearly: "45",
+    pricePerMonthMonthly: "50,00",
+    pricePerMonthYearly: "45,00",
     invoiceAmount: "Endlos",
     woocommerceIcon: "check",
     supportIcon: "check",

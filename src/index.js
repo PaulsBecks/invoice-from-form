@@ -4,7 +4,6 @@ import { hydrate, render } from "react-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import TopNavigationBar from "./components/TopNavigationBar";
-import getConfig from "./config";
 
 import "semantic-ui-less/semantic.less";
 import "./index.css";

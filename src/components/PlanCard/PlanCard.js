@@ -14,9 +14,9 @@ export default function PlanCard({
   return (
     <Card.Group centered>
       {plans.map((plan) => (
-        <Card>
+        <Card key={plan.name}>
           <Card.Header className="billeroo-plan-card-header" textAlign="center">
-            <Icon name={plan.iconName} size="big" color={plan.color} />
+            <Icon name={plan.iconName} size="big" />
             <h3>{plan.name}</h3>
           </Card.Header>
           <Card.Content className="billeroo-plan-card-price-container">

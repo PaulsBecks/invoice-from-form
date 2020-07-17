@@ -6,7 +6,6 @@ import PlanCard from "../../components/PlanCard/PlanCard";
 
 import { plans } from "../../constants";
 import { useHistory } from "react-router";
-import useSubscriptions from "../../hooks/useSubscriptions";
 import useCurrentSubscription from "../../hooks/useCurrentSubscription";
 export default function Settings() {
   const [user, setUser] = useUser();

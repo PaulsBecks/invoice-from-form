@@ -5,11 +5,9 @@ import {
   invoice as invoiceSceleton,
   customer as customerSceleton,
 } from "../../sceletons";
-import { useHistory } from "react-router-dom";
 
 export default function InvoiceNew({ updateInvoice: _updateInvoice }) {
   const [company, , companyIsLoading] = useCompany();
-  const history = useHistory();
   const today = new Date();
   useGA();
 
