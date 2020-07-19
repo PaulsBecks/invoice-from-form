@@ -4,6 +4,7 @@ import "./SinglePage.css";
 import { formatDate, formatPrice, parsePrice } from "../../services";
 import { Button } from "semantic-ui-react";
 import SinglePageOverlay from "./SinglePageOverlay";
+import roundPrice from "../../services/roundPrice";
 
 const SinglePage = ({
   id,
@@ -21,15 +22,20 @@ const SinglePage = ({
   },
   setFormSelected,
 }) => {
-  const articlesNetPrice = articles
+  const [articlesNetPrice, uSTSum] = articles
     .map(({ price, toBePayed }) => {
       const totalPrice = parsePrice(price) * toBePayed;
       const totalPriceWithDiscount =
         totalPrice * ((100 - customer.discount) / 100);
-      const net = totalPriceWithDiscount / (1 + customer.ust / 100);
-      return net;
+      const net = roundPrice(totalPriceWithDiscount / (1 + customer.ust / 100));
+      const ust = roundPrice(totalPrice - net);
+      console.log(ust);
+      return [net, ust];
     })
-    .reduce((total, x) => x + total, 0);
+    .reduce(([netSum, uSTSum], [net, ust]) => [netSum + net, uSTSum + ust], [
+      0,
+      0,
+    ]);
 
   const servicesPrice = services
     .map(({ price }) => {
@@ -303,10 +309,10 @@ const SinglePage = ({
                   <p>
                     <b>
                       {formatPrice(
-                        ((netPrice +
-                          (shippingDisabled ? 0 : parsePrice(porto))) *
-                          parsePrice(customer.ust)) /
-                          100
+                        uSTSum +
+                          ((shippingDisabled ? 0 : parsePrice(porto)) *
+                            parsePrice(customer.ust)) /
+                            100
                       )}{" "}
                       €
                     </b>
@@ -319,9 +325,12 @@ const SinglePage = ({
               <p>
                 <b>
                   {formatPrice(
-                    netPrice * (1 + parsePrice(customer.ust) / 100) +
-                      (shippingDisabled ? 0 : parsePrice(porto)) *
-                        (1 + parsePrice(customer.ust) / 100)
+                    netPrice +
+                      uSTSum +
+                      (shippingDisabled
+                        ? 0
+                        : parsePrice(porto) *
+                          (1 + parsePrice(customer.ust) / 100))
                   )}{" "}
                   €
                 </b>

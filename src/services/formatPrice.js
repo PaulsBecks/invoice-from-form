@@ -1,14 +1,9 @@
 import parsePrice from "./parsePrice";
-
-const precision = 2;
+import roundPrice from "./roundPrice";
 
 export default function formatPrice(price) {
   if (typeof price !== "number") {
     price = parsePrice(price);
   }
-  return `${(+(
-    Math.round(+(price + "e" + precision)) +
-    "e" +
-    -precision
-  )).toFixed(2)}`.replace(".", ",");
+  return `${roundPrice(price).toFixed(2)}`.replace(".", ",");
 }
