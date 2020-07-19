@@ -19,6 +19,7 @@
 .invoice-blog-entry img {
   background-blend-mode: multiply;
   margin: 1em 0 4em;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
