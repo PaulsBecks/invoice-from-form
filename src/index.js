@@ -15,6 +15,7 @@ import Store from "./store/Store";
 import Plan from "./pages/Plan/Plan";
 import Settings from "./pages/Settings/Settings";
 import AGB from "./pages/AGB";
+import CookieBanner from "./components/CookieBanner/CookieBanner";
 
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -108,6 +109,7 @@ const App = () => {
             <DataProtection />
           </Route>
         </Switch>
+        <CookieBanner />
       </Router>
     </Store>
   );
