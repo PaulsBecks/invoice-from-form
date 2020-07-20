@@ -23,7 +23,7 @@ export default function CookieBanner() {
       <div>
         Wir verwenden Cookies um Billeroo stetig zu verbessern. Mehr erfährst du
         in unserer <Link to="/dataprotection">Datenschutzerklärung</Link>. Mit
-        "Akzeptieren" willigst du der Verwendung dieser Technologien ein.
+        "Akzeptieren" willigst du der Verwendung dieser Technologie ein.
       </div>
       <Button content="Akzeptieren" onClick={acceptCookies} secondary />
     </div>
