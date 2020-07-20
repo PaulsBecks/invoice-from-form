@@ -14,6 +14,7 @@ import { Plans } from "./pages";
 import Store from "./store/Store";
 import Plan from "./pages/Plan/Plan";
 import Settings from "./pages/Settings/Settings";
+import AGB from "./pages/AGB";
 
 const FAQ = React.lazy(() => import("./pages/FAQ"));
 const Blog = React.lazy(() => import("./pages/Blog"));
@@ -93,6 +94,9 @@ const App = () => {
           </Route>
           <Route path="/imprint">
             <Imprint />
+          </Route>
+          <Route path="/agb">
+            <AGB />
           </Route>
           <Route exact path="/plans">
             <Plans />

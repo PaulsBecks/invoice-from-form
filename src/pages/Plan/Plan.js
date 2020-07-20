@@ -112,8 +112,8 @@ export default function Plan() {
                   <div>
                     <Message info>
                       <b>
-                        Du bist aktuell nicht eingeloggt, wenn du deinen
-                        aktuellen Account ugraden möchtest melde dich bitte
+                        Du bist aktuell nicht eingeloggt. Wenn du einen bereits
+                        bestehenden Account ugraden möchtest, melde dich bitte
                         zuerst an.
                       </b>
                     </Message>
@@ -216,7 +216,19 @@ export default function Plan() {
                 </div>
                 <Form>
                   <Checkbox
-                    label="Ich erkläre mich mit den AGB von Billeroo einverstanden."
+                    label={
+                      <label>
+                        Ich erkläre mich mit den{" "}
+                        <a href="/agb" target="_blank">
+                          AGB
+                        </a>{" "}
+                        und{" "}
+                        <a href="/dataprotection" target="_blank">
+                          Datenschutzvereinbarungen
+                        </a>{" "}
+                        von Billeroo einverstanden.
+                      </label>
+                    }
                     checked={agbAccepted}
                     onChange={(e, a) => {
                       setAgbAccepted(a.checked);

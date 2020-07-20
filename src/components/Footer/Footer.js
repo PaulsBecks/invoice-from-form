@@ -14,7 +14,7 @@ export default function Footer() {
             <ul>
               <li>
                 <a href="https://www.instagram.com/billeroo.de/">
-                  <Icon name="Instagram" /> Instagram
+                  <Icon name="instagram" /> Instagram
                 </a>
               </li>
             </ul>
@@ -48,7 +48,7 @@ export default function Footer() {
               <br />
             </p>
             <p>
-              Paul Beck - Softwareentwicklung
+              Billeroo Software Paul Beck
               <br />
               Kniprodestraße 22
               <br />
@@ -68,6 +68,9 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/dataprotection">Datenschutzerklärung</Link>
+              </li>
+              <li>
+                <Link to="/agb">AGB</Link>
               </li>
             </ul>
           </div>
