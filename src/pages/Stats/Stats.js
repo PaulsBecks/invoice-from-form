@@ -14,7 +14,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { useInvoiceStats, useArticleStats } from "../../hooks";
+import { useStats } from "../../hooks";
 import "./Stats.css";
 
 import {
@@ -27,7 +27,7 @@ import {
 import CountUp from "react-countup";
 
 export default function Stats() {
-  const invoiceStats = useInvoiceStats();
+  const [{ invoiceStats, articleStats }] = useStats();
   const monthSeries = useMemo(
     () =>
       invoiceStats.map((m, i) => ({
@@ -41,7 +41,6 @@ export default function Stats() {
     [invoiceStats]
   );
 
-  const articleStats = useArticleStats();
   const articleTurnoverSeries = useMemo(
     () =>
       Object.values(articleStats).map((m) => ({

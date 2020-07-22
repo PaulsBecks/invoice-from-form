@@ -38,6 +38,9 @@ const App = () => {
           callback(allowTransition);
         }}
       >
+        <div>
+          <CookieBanner />
+        </div>
         <TopNavigationBar />
         <ScrollToTop />
         <Switch>
@@ -109,7 +112,6 @@ const App = () => {
             <DataProtection />
           </Route>
         </Switch>
-        <CookieBanner />
       </Router>
     </Store>
   );

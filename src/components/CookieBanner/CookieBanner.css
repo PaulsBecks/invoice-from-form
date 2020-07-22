@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-around;
   padding: 3em 2em 2em;
+  z-index: 1;
   background: white;
   border-top: 2px solid var(--primary-color);
 }

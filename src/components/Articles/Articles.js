@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useArticles, useArticleStats, useGA, useAuthors } from "../../hooks";
+import { useArticles, useGA, useAuthors, useStats } from "../../hooks";
 import { article as articleSceleton } from "../../sceletons";
 import { Table, Button, Modal } from "semantic-ui-react";
 import Article from "../Article";
@@ -18,7 +18,7 @@ export default () => {
   ] = useArticles();
   const [article, setArticle] = useState();
   const [invoiceArticle, setInvoiceArticle] = useState();
-  const invoiceStats = useArticleStats();
+  const [{ articleStats }] = useStats();
   const [, , authorsByArticle] = useArticleAuthors();
   const [, , , , , getAuthorById] = useAuthors();
   useGA();
@@ -39,8 +39,8 @@ export default () => {
               article={article}
               setArticle={setArticle}
               totalSend={
-                invoiceStats[article._id]
-                  ? invoiceStats[article._id].totalSend
+                articleStats[article._id]
+                  ? articleStats[article._id].totalSend
                   : 0
               }
             />
@@ -81,8 +81,8 @@ export default () => {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-                {invoiceStats[invoiceArticle._id] &&
-                  invoiceStats[invoiceArticle._id].invoices.map((invoice) => (
+                {articleStats[invoiceArticle._id] &&
+                  articleStats[invoiceArticle._id].invoices.map((invoice) => (
                     <Table.Row key={invoice._id}>
                       <Table.Cell>{invoice.invoiceNumber}</Table.Cell>
                       <Table.Cell>{invoice.customerName}</Table.Cell>
@@ -100,16 +100,16 @@ export default () => {
                       </Table.Cell>
                     </Table.Row>
                   ))}
-                {invoiceStats[invoiceArticle._id] && (
+                {articleStats[invoiceArticle._id] && (
                   <Table.Row active key="final-row">
                     <Table.Cell />
                     <Table.Cell />
                     <Table.Cell>
-                      {invoiceStats[invoiceArticle._id].totalSold}
+                      {articleStats[invoiceArticle._id].totalSold}
                     </Table.Cell>
                     <Table.Cell>
                       {formatPrice(
-                        invoiceStats[invoiceArticle._id].totalSold *
+                        articleStats[invoiceArticle._id].totalSold *
                           parsePrice(invoiceArticle.price)
                       )}{" "}
                       €
@@ -144,8 +144,8 @@ export default () => {
                   <Table.Cell key="name">{a.name}</Table.Cell>
                   <Table.Cell key="isbn">{a.isbn}</Table.Cell>
                   <Table.Cell key="amount">
-                    {invoiceStats[a._id]
-                      ? parseInt(a.amount + "") - invoiceStats[a._id].totalSend
+                    {articleStats[a._id]
+                      ? parseInt(a.amount + "") - articleStats[a._id].totalSend
                       : a.amount}
                   </Table.Cell>
                   <Table.Cell key="price">{a.price} €</Table.Cell>

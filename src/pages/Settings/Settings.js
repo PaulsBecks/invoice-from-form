@@ -13,6 +13,10 @@ export default function Settings() {
   const history = useHistory();
   const [currentSubscription] = useCurrentSubscription();
 
+  if (!user || !user.user || user.user.placeholder) {
+    return null;
+  }
+
   return (
     <div className="billeroo-settings-container">
       <div>

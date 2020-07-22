@@ -19,13 +19,15 @@ export default function CookieBanner() {
   }
 
   return (
-    <div className="billeroo-cookie-banner">
-      <div>
-        Wir verwenden Cookies um Billeroo stetig zu verbessern. Mehr erfährst du
-        in unserer <Link to="/dataprotection">Datenschutzerklärung</Link>. Mit
-        "Akzeptieren" willigst du der Verwendung dieser Technologie ein.
+    <div>
+      <div className="billeroo-cookie-banner">
+        <div>
+          Wir verwenden Cookies um Billeroo stetig zu verbessern. Mehr erfährst
+          du in unserer <Link to="/dataprotection">Datenschutzerklärung</Link>.
+          Mit "Akzeptieren" willigst du der Verwendung dieser Technologie ein.
+        </div>
+        <Button content="Akzeptieren" onClick={acceptCookies} secondary />
       </div>
-      <Button content="Akzeptieren" onClick={acceptCookies} secondary />
     </div>
   );
 }
