@@ -94,7 +94,7 @@ export default () => {
                         €
                       </Table.Cell>
                       <Table.Cell>
-                        {invoice.payed
+                        {invoice.paymentDate
                           ? formatDate(invoice.paymentDate)
                           : "Ausstehend"}
                       </Table.Cell>

@@ -15,6 +15,5 @@ export default function useStats() {
     fetchStats();
   }, []); // eslint-disable-line
 
-  console.log(stats);
   return [stats];
 }

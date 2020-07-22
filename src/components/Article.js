@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Form, Input, Dropdown } from "semantic-ui-react";
 import { useAuthors, useArticleAuthors } from "../hooks";
 import { formatPrice } from "../services";
+import ArticleAuthorForm from "../components/ArticleAuthorForm";
 
 export default function Article({
   article,
@@ -17,9 +18,10 @@ export default function Article({
     authorsByArticle,
     addArticleAuthor,
     removeArticleAuthor,
+    updateArticleAuthor,
   ] = useArticleAuthors();
 
-  const [authors] = useAuthors();
+  const [authors, , , , , getAuthorById] = useAuthors();
 
   const handleArticleChange = (e, { name, value }) => {
     if (name === "price") {
@@ -47,7 +49,11 @@ export default function Article({
         (v) => !authorsByArticle(article._id).find((a) => a.authorId === v)
       );
       for (var i in newAuthors) {
-        addArticleAuthor({ authorId: newAuthors[i], articleId: article._id });
+        addArticleAuthor({
+          authorId: newAuthors[i],
+          articleId: article._id,
+          percent: "5,00",
+        });
       }
     }
     // remove articleAuthors
@@ -117,16 +123,27 @@ export default function Article({
         />
       </Form.Group>
       {authorsEnabled && (
-        <Form.Field
-          label="Wählen Sie einen Autoren aus:"
-          control={Dropdown}
-          search
-          selection
-          multiple
-          options={authorOptions}
-          value={authorsByArticle(article._id).map((aa) => aa.authorId)}
-          onChange={handleAuthorChange}
-        />
+        <div>
+          <Form.Field
+            label="Wählen Sie einen Autoren aus:"
+            control={Dropdown}
+            search
+            selection
+            multiple
+            options={authorOptions}
+            value={authorsByArticle(article._id).map((aa) => aa.authorId)}
+            onChange={handleAuthorChange}
+          />
+          <div>
+            {authorsByArticle(article._id).map((aa) => (
+              <ArticleAuthorForm
+                key={aa.authorId}
+                updateArticleAuthor={updateArticleAuthor}
+                articleAuthor={aa}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </Form>
   );

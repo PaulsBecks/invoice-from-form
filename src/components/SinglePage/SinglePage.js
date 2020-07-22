@@ -22,14 +22,13 @@ const SinglePage = ({
   },
   setFormSelected,
 }) => {
-  const [articlesNetPrice, uSTSum] = articles
+  const [articlesNetPrice, articleUSTSum] = articles
     .map(({ price, toBePayed }) => {
       const totalPrice = parsePrice(price) * toBePayed;
       const totalPriceWithDiscount =
         totalPrice * ((100 - customer.discount) / 100);
       const net = roundPrice(totalPriceWithDiscount / (1 + customer.ust / 100));
-      const ust = roundPrice(totalPrice - net);
-      console.log(ust);
+      const ust = roundPrice(totalPriceWithDiscount - net);
       return [net, ust];
     })
     .reduce(([netSum, uSTSum], [net, ust]) => [netSum + net, uSTSum + ust], [
@@ -43,9 +42,17 @@ const SinglePage = ({
     })
     .reduce((total, x) => x + total, 0);
 
-  const servicesNetPrice =
-    (servicesPrice * (100 - customer.discount)) / (100 + customer.ust);
+  const servicesPriceWithDiscount =
+    (servicesPrice * (100 - customer.discount)) / 100;
 
+  const servicesNetPrice = roundPrice(
+    servicesPriceWithDiscount / ((100 + customer.ust) / 100)
+  );
+  const serviceUSTSum = roundPrice(
+    servicesPriceWithDiscount - servicesNetPrice
+  );
+
+  const uSTSum = articleUSTSum + serviceUSTSum;
   const netPrice = articlesNetPrice + servicesNetPrice;
   if (!customer) {
     return null;
