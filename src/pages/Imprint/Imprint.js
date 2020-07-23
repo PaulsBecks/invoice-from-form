@@ -11,7 +11,7 @@ export default function Imprint() {
         <h1 className="billeroo-imprint-title">Impressum</h1>
         <div>
           <p>
-            Billeroo
+            Billeroo Software Paul Beck
             <br />
             Kniprodestraße 22
             <br />
