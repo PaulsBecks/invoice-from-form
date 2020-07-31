@@ -108,8 +108,8 @@ export default ({
 
   const handleCustomerChange = (e, { value }) => {
     let customer;
-    if (value < customersLength) customer = getCustomerById(value);
-    else customer = { ...customerSceleton, id: customersLength };
+    customer = getCustomerById(value);
+    if (!customer) customer = { ...customerSceleton, id: customersLength };
     setCustomer(customer);
     setInvoice({
       ...invoice,
@@ -178,31 +178,33 @@ export default ({
       <div className={"invoice-form "}>
         {formSelected[0] === "customer" && (
           <Modal open onClose={() => setFormSelected([])} closeIcon>
-            <div className="invoice-form-wrap">
-              <Form>
-                <Form.Field
-                  label="Wählen Sie einen Kunden aus:"
-                  control={Dropdown}
-                  search
-                  selection
-                  options={customerOptions}
-                  value={customer._id}
-                  onChange={handleCustomerChange}
-                />
-              </Form>
-              <Segment>
-                <CustomerForm
-                  customer={customer}
-                  setCustomer={(customer) => {
-                    setCustomer(customer);
-                    setInvoice({
-                      ...invoice,
-                      customer,
-                    });
-                  }}
-                />
-              </Segment>
-            </div>
+            <Modal.Content>
+              <div className="invoice-form-wrap">
+                <Form>
+                  <Form.Field
+                    label="Wählen Sie einen Kunden aus:"
+                    control={Dropdown}
+                    search
+                    selection
+                    options={customerOptions}
+                    value={customer._id}
+                    onChange={handleCustomerChange}
+                  />
+                </Form>
+                <Segment>
+                  <CustomerForm
+                    customer={customer}
+                    setCustomer={(customer) => {
+                      setCustomer(customer);
+                      setInvoice({
+                        ...invoice,
+                        customer,
+                      });
+                    }}
+                  />
+                </Segment>
+              </div>
+            </Modal.Content>
           </Modal>
         )}
         <div>
@@ -374,118 +376,122 @@ export default ({
           </Modal>
           {formSelected[0] === "general" && (
             <Modal open onClose={() => setFormSelected([])} closeIcon>
-              <div className="invoice-form-wrap">
-                <Form>
-                  <Form.Group fluid widths="equal">
-                    {formSelected[1] === "invoiceDate" && (
-                      <Form.Field
-                        label="Rechnungsdatum"
-                        name="invoiceDate"
-                        selected={new Date(invoice.invoiceDate)}
-                        onChange={(v) => updateInvoiceDate(v, "invoiceDate")}
-                        control={DatePicker}
-                        dateFormat="dd/MM/yyyy"
-                      />
-                    )}
-                    {formSelected[1] === "orderDate" && (
-                      <Form.Field
-                        label="Bestelldatum"
-                        name="orderDate"
-                        selected={new Date(invoice.orderDate)}
-                        onChange={(v) => updateInvoiceDate(v, "orderDate")}
-                        control={DatePicker}
-                        dateFormat="dd/MM/yyyy"
-                      />
-                    )}
-                    {formSelected[1] === "shippingDate" && (
-                      <Form.Field
-                        label="Versanddatum"
-                        name="shippingDate"
-                        selected={new Date(invoice.shippingDate)}
-                        onChange={(v) => updateInvoiceDate(v, "shippingDate")}
-                        control={DatePicker}
-                        dateFormat="dd/MM/yyyy"
-                      />
-                    )}
-                  </Form.Group>
-                  <Form.Group fluid widths="equal">
-                    {formSelected[1] === "porto" && (
-                      <Form.Field
-                        label="Versandkosten (Netto)"
-                        value={porto}
-                        name="porto"
-                        onChange={(e, { value }) => setPorto(value)}
-                        control={Input}
-                        onBlur={(e) =>
-                          updateInvoice(e, {
-                            name: e.target.name,
-                            value: e.target.value,
-                          })
-                        }
-                        icon="euro"
-                      />
-                    )}
-                    {formSelected[1] === "invoiceNumber" && (
-                      <Form.Field
-                        label="Rechnungsnummer"
-                        name="invoiceNumber"
-                        value={invoice.invoiceNumber}
-                        onChange={updateInvoice}
-                        control={Input}
-                      />
-                    )}
-                  </Form.Group>
-
-                  {formSelected[1] === "payed" && (
-                    <div>
-                      <Form.Field>
-                        <label>Bezahlt</label>
-                        <Checkbox
-                          onChange={(e, { name, checked }) => {
-                            if (checked) {
-                              setInvoice({
-                                ...invoice,
-                                [name]: checked,
-                                paymentDate: new Date(),
-                              });
-                            } else {
-                              setInvoice({
-                                ...invoice,
-                                [name]: checked,
-                                paymentDate: undefined,
-                              });
-                            }
-                          }}
-                          name="payed"
-                          checked={invoice.payed}
-                          toggle
-                        />
-                      </Form.Field>
-                      {invoice.payed && (
+              <Modal.Content>
+                <div className="invoice-form-wrap">
+                  <Form>
+                    <Form.Group fluid widths="equal">
+                      {formSelected[1] === "invoiceDate" && (
                         <Form.Field
-                          label="Zahlungseingangsdatum"
-                          name="paymentDate"
-                          selected={new Date(invoice.paymentDate)}
-                          onChange={(v) => updateInvoiceDate(v, "paymentDate")}
+                          label="Rechnungsdatum"
+                          name="invoiceDate"
+                          selected={new Date(invoice.invoiceDate)}
+                          onChange={(v) => updateInvoiceDate(v, "invoiceDate")}
                           control={DatePicker}
                           dateFormat="dd/MM/yyyy"
                         />
                       )}
-                    </div>
-                  )}
-                </Form>
-                <CompanyForm
-                  company={company}
-                  setCompany={(company) => {
-                    setCompany(company);
-                    setInvoice({
-                      ...invoice,
-                      company,
-                    });
-                  }}
-                  selected={formSelected[1]}
-                />
-              </div>
+                      {formSelected[1] === "orderDate" && (
+                        <Form.Field
+                          label="Bestelldatum"
+                          name="orderDate"
+                          selected={new Date(invoice.orderDate)}
+                          onChange={(v) => updateInvoiceDate(v, "orderDate")}
+                          control={DatePicker}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                      )}
+                      {formSelected[1] === "shippingDate" && (
+                        <Form.Field
+                          label="Versanddatum"
+                          name="shippingDate"
+                          selected={new Date(invoice.shippingDate)}
+                          onChange={(v) => updateInvoiceDate(v, "shippingDate")}
+                          control={DatePicker}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                      )}
+                    </Form.Group>
+                    <Form.Group fluid widths="equal">
+                      {formSelected[1] === "porto" && (
+                        <Form.Field
+                          label="Versandkosten (Netto)"
+                          value={porto}
+                          name="porto"
+                          onChange={(e, { value }) => setPorto(value)}
+                          control={Input}
+                          onBlur={(e) =>
+                            updateInvoice(e, {
+                              name: e.target.name,
+                              value: e.target.value,
+                            })
+                          }
+                          icon="euro"
+                        />
+                      )}
+                      {formSelected[1] === "invoiceNumber" && (
+                        <Form.Field
+                          label="Rechnungsnummer"
+                          name="invoiceNumber"
+                          value={invoice.invoiceNumber}
+                          onChange={updateInvoice}
+                          control={Input}
+                        />
+                      )}
+                    </Form.Group>
+
+                    {formSelected[1] === "payed" && (
+                      <div>
+                        <Form.Field>
+                          <label>Bezahlt</label>
+                          <Checkbox
+                            onChange={(e, { name, checked }) => {
+                              if (checked) {
+                                setInvoice({
+                                  ...invoice,
+                                  [name]: checked,
+                                  paymentDate: new Date(),
+                                });
+                              } else {
+                                setInvoice({
+                                  ...invoice,
+                                  [name]: checked,
+                                  paymentDate: undefined,
+                                });
+                              }
+                            }}
+                            name="payed"
+                            checked={invoice.payed}
+                            toggle
+                          />
+                        </Form.Field>
+                        {invoice.payed && (
+                          <Form.Field
+                            label="Zahlungseingangsdatum"
+                            name="paymentDate"
+                            selected={new Date(invoice.paymentDate)}
+                            onChange={(v) =>
+                              updateInvoiceDate(v, "paymentDate")
+                            }
+                            control={DatePicker}
+                            dateFormat="dd/MM/yyyy"
+                          />
+                        )}
+                      </div>
+                    )}
+                  </Form>
+                  <CompanyForm
+                    company={company}
+                    setCompany={(company) => {
+                      setCompany(company);
+                      setInvoice({
+                        ...invoice,
+                        company,
+                      });
+                    }}
+                    selected={formSelected[1]}
+                  />
+                </div>
+              </Modal.Content>
             </Modal>
           )}
         </div>
