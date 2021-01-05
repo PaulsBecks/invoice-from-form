@@ -25,6 +25,7 @@ import {
   monthNamesLong,
 } from "../../constants";
 import CountUp from "react-countup";
+import { Table } from "semantic-ui-react";
 
 export default function Stats() {
   const [{ invoiceStats, articleStats }] = useStats();
@@ -44,11 +45,35 @@ export default function Stats() {
   const articleTurnoverSeries = useMemo(
     () =>
       Object.values(articleStats).map((m) => ({
-        name: m.name ? m.name.slice(0, 10) + "..." : "",
-        Gesamtumsatz: m.totalTurnover,
+        name: m.name ? m.name.slice(0, 20) + "..." : "",
+        Verkauft: m.totalSold,
       })),
     [articleStats]
   );
+
+  const articleTurnoverSeriesTotalTurnover = useMemo(
+    () => articleTurnoverSeries.reduce(
+      (total, at) => total + at.Verkauft
+      , 0
+    ),
+    [articleTurnoverSeries]
+  );
+
+  const articleTurnoverSeriesFiltered = useMemo(
+    () => articleTurnoverSeries.reduce(
+      (total, at) => {
+        if (at.Verkauft < articleTurnoverSeriesTotalTurnover * 0.05) {
+          total[0]["Verkauft"] = total[0].Verkauft + at.Verkauft;
+          return total;
+        }
+        else {
+          return total.concat(at);
+        }
+      },
+      [{ name: "Sonstige Artikel", Verkauft: 0 }]
+    ),
+    [articleTurnoverSeries]
+  )
 
   const month = new Date().getMonth();
 
@@ -69,6 +94,7 @@ export default function Stats() {
       );
     });
   };
+
   return (
     <div>
       <div style={{ display: "flex" }}>
@@ -96,19 +122,19 @@ export default function Stats() {
         </div>
         <div style={{ width: "45%", padding: "2em" }}>
           <h2 className="billeroo-stats-container-title">
-            Artikelumsätze - Anteilig
+            Stückzahl Verkauft - Anteilig
           </h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Pie
-                data={articleTurnoverSeries}
+                data={articleTurnoverSeriesFiltered}
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
-                dataKey="Gesamtumsatz"
+                dataKey="Verkauft"
                 label
               >
-                {articleTurnoverSeries.map((entry, index) => (
+                {articleTurnoverSeriesFiltered.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index]} />
                 ))}
               </Pie>
@@ -150,18 +176,30 @@ export default function Stats() {
           </span>
         </div>
       </div>
-      <div>
-        <h2 className="billeroo-stats-container-title">Artikelumsätze</h2>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={articleTurnoverSeries}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Gesamtumsatz" fill={primaryColor} />
-          </BarChart>
-        </ResponsiveContainer>
+      <div className="billeroo-stats-article-table">
+        <h2 className="billeroo-stats-container-title">Artikelübersich</h2>
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Artikelname</Table.HeaderCell>
+              <Table.HeaderCell>Stückzahl verkauft</Table.HeaderCell>
+              <Table.HeaderCell>Stückzahl versendet</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {Object.values(articleStats).map((article) => {
+              return (
+                <Table.Row key={article._id}>
+                  <Table.Cell>{article.name}</Table.Cell>
+                  <Table.Cell>{article.totalSold}</Table.Cell>
+                  <Table.Cell>{article.totalSend}</Table.Cell>
+                </Table.Row>
+              )
+            })
+            }
+          </Table.Body>
+        </Table>
       </div>
     </div>
   );
