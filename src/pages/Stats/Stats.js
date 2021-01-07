@@ -177,7 +177,7 @@ export default function Stats() {
         </div>
       </div>
       <div className="billeroo-stats-article-table">
-        <h2 className="billeroo-stats-container-title">Artikelübersich</h2>
+        <h2 className="billeroo-stats-container-title">Artikelübersicht</h2>
         <Table celled>
           <Table.Header>
             <Table.Row>
