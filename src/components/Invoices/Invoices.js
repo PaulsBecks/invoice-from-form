@@ -119,10 +119,10 @@ export default () => {
                               transparent
                             />
                           ) : (
-                            <span style={{ marginLeft: "0.5em" }}>
-                              Ausstehend
-                            </span>
-                          )}
+                              <span style={{ marginLeft: "0.5em" }}>
+                                Ausstehend
+                              </span>
+                            )}
                         </Form.Group>
                       </Form>
                     </Table.Cell>
@@ -158,7 +158,9 @@ export default () => {
               })}
             </Table.Body>
           </Table>
-          <div ref={reloadDiv} />
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div ref={reloadDiv} className="loader" />
+          </div>
           <div style={{ position: "absolute", opacity: "0.0" }}>
             {(invoiceDownloadSelected || invoiceEmailSelected) && (
               <SinglePage
