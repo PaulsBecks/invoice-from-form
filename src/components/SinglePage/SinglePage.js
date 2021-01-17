@@ -101,8 +101,8 @@ const SinglePage = ({
                   />
                 </SinglePageOverlay>
               ) : (
-                <Button>Kunde hinzufügen</Button>
-              )}
+                  <Button>Kunde hinzufügen</Button>
+                )}
             </div>
             <SinglePageOverlay
               wrapperClass="invoice-header-company-info"
@@ -234,19 +234,16 @@ const SinglePage = ({
                         </div>
                       </div>
                       <div className="invoice-body-artivle-price-calc">
-                        <div>{`Preis ${multiple ? "je" : ""} ${price} €${
-                          multiple ? ` = ${formatPrice(totalPrice)} €` : ""
-                        }${
-                          customer.discount > 0
-                            ? `, abzüglich ${
-                                customer.discount
-                              } % Rabatt = ${formatPrice(
-                                totalPriceWithDiscount
-                              )} €`
+                        <div>{`Preis ${multiple ? "je" : ""} ${price} €${multiple ? ` = ${formatPrice(totalPrice)} €` : ""
+                          }${customer.discount > 0
+                            ? `, abzüglich ${customer.discount
+                            } % Rabatt = ${formatPrice(
+                              totalPriceWithDiscount
+                            )} €`
                             : ""
-                        } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
-                          totalPriceWithDiscount - net
-                        )} €)`}</div>
+                          } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
+                            totalPriceWithDiscount - net
+                          )} €)`}</div>
                       </div>
                     </div>
                     <div className="invoice-body-article-price">
@@ -271,15 +268,13 @@ const SinglePage = ({
                           __html: service.description,
                         }}
                       />
-                      <div>{`Preis ${service.price} €${
-                        customer.discount > 0
-                          ? `, abzüglich ${
-                              customer.discount
-                            } % Rabatt = ${formatPrice(withDiscount)} €`
-                          : ""
-                      } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
-                        withDiscount - net
-                      )} €)`}</div>
+                      <div>{`Preis ${service.price} €${customer.discount > 0
+                        ? `, abzüglich ${customer.discount
+                        } % Rabatt = ${formatPrice(withDiscount)} €`
+                        : ""
+                        } (beinhaltet ${customer.ust} % MwST = ${formatPrice(
+                          withDiscount - net
+                        )} €)`}</div>
                     </div>
                     <div className="invoice-body-service-price">
                       <b>
@@ -305,7 +300,7 @@ const SinglePage = ({
                   <div className="invoice-body-price-calculation-label-and-number">
                     <p>Versandkosten (Netto)</p>
                     <p>
-                      <b>{porto.replace(".", ",")} €</b>
+                      <b>{formatPrice(porto)} €</b>
                     </p>
                   </div>
                 </SinglePageOverlay>
@@ -317,9 +312,9 @@ const SinglePage = ({
                     <b>
                       {formatPrice(
                         uSTSum +
-                          ((shippingDisabled ? 0 : parsePrice(porto)) *
-                            parsePrice(customer.ust)) /
-                            100
+                        ((shippingDisabled ? 0 : parsePrice(porto)) *
+                          parsePrice(customer.ust)) /
+                        100
                       )}{" "}
                       €
                     </b>
@@ -333,11 +328,11 @@ const SinglePage = ({
                 <b>
                   {formatPrice(
                     netPrice +
-                      uSTSum +
-                      (shippingDisabled
-                        ? 0
-                        : parsePrice(porto) *
-                          (1 + parsePrice(customer.ust) / 100))
+                    uSTSum +
+                    (shippingDisabled
+                      ? 0
+                      : parsePrice(porto) *
+                      (1 + parsePrice(customer.ust) / 100))
                   )}{" "}
                   €
                 </b>
